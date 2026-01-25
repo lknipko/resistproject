@@ -19,11 +19,16 @@ This is a civic engagement platform designed to help citizens understand governm
 ## Technology Stack
 
 **Core Platform:**
-- **Wiki.js** - Main application framework
-- **Docker & Docker Compose** - Containerization and deployment
-- **PostgreSQL** - Database (production)
+- **Wiki.js 2.5** - Main application framework
+- **Docker & Docker Compose** - Local development
+- **PostgreSQL 15** - Database
 - **Node.js** - Runtime environment
 - **Markdown** - Primary content format
+
+**Hosting & Deployment:**
+- **Railway.app** - Production hosting
+- **Cloudflare** - DNS management
+- **GitHub** - Source control (repository: resistproject)
 
 **Development Environment:**
 - Arch Linux
@@ -33,6 +38,146 @@ This is a civic engagement platform designed to help citizens understand governm
 **Future Additions:**
 - Custom Node.js service for trending/analytics
 - Integration with external services (5 Calls, Resistbot, etc.)
+
+---
+
+## Production Deployment
+
+**Live Site:** https://resistproject.com
+**Railway URL:** https://resistproject-production.up.railway.app
+**GitHub Repo:** https://github.com/[username]/resistproject
+
+### API Access
+
+Production Wiki.js API is enabled. The API key is stored locally (not in git):
+- Local: `wiki-js-key.txt` (for local dev)
+- Production API key is in `scripts/sync-to-production.js`
+
+**GraphQL Endpoint:** `https://resistproject-production.up.railway.app/graphql`
+
+---
+
+## Development Scripts
+
+All scripts are in `/scripts/`:
+
+### `sync-to-production.js`
+**Syncs all local content to production.** This is the main deployment script.
+
+```bash
+node scripts/sync-to-production.js
+```
+
+- Scans all `.md` files in `/content/`
+- Creates new pages if they don't exist on production
+- Updates existing pages with new content
+- Extracts title from first `# Heading` in each file
+
+### `create-page.js`
+Creates a single page on local Wiki.js instance.
+
+```bash
+node scripts/create-page.js <content-file> <path> <title> <description>
+```
+
+### `update-page.js`
+Updates an existing page on local Wiki.js by ID.
+
+```bash
+node scripts/update-page.js <page-id> <content-file>
+```
+
+---
+
+## Content File Structure
+
+```
+content/
+├── home.md                      # Landing page (path: /home)
+├── learn/                       # LEARN section pages
+│   ├── obbba-medicaid.md       # path: /learn/obbba-medicaid
+│   ├── birthright-citizenship.md
+│   ├── vaccine-schedule.md
+│   ├── schedule-f.md
+│   ├── digital-rights.md
+│   ├── casa-decision.md
+│   ├── trump-accounts.md
+│   └── federal-law-enforcement.md
+└── act/                         # ACT section pages
+    ├── contact-congress.md     # path: /act/contact-congress
+    ├── immigration.md
+    ├── join-litigation.md
+    ├── dhs-funding.md
+    ├── medicaid-enrollment.md
+    ├── pharmacy-access.md
+    ├── school-boards.md
+    └── whistleblower.md
+```
+
+**File naming convention:**
+- Filename becomes the URL path (e.g., `learn/obbba-medicaid.md` → `/learn/obbba-medicaid`)
+- Use lowercase with hyphens
+- No spaces or special characters
+
+---
+
+## Workflow: Adding/Updating Content
+
+### To add a new page:
+
+1. Create markdown file in appropriate directory:
+   ```bash
+   # For a LEARN page:
+   content/learn/new-topic.md
+
+   # For an ACT page:
+   content/act/new-action.md
+   ```
+
+2. Follow the template structure (see `/templates/`)
+
+3. Sync to production:
+   ```bash
+   node scripts/sync-to-production.js
+   ```
+
+4. Commit to git:
+   ```bash
+   git add content/
+   git commit -m "Add new page: topic name"
+   git push
+   ```
+
+### To update existing content:
+
+1. Edit the markdown file in `/content/`
+2. Run sync script:
+   ```bash
+   node scripts/sync-to-production.js
+   ```
+3. Commit changes to git
+
+---
+
+## Local Development
+
+### Start local Wiki.js:
+```bash
+docker compose up -d
+```
+
+Access at: http://localhost:3000
+
+### Local database:
+- PostgreSQL running in Docker
+- Credentials in `.env` file (not committed)
+
+### Stop local instance:
+```bash
+docker compose down
+```
+
+---
 
 ## Project Structure
 
@@ -185,28 +330,17 @@ Create standardized Markdown templates for:
 - Organization profiles
 - Resource collections
 
-## Deployment Strategy
+## Deployment Status
 
-### Phase 1: Local Development
-- Docker Compose setup on local machine
-- SQLite database (lightweight for dev)
-- Test all features locally
+### Current Setup (LIVE)
+- **Production:** Railway.app with PostgreSQL
+- **Domain:** resistproject.com (via Cloudflare DNS)
+- **SSL:** Automatic via Railway
+- **Backups:** Railway automatic PostgreSQL backups
 
-### Phase 2: Production Deployment
-**Recommended hosting:**
-- DigitalOcean App Platform ($5-15/month)
-- Railway.app (good free tier option)
-
-**Requirements:**
-- PostgreSQL database
-- SSL certificate (Let's Encrypt)
-- Domain name
-- Automated backups
-- Version control (Git)
-
-### Phase 3: Scaling
+### Phase 3: Scaling (Future)
 When traffic grows:
-- CDN for static assets
+- CDN for static assets (Cloudflare)
 - Database optimization
 - Caching layer
 - Load balancing (if needed)
@@ -242,14 +376,21 @@ When traffic grows:
    - No tracking without consent
    - GDPR compliance considerations
 
-## Future Features (Roadmap)
+## Features Roadmap
+
+**Completed:**
+- [x] Wiki.js setup and deployment
+- [x] Production hosting (Railway + custom domain)
+- [x] LEARN page template and 8 issue pages
+- [x] ACT page template and 8 action pages
+- [x] API-based content deployment scripts
+- [x] Cross-linking between LEARN and ACT sections
 
 **Short-term:**
-- [ ] Basic Wiki.js setup
-- [ ] Custom page templates
-- [ ] Content tagging system
+- [ ] Content tagging system (in Wiki.js admin)
+- [ ] Navigation menu setup
 - [ ] User contribution workflow
-- [ ] 5-10 complete issue pages
+- [ ] Visual styling (LEARN=blue, ACT=orange)
 
 **Medium-term:**
 - [ ] Custom trending algorithm
