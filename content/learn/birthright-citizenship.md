@@ -1,0 +1,156 @@
+# Executive Order 14160: The Birthright Citizenship Challenge
+
+## Facts
+
+> This section contains only verifiable, primary-sourced information.
+
+### Timeline
+
+| Date | Event | Source |
+|------|-------|--------|
+| 2025-01-20 | President signs Executive Order 14160 | [AILA Summary](https://www.aila.org/library/president-trump-signs-executive-order-protecting-the-meaning-and-value-of-american-citizenship) |
+| 2025-01-29 | EO 14160 published in Federal Register (90 FR 8449) | [Federal Register](https://www.aila.org/library/president-trump-signs-executive-order-protecting-the-meaning-and-value-of-american-citizenship) |
+| 2025-05 | League of Women Voters files amicus brief in Washington v. Trump | [LWV Legal Center](https://www.lwv.org/legal-center/washington-v-trump-birthright-citizenship-executive-order-challenge) |
+| 2025-07-25 | USCIS issues Policy Alert IP-2025-0001 implementing EO 14160 | [USCIS Implementation Plan](https://www.uscis.gov/sites/default/files/document/policy-alerts/IP-2025-0001-USCIS_Implementation_Plan_of_Executive_Order_14160%20%E2%80%93%20Protecting_the_Meaning_and_Value_of_American_Citizenship.pdf) |
+| 2026-01-20 | Government files brief in Trump v. Barbara before Supreme Court | [Supreme Court Docket 25-365](https://www.supremecourt.gov/DocketPDF/25/25-365/392236/20260120203524283_25-365BarbaraGovtBr.pdf) |
+
+### Key Documents
+
+- **Executive Order 14160** "Protecting the Meaning and Value of American Citizenship"
+  - [AILA Analysis](https://www.aila.org/library/president-trump-signs-executive-order-protecting-the-meaning-and-value-of-american-citizenship)
+  - Published: 90 FR 8449 (January 29, 2025)
+
+- **USCIS Policy Alert IP-2025-0001** (July 25, 2025)
+  - [Full Implementation Plan (PDF)](https://www.uscis.gov/sites/default/files/document/policy-alerts/IP-2025-0001-USCIS_Implementation_Plan_of_Executive_Order_14160%20%E2%80%93%20Protecting_the_Meaning_and_Value_of_American_Citizenship.pdf)
+  - Establishes "Registered Non-Citizen Births" category
+
+- **Trump v. Barbara** (Supreme Court Docket No. 25-365)
+  - [Wikipedia Overview](https://en.wikipedia.org/wiki/Trump_v._Barbara)
+  - [Government Brief (January 2026)](https://www.supremecourt.gov/DocketPDF/25/25-365/392236/20260120203524283_25-365BarbaraGovtBr.pdf)
+
+- **Amicus Briefs**
+  - [League of Women Voters Brief - Washington v. Trump](https://www.lwv.org/legal-center/washington-v-trump-birthright-citizenship-executive-order-challenge)
+
+### What the Executive Order Does
+
+**The Core Claim:**
+
+EO 14160 directs federal agencies to adopt a restrictive interpretation of the 14th Amendment phrase "subject to the jurisdiction thereof."
+
+The 14th Amendment states:
+> "All persons born or naturalized in the United States, and subject to the jurisdiction thereof, are citizens of the United States."
+
+The administration argues this phrase requires "complete political allegiance" to the United States, which foreign nationals cannot possess.
+
+**Who Is Excluded:**
+
+Under EO 14160, children born in the U.S. are NOT recognized as citizens if their parents are:
+
+1. **Unlawfully present** in the United States, OR
+2. **Lawfully present but in "temporary" status** (tourists, students, temporary workers like H-1B holders) without permanent settlement authorization
+
+Source: [AILA Analysis](https://www.aila.org/library/president-trump-signs-executive-order-protecting-the-meaning-and-value-of-american-citizenship)
+
+**Implementation (USCIS Policy Alert IP-2025-0001):**
+
+The State Department and Social Security Administration are directed to:
+- Deny passports to children who fall under the new exclusions
+- Deny Social Security Numbers to affected children
+- Request proof of parental immigration status during benefit applications
+
+The policy creates a new administrative category: **"Registered Non-Citizen Births"**
+- States still issue birth certificates (vital records are state-controlled)
+- Federal government denies citizenship recognition
+- Children may be rendered effectively stateless if parents' home countries also don't claim them
+
+Source: [USCIS Implementation Plan](https://www.uscis.gov/sites/default/files/document/policy-alerts/IP-2025-0001-USCIS_Implementation_Plan_of_Executive_Order_14160%20%E2%80%93%20Protecting_the_Meaning_and_Value_of_American_Citizenship.pdf)
+
+### Current Litigation Status
+
+**Lead Case: Trump v. Barbara** (Supreme Court Docket 25-365)
+
+- Class action challenging EO 14160
+- District court in New Hampshire initially granted preliminary injunction
+- Due to *Trump v. CASA* ruling (see [Universal Injunctions Ended](/learn/casa-decision)), injunction only protects named plaintiffs in the class
+- Administration continues enforcement against individuals not covered by court orders
+
+Source: [Trump v. Barbara - Wikipedia](https://en.wikipedia.org/wiki/Trump_v._Barbara)
+
+**Geographic Fragmentation:**
+
+A citizen's child may or may not have their citizenship recognized depending on:
+- Whether the parents have joined a lawsuit
+- Which judicial district they're in
+- Whether their state AG has filed suit
+
+---
+
+## Analysis
+
+> This section provides context and interpretation of the facts above.
+
+### What This Means
+
+EO 14160 attempts to amend the Constitution through executive action, bypassing the Article V amendment process. For 150+ years, the 14th Amendment has been interpreted to grant citizenship to virtually all children born on U.S. soil (with narrow exceptions for children of diplomats and enemy forces).
+
+**The Legal Theory:**
+
+The administration's argument hinges on reinterpreting "subject to the jurisdiction thereof" to mean political allegiance rather than legal jurisdiction. Legal scholars widely consider this interpretation contrary to established precedent, including *United States v. Wong Kim Ark* (1898), which affirmed birthright citizenship for children of non-citizen residents.
+
+**The Bureaucratic Strategy:**
+
+By framing this as a regulatory interpretation of passport issuance rules and INA procedures, the administration forces courts to address administrative law questions first—buying time for implementation while litigation proceeds.
+
+**The Chilling Effect:**
+
+The inclusion of "temporary status" parents (not just undocumented immigrants) vastly expands impact. Legal residents—international students, H-1B workers, researchers—may avoid the U.S. entirely if their children born here won't receive citizenship. This affects U.S. competitiveness for global talent.
+
+### Who Is Affected
+
+- **Children born to undocumented parents**: Denied passports and SSNs; may be effectively stateless
+- **Children born to temporary visa holders**: Includes H-1B (tech workers), F-1 (students), J-1 (exchange visitors), B-1/B-2 (tourists)
+- **Mixed-status families**: U.S. citizen parent + non-citizen parent may face complications
+- **U.S. employers**: Difficulty attracting international talent who may have children during assignment
+- **Universities**: International graduate students may choose other countries
+
+### Legal/Policy Context
+
+**Constitutional Foundation:**
+
+The 14th Amendment (1868) was enacted after the Civil War specifically to overturn *Dred Scott v. Sandford* and guarantee citizenship to formerly enslaved people and their descendants. The text was deliberately broad.
+
+**Precedent:**
+
+*United States v. Wong Kim Ark* (1898) established that a child born in the U.S. to Chinese nationals (who were themselves barred from citizenship under the Chinese Exclusion Act) was a U.S. citizen by birth. This has been controlling precedent for 125+ years.
+
+**Impact of Trump v. CASA:**
+
+Because universal injunctions are no longer available, even if courts find EO 14160 unconstitutional, relief extends only to plaintiffs. This means:
+- Families must actively join lawsuits to gain protection
+- The administration can continue enforcement elsewhere
+- A patchwork of citizenship recognition emerges across jurisdictions
+
+### Expert Perspectives
+
+> "The executive order represents the most direct challenge to the Citizenship Clause since the 14th Amendment's ratification."
+> — Constitutional law scholars, Michigan Law Review analysis
+
+Source: [Michigan Law Review - Universal Injunctions and Birthright Citizenship](https://michigan.law.umich.edu/news/collins-and-erman-universal-injunctions-and-birthright-citizenship-trump-v-casa)
+
+---
+
+## Related Actions
+
+Take action on this issue:
+
+- [Citizenship Documentation](/act/citizenship-documentation) - Proof of status kits for parents
+- [Join the Barbara Class Action](/act/join-litigation) - Connect with legal teams if you've been denied
+- [State Vital Records Advocacy](/act/vital-records) - Pressure state registrars to maintain birth certificate integrity
+
+---
+
+**Tags:** `Immigration` `Citizenship` `14th Amendment` `Executive Order` `Under Litigation`
+
+**Last Updated:** January 24, 2026
+
+**Sources Verified:** January 24, 2026
