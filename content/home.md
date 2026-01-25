@@ -1,4 +1,4 @@
-# We The People Wiki
+# Resist Project
 
 **Verified facts. Primary sources. Concrete action.**
 
@@ -28,7 +28,7 @@ The One Big Beautiful Bill Act (P.L. 119-21) restructured Medicaid financing and
 ### Citizenship & Immigration
 Executive Order 14160 challenges birthright citizenship, directing agencies to deny passports and SSNs to certain U.S.-born children. Currently being litigated in *Trump v. Barbara*.
 - [Learn: Birthright Citizenship Challenge](/learn/birthright-citizenship)
-- [Act: Citizenship Documentation](/act/citizenship-documentation)
+- [Act: Defend Immigrant Rights](/act/immigration)
 
 ### Public Health Access
 HHS reclassified six vaccines from "routine" to "Shared Clinical Decision-Making," triggering pharmacy access restrictions in 25 states.
@@ -48,12 +48,12 @@ Schedule F (EO 14171) strips protections from 50,000+ federal positions. The "10
 ### The Courts: New Rules
 *Trump v. CASA* ended universal injunctions. Courts can now only protect named plaintiffs, fragmenting legal relief by jurisdiction.
 - [Learn: Universal Injunctions Ended](/learn/casa-decision)
-- [Act: Plaintiff Recruitment](/act/join-litigation)
+- [Act: Join Litigation](/act/join-litigation)
 
 ### Economic Security
 "Trump Accounts" provide $1,000 at birth but favor wealthy families through $5,000 annual contribution limits.
 - [Learn: Trump Accounts Explained](/learn/trump-accounts)
-- [Act: Claim Your Thousand](/act/claim-trump-account)
+- [Act: Contact Congress](/act/contact-congress)
 
 ### Federal Law Enforcement
 Two U.S. citizens—Renee Nicole Good and Alex Pretti—killed by federal agents in Minneapolis in January 2026. H.R. 7147 increases DHS funding without oversight.
@@ -129,6 +129,6 @@ All contributions go through editorial review to maintain credibility.
 
 ---
 
-*Last updated: January 24, 2026*
+*Last updated: January 25, 2026*
 
 *This platform is maintained by volunteers committed to informed civic participation.*

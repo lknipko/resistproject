@@ -107,9 +107,9 @@ With universal injunctions unavailable, advocates must pursue:
 
 Take action on this issue:
 
-- [Join Litigation](/act/join-litigation) - Connect with legal teams if you've been harmed
-- [AG Accountability](/act/ag-accountability) - Track which AGs have joined which lawsuits
-- [Rights by Zip Code](/act/rights-checker) - Check which policies are enjoined in your area
+- [Join Litigation](/act/join-litigation) - Connect with legal teams if you've been harmed by federal policies
+- [Contact Congress](/act/contact-congress) - Advocate for legislative solutions
+- [Defend Immigrant Rights](/act/immigration) - Immigration-specific legal resources
 
 ---
 

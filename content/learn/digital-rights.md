@@ -162,10 +162,9 @@ This lays groundwork for a "Real ID internet" where dissent can be identified an
 
 Take action on this issue:
 
-- [School Board Advocacy](/act/school-boards) - Support inclusive curriculum policies
-- [Digital Privacy Tools](/act/digital-privacy) - Protect your online identity
-- [Trans Healthcare Map](/act/trans-healthcare) - Find care in sanctuary states
+- [School Board Advocacy](/act/school-boards) - Support inclusive curriculum policies and digital rights
 - [Contact Congress](/act/contact-congress) - Oppose federal age verification mandates
+- [Join Litigation](/act/join-litigation) - Connect with LGBTQ+ legal organizations
 
 ---
 

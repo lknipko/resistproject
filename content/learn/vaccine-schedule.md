@@ -117,9 +117,9 @@ States control pharmacy licensing and scope of practice. The federal government 
 
 Take action on this issue:
 
-- [Pharmacy Access Map](/act/pharmacy-access) - Check vaccination access in your state
-- [Decoupling Legislation](/act/vaccine-decoupling) - Lobby your state legislature
-- [Insurance Appeals](/act/insurance-appeals) - Template letters for coverage denials
+- [Pharmacy Access & Vaccine Advocacy](/act/pharmacy-access) - Check vaccination access in your state and advocate for decoupling
+- [Contact Congress](/act/contact-congress) - Advocate for federal solutions
+- [Medicaid Enrollment Defense](/act/medicaid-enrollment) - Healthcare access resources
 
 ---
 

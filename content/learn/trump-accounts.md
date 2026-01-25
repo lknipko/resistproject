@@ -133,9 +133,9 @@ At 7% annual return over 18 years, $1,000 becomes approximately $3,400. It's fre
 
 Take action on this issue:
 
-- [Claim Your Thousand](/act/claim-trump-account) - Step-by-step guide to claiming the $1,000
-- [Employer Equity Campaign](/act/employer-equity) - Push your employer for matching contributions for all employees
-- [Financial Literacy Resources](/act/financial-literacy) - Compound interest calculators and investment basics
+- [Contact Congress](/act/contact-congress) - Advocate for more equitable policies
+- [Medicaid Enrollment Defense](/act/medicaid-enrollment) - Protect healthcare access being cut alongside Trump Account creation
+- [Join Litigation](/act/join-litigation) - Connect with organizations challenging OBBBA provisions
 
 ---
 

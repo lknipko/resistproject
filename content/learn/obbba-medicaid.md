@@ -123,9 +123,9 @@ The OBBBA was passed through budget reconciliation, requiring only a simple Sena
 
 Take action on this issue:
 
-- [Medicaid Enrollment Defense](/act/medicaid-enrollment) - Help neighbors navigate reverification
-- [State Budget Advocacy](/act/state-budget) - Track your state's response to provider tax ban
-- [Contact Congress](/act/contact-congress) - Call scripts and email templates
+- [Medicaid Enrollment Defense](/act/medicaid-enrollment) - Help neighbors navigate 6-month reverification
+- [Contact Congress](/act/contact-congress) - Call scripts and email templates for healthcare advocacy
+- [Join Litigation](/act/join-litigation) - Connect with legal organizations challenging OBBBA provisions
 
 ---
 

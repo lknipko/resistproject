@@ -143,9 +143,9 @@ Source: [Michigan Law Review - Universal Injunctions and Birthright Citizenship]
 
 Take action on this issue:
 
-- [Citizenship Documentation](/act/citizenship-documentation) - Proof of status kits for parents
-- [Join the Barbara Class Action](/act/join-litigation) - Connect with legal teams if you've been denied
-- [State Vital Records Advocacy](/act/vital-records) - Pressure state registrars to maintain birth certificate integrity
+- [Defend Immigrant Rights](/act/immigration) - Know your rights resources and legal defense organizations
+- [Join Litigation](/act/join-litigation) - Connect with legal teams if you've been denied citizenship recognition
+- [Contact Congress](/act/contact-congress) - Call scripts and email templates for advocacy
 
 ---
 

@@ -166,10 +166,9 @@ These killings occur in the context of:
 
 Take action on this issue:
 
-- [Senate Pressure Campaign](/act/dhs-funding) - Target Senate Appropriations Committee on H.R. 7147
-- [Legal Observer Training](/act/legal-observer) - Know your rights when documenting federal agents
-- [Day of Truth Coordination](/act/day-of-truth) - Support ongoing protests and economic actions
-- [Bivens Reform](/act/bivens-reform) - Advocate for legislation creating accountability for federal agents
+- [DHS Funding & Oversight Campaign](/act/dhs-funding) - Target Senate on H.R. 7147, demand accountability measures
+- [Contact Congress](/act/contact-congress) - Call scripts for DHS oversight
+- [Defend Immigrant Rights](/act/immigration) - Community defense resources
 
 ---
 

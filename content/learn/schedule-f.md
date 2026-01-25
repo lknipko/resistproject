@@ -128,9 +128,9 @@ Status: Ongoing litigation
 
 Take action on this issue:
 
-- [Whistleblower Resources](/act/whistleblower) - Secure channels for federal employees
-- [Save the Regulation](/act/public-comments) - Comment on proposed rule repeals
-- [Brain Drain Tracker](/act/brain-drain) - Monitor expert departures from agencies
+- [Whistleblower Resources](/act/whistleblower) - Secure channels and legal protections for federal employees
+- [Contact Congress](/act/contact-congress) - Advocate for civil service protections
+- [Join Litigation](/act/join-litigation) - Connect with NTEU and other legal challenges
 
 ---
 

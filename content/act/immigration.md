@@ -139,8 +139,9 @@ Rapid response networks mobilize community members when immigration enforcement 
 
 ## Related Information
 
-- [LEARN: Immigration Enforcement Policies](/learn/immigration-enforcement) - Background and primary sources
-- [LEARN: Due Process Rights](/learn/due-process) - Constitutional protections
+- [LEARN: Birthright Citizenship Challenge](/learn/birthright-citizenship) - Executive Order 14160
+- [LEARN: Universal Injunctions Ended](/learn/casa-decision) - Why individual participation in lawsuits matters
+- [LEARN: Federal Law Enforcement Escalation](/learn/federal-law-enforcement) - Minneapolis killings
 
 ---
 
