@@ -1,8 +1,10 @@
 [build]
 builder = "dockerfile"
-dockerfilePath = "Dockerfile"
+dockerfilePath = "resist-project/Dockerfile"
 
 [deploy]
-
+startCommand = "node server.js"
+healthcheckPath = "/"
+healthcheckTimeout = 100
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
