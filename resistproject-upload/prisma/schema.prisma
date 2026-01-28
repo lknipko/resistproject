@@ -1,0 +1,416 @@
+// Resist Project - Prisma Schema
+// Adapted from 8 SQL migrations for Next.js + NextAuth.js integration
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// NextAuth.js v5 Models (Required)
+// ============================================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  accounts      Account[]
+  sessions      Session[]
+
+  // Relations to custom tables
+  extended      UserExtended?
+  editProposals EditProposal[] @relation("author")
+  resolvedEdits EditProposal[] @relation("resolver")
+  votes         Vote[]
+  auditLogs     AuditLog[]
+  pinnedPages   PinnedPage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ============================================================================
+// Custom Models (from SQL migrations 001-008)
+// ============================================================================
+
+// From 002_users_extended.sql
+model UserExtended {
+  id     Int    @id @default(autoincrement())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  email        String  @unique
+  displayName  String? @map("display_name") @db.VarChar(100)
+
+  // Contributor tier system (1-5)
+  userTier Int @default(1) @map("user_tier")
+
+  // Reputation tracking
+  reputationScore Int @default(0) @map("reputation_score")
+
+  // Edit statistics
+  editsProposed Int @default(0) @map("edits_proposed")
+  editsApproved Int @default(0) @map("edits_approved")
+  editsRejected Int @default(0) @map("edits_rejected")
+  editsReverted Int @default(0) @map("edits_reverted")
+
+  // Voting statistics
+  votesCast             Int @default(0) @map("votes_cast")
+  votesReceivedPositive Int @default(0) @map("votes_received_positive")
+  votesReceivedNegative Int @default(0) @map("votes_received_negative")
+
+  // Review statistics
+  reviewsCompleted Int @default(0) @map("reviews_completed")
+
+  // Account status
+  accountStatus     String    @default("active") @map("account_status") @db.VarChar(20)
+  suspensionReason  String?   @map("suspension_reason") @db.Text
+  suspensionExpires DateTime? @map("suspension_expires")
+
+  // Rate limiting
+  dailyEditCount    Int      @default(0) @map("daily_edit_count")
+  dailyVoteCount    Int      @default(0) @map("daily_vote_count")
+  lastActivityReset DateTime @default(now()) @map("last_activity_reset") @db.Date
+
+  // Badges (JSON array)
+  badges Json @default("[]")
+
+  // Preferences
+  emailNotifications Boolean @default(true) @map("email_notifications")
+  weeklyDigest       Boolean @default(true) @map("weekly_digest")
+
+  // Security tracking
+  lastLogin             DateTime? @map("last_login")
+  failedLoginAttempts   Int       @default(0) @map("failed_login_attempts")
+  lastFailedLogin       DateTime? @map("last_failed_login")
+  registrationIpHash    String?   @map("registration_ip_hash") @db.VarChar(64)
+  lastKnownIpHash       String?   @map("last_known_ip_hash") @db.VarChar(64)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userTier])
+  @@index([reputationScore(sort: Desc)])
+  @@index([accountStatus])
+  @@index([registrationIpHash])
+  @@map("users_extended")
+}
+
+// From 001_page_metadata.sql
+model PageMetadata {
+  id       Int    @id @default(autoincrement())
+  pageId   Int    @unique @map("page_id")
+  pagePath String @map("page_path") @db.VarChar(500)
+
+  // Content categorization
+  tier        Int    @default(3)
+  contentType String @default("info") @map("content_type") @db.VarChar(50)
+
+  // Issue tagging (JSON array)
+  issueTags Json @default("[]") @map("issue_tags") @db.JsonB
+
+  // Time-sensitive fields
+  deadline DateTime? @db.Timestamptz
+  status   String    @default("active") @db.VarChar(20)
+
+  // Scoring fields
+  currentScore    Decimal @default(0) @map("current_score") @db.Decimal(10, 2)
+  baseScore       Decimal @default(0) @map("base_score") @db.Decimal(10, 2)
+  urgencyFactor   Decimal @default(1.0) @map("urgency_factor") @db.Decimal(5, 2)
+  freshnessFactor Decimal @default(1.0) @map("freshness_factor") @db.Decimal(5, 2)
+  engagementBoost Decimal @default(0) @map("engagement_boost") @db.Decimal(10, 2)
+
+  // Score breakdown (JSON)
+  scoreBreakdown   Json      @default("{}") @map("score_breakdown") @db.JsonB
+  lastScoreUpdate  DateTime? @map("last_score_update") @db.Timestamptz
+
+  // Impact tracking
+  impactLevel String @default("medium") @map("impact_level") @db.VarChar(20)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([pageId])
+  @@index([pagePath])
+  @@index([tier])
+  @@index([contentType])
+  @@index([status])
+  @@index([deadline])
+  @@index([currentScore(sort: Desc)])
+  @@index([status, currentScore(sort: Desc)], name: "idx_page_metadata_trending")
+  @@map("page_metadata")
+}
+
+// From 003_edit_proposals.sql
+model EditProposal {
+  id         Int    @id @default(autoincrement())
+  pageId     Int    @map("page_id")
+  pagePath   String @map("page_path") @db.VarChar(500)
+
+  // Proposer information
+  proposerId   String @map("proposer_id")
+  proposer     User   @relation("author", fields: [proposerId], references: [id], onDelete: SetNull)
+  proposerTier Int    @map("proposer_tier")
+
+  // Edit content
+  originalContent String @map("original_content") @db.Text
+  proposedContent String @map("proposed_content") @db.Text
+  diffContent     String? @map("diff_content") @db.Text
+
+  // Proposal metadata
+  editSummary      String @map("edit_summary") @db.VarChar(500)
+  editType         String @default("content") @map("edit_type") @db.VarChar(30)
+  sectionsAffected Json   @default("[]") @map("sections_affected") @db.JsonB
+
+  // Validation
+  validationStatus  String @default("pending") @map("validation_status") @db.VarChar(20)
+  validationResults Json   @default("{}") @map("validation_results") @db.JsonB
+
+  // Review status
+  status String @default("pending") @db.VarChar(20)
+
+  // Voting scores
+  approvalScore    Int @default(0) @map("approval_score")
+  rejectionScore   Int @default(0) @map("rejection_score")
+  approvalThreshold Int @default(5) @map("approval_threshold")
+
+  // Resolution
+  resolvedById    String?   @map("resolved_by")
+  resolvedBy      User?     @relation("resolver", fields: [resolvedById], references: [id], onDelete: SetNull)
+  resolutionReason String?   @map("resolution_reason") @db.Text
+  resolvedAt       DateTime? @map("resolved_at") @db.Timestamptz
+
+  // Conflict detection
+  baseRevision Int?     @map("base_revision")
+  hasConflict  Boolean  @default(false) @map("has_conflict")
+
+  // Soft delete
+  isDeleted Boolean   @default(false) @map("is_deleted")
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  // Relations
+  votes Vote[]
+
+  @@index([pageId])
+  @@index([pagePath])
+  @@index([proposerId])
+  @@index([status])
+  @@index([validationStatus])
+  @@index([createdAt(sort: Desc)])
+  @@index([status, validationStatus, createdAt], name: "idx_edit_proposals_review_queue")
+  @@map("edit_proposals")
+}
+
+// From 004_votes.sql
+model Vote {
+  id         Int    @id @default(autoincrement())
+  proposalId Int    @map("proposal_id")
+  proposal   EditProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+
+  voterId   String @map("voter_id")
+  voter     User   @relation(fields: [voterId], references: [id], onDelete: Cascade)
+  voterTier Int    @map("voter_tier")
+
+  voteType   String @map("vote_type") @db.VarChar(10)
+  voteWeight Int    @map("vote_weight")
+  comment    String? @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@unique([proposalId, voterId])
+  @@index([proposalId])
+  @@index([voterId])
+  @@index([voteType])
+  @@index([createdAt(sort: Desc)])
+  @@map("votes")
+}
+
+// From 005_audit_log.sql
+model AuditLog {
+  id BigInt @id @default(autoincrement())
+
+  // Action identification
+  actionType     String @map("action_type") @db.VarChar(50)
+  actionCategory String @map("action_category") @db.VarChar(30)
+
+  // Actor information
+  actorId     String? @map("actor_id")
+  actor       User?   @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  actorType   String  @default("user") @map("actor_type") @db.VarChar(20)
+  actorIpHash String? @map("actor_ip_hash") @db.VarChar(64)
+
+  // Target information
+  targetType String? @map("target_type") @db.VarChar(30)
+  targetId   Int?    @map("target_id")
+  targetPath String? @map("target_path") @db.VarChar(500)
+
+  // Action details
+  description String @db.Text
+  oldValue    Json?  @map("old_value") @db.JsonB
+  newValue    Json?  @map("new_value") @db.JsonB
+  metadata    Json   @default("{}") @db.JsonB
+
+  // Security flags
+  isSuspicious  Boolean @default(false) @map("is_suspicious")
+  securityNotes String? @map("security_notes") @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@index([actionType])
+  @@index([actionCategory])
+  @@index([actorId])
+  @@index([targetType, targetId])
+  @@index([targetPath])
+  @@index([createdAt(sort: Desc)])
+  @@index([isSuspicious])
+  @@index([actorId, createdAt(sort: Desc)], name: "idx_audit_log_actor_activity")
+  @@index([targetPath, createdAt(sort: Desc)], name: "idx_audit_log_page_history")
+  @@map("audit_log")
+}
+
+// From 006_page_events.sql
+model PageEvent {
+  id BigInt @id @default(autoincrement())
+
+  pageId   Int    @map("page_id")
+  pagePath String @map("page_path") @db.VarChar(500)
+
+  eventType   String  @map("event_type") @db.VarChar(30)
+  eventTarget String? @map("event_target") @db.VarChar(100)
+
+  // Session tracking (anonymous)
+  sessionHash String? @map("session_hash") @db.VarChar(64)
+
+  // Metadata
+  referrerDomain    String? @map("referrer_domain") @db.VarChar(255)
+  userAgentCategory String? @map("user_agent_category") @db.VarChar(30)
+
+  eventValue Int? @map("event_value")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  eventDate DateTime @default(now()) @map("event_date") @db.Date
+
+  @@index([pageId])
+  @@index([pagePath])
+  @@index([eventType])
+  @@index([eventDate])
+  @@index([createdAt(sort: Desc)])
+  @@index([pageId, eventType, eventDate], name: "idx_page_events_engagement")
+  @@index([pageId, sessionHash, eventType, eventDate], name: "idx_page_events_session")
+  @@map("page_events")
+}
+
+model PageMetricsDaily {
+  id       Int    @id @default(autoincrement())
+  pageId   Int    @map("page_id")
+  pagePath String @map("page_path") @db.VarChar(500)
+  metricDate DateTime @map("metric_date") @db.Date
+
+  // Counts
+  viewCount      Int @default(0) @map("view_count")
+  uniqueSessions Int @default(0) @map("unique_sessions")
+  actionClicks   Int @default(0) @map("action_clicks")
+  shares         Int @default(0)
+  externalClicks Int @default(0) @map("external_clicks")
+
+  // Engagement metrics
+  avgTimeOnPage Int?    @map("avg_time_on_page")
+  bounceRate    Decimal? @map("bounce_rate") @db.Decimal(5, 2)
+
+  dailyEngagementScore Decimal @default(0) @map("daily_engagement_score") @db.Decimal(10, 2)
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@unique([pageId, metricDate])
+  @@index([pageId])
+  @@index([metricDate(sort: Desc)])
+  @@index([dailyEngagementScore(sort: Desc)])
+  @@map("page_metrics_daily")
+}
+
+// From 007_pinned_pages.sql
+model PinnedPage {
+  id       Int    @id @default(autoincrement())
+  pageId   Int    @map("page_id")
+  pagePath String @map("page_path") @db.VarChar(500)
+
+  pinPosition Int    @default(1) @map("pin_position")
+  pinLocation String @default("homepage") @map("pin_location") @db.VarChar(50)
+
+  // Display options
+  pinLabel String? @map("pin_label") @db.VarChar(50)
+  pinStyle String  @default("standard") @map("pin_style") @db.VarChar(30)
+
+  // Scheduling
+  startTime DateTime  @default(now()) @map("start_time") @db.Timestamptz
+  endTime   DateTime? @map("end_time") @db.Timestamptz
+
+  // Tracking
+  pinnedById String @map("pinned_by")
+  pinnedBy   User   @relation(fields: [pinnedById], references: [id], onDelete: SetNull)
+  pinReason  String @map("pin_reason") @db.Text
+
+  isActive Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@unique([pinLocation, pinPosition])
+  @@index([pageId])
+  @@index([pinLocation])
+  @@index([isActive])
+  @@index([startTime, endTime])
+  @@index([pinLocation, pinPosition], name: "idx_pinned_pages_active_location")
+  @@map("pinned_pages")
+}
