@@ -5,6 +5,7 @@ import { prisma } from "./db"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  trustHost: true,
   providers: [
     Resend({
       apiKey: process.env.RESEND_API_KEY,
@@ -16,7 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   pages: {
     signIn: "/auth/signin",
-    verifyRequest: "/auth/verify",
+    verifyRequest: "/auth/verify-request",
     error: "/auth/error",
   },
   callbacks: {
