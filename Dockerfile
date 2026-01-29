@@ -48,9 +48,8 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 
-# Copy startup script
-COPY --from=builder /app/start.sh ./start.sh
-RUN chmod +x ./start.sh
+# Copy migration startup script
+COPY --from=builder /app/migrate-and-start.js ./migrate-and-start.js
 
 USER nextjs
 
@@ -59,4 +58,4 @@ EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["./start.sh"]
+CMD ["node", "migrate-and-start.js"]
