@@ -1,5 +1,8 @@
 FROM node:20-alpine AS base
 
+# Cache buster - change this value to force rebuild
+ARG CACHEBUST=2025-01-28-v2
+
 # Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat openssl
