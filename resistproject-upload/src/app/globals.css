@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --header-height: 64px;
+  --outdent: 2rem;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --outdent: 0;
+  }
+}
+
+body {
+  font-family: theme('fontFamily.sans');
+  color: theme('colors.gray.800');
+  line-height: 1.6;
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .outdent {
+    margin-left: calc(-1 * var(--outdent));
+    padding-left: var(--outdent);
+  }
+}
