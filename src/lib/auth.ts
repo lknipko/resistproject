@@ -6,6 +6,8 @@ import { prisma } from "./db"
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   trustHost: true,
+  basePath: "/api/auth",
+  debug: process.env.NODE_ENV === 'development',
   providers: [
     Resend({
       apiKey: process.env.RESEND_API_KEY,
@@ -14,12 +16,40 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   session: {
     strategy: "database",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   cookies: {
     sessionToken: {
       name: process.env.NODE_ENV === 'production'
         ? '__Secure-authjs.session-token'
         : 'authjs.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        domain: process.env.NODE_ENV === 'production'
+          ? '.resistproject.com'
+          : undefined,
+      },
+    },
+    callbackUrl: {
+      name: process.env.NODE_ENV === 'production'
+        ? '__Secure-authjs.callback-url'
+        : 'authjs.callback-url',
+      options: {
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        domain: process.env.NODE_ENV === 'production'
+          ? '.resistproject.com'
+          : undefined,
+      },
+    },
+    csrfToken: {
+      name: process.env.NODE_ENV === 'production'
+        ? '__Host-authjs.csrf-token'
+        : 'authjs.csrf-token',
       options: {
         httpOnly: true,
         sameSite: 'lax',
