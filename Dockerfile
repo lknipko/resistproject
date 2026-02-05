@@ -5,14 +5,14 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
-COPY resist-project/package.json resist-project/package-lock.json* ./
+COPY package.json package-lock.json* ./
 RUN npm ci
 
 # Build the application
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY resist-project/ .
+COPY . .
 
 # Generate Prisma Client
 RUN npx prisma generate
