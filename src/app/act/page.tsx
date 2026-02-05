@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { getAllPages } from '@/lib/content'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'Act',
   description: 'Take meaningful action with concrete, low-barrier opportunities for civic participation',

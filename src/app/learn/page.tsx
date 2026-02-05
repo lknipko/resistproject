@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { getAllPages } from '@/lib/content'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'Learn',
   description: 'Understand government actions with verified facts and primary sources',

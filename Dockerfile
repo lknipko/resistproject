@@ -25,6 +25,11 @@ RUN npx prisma generate
 # Ensure public directory exists
 RUN mkdir -p public
 
+# Debug: Check if content directory exists
+RUN ls -la content/ || echo "Content directory not found!"
+RUN ls -la content/learn/ || echo "Learn directory not found!"
+RUN ls -la content/act/ || echo "Act directory not found!"
+
 # Build Next.js application
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
