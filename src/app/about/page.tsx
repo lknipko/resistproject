@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'About',
   description: 'About Resist Project - Fact-based civic engagement platform',
