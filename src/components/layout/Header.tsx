@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import AuthButton from './AuthButton'
 
 export default function Header() {
   return (
@@ -8,6 +9,7 @@ export default function Header() {
           <Link href="/" className="text-xl font-bold hover:text-teal-light transition-colors">
             Resist Project
           </Link>
+
           <nav className="hidden md:flex items-center gap-8">
             <Link href="/learn" className="hover:text-teal-light transition-colors font-medium">
               LEARN
@@ -18,7 +20,10 @@ export default function Header() {
             <Link href="/about" className="hover:text-teal-light transition-colors">
               About
             </Link>
+            <AuthButton />
           </nav>
+
+          {/* Mobile menu button - TODO: implement mobile menu */}
           <button
             className="md:hidden text-white"
             aria-label="Open menu"
