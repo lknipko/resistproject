@@ -1,7 +1,7 @@
 FROM node:20.18-alpine3.20 AS base
 
 # Cache buster - change this value to force rebuild
-ARG CACHEBUST=2026-02-04-v2
+ARG CACHEBUST=2026-02-05-debug
 RUN echo "Cache bust: ${CACHEBUST}"
 
 # Install dependencies only when needed
