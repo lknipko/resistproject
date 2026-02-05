@@ -1,0 +1,211 @@
+# Whistleblower Resources
+
+Secure channels and legal protections for federal employees witnessing waste, fraud, abuse, or violations of law.
+
+---
+
+## Quick Actions
+
+> Complete these in under 5 minutes
+
+### Assess Your Situation
+
+Before disclosing, understand:
+
+1. **What type of wrongdoing?** Waste, fraud, abuse, violation of law, threat to public safety
+2. **What evidence do you have?** Documents, emails, firsthand observation
+3. **Who needs to know?** Inspector General, Congress, media, all of the above
+
+### Know Your Protections
+
+**Whistleblower Protection Act (WPA)** protects federal employees who disclose:
+- Violation of law, rule, or regulation
+- Gross mismanagement
+- Gross waste of funds
+- Abuse of authority
+- Substantial danger to public health or safety
+
+**You are protected from retaliation** including:
+- Termination
+- Demotion
+- Suspension
+- Harassment
+- Reassignment
+
+### Secure Your Communications
+
+**Before contacting anyone:**
+
+1. **Do NOT use government devices** - Use personal phone/computer
+2. **Do NOT use government email** - Use personal encrypted email
+3. **Do NOT discuss at work** - Assume you may be monitored
+4. **Document everything** - Keep personal copies (following classification rules)
+
+**Secure Tools:**
+- [Signal](https://signal.org/) - Encrypted messaging
+- [ProtonMail](https://protonmail.com/) - Encrypted email
+- [Tor Browser](https://www.torproject.org/) - Anonymous browsing
+
+---
+
+## Where to Report
+
+### Inspectors General
+
+Every federal agency has an Inspector General (IG) who investigates wrongdoing:
+
+- [Council of the Inspectors General (CIGIE)](https://www.ignet.gov/) - Find your agency's IG
+- IGs can receive anonymous complaints
+- IGs have subpoena power and investigate independently
+
+### Congress
+
+**Congressional Committees** with oversight jurisdiction:
+
+| Issue Area | Senate Committee | House Committee |
+|------------|------------------|-----------------|
+| **General government** | Homeland Security & Gov Affairs | Oversight & Accountability |
+| **Intelligence** | Select Committee on Intelligence | Permanent Select Committee on Intelligence |
+| **Military** | Armed Services | Armed Services |
+| **Appropriations** | Appropriations | Appropriations |
+
+**How to contact:**
+- Find committee staff contacts on committee websites
+- Request to speak with oversight or investigative staff
+- You can request confidentiality
+
+### Office of Special Counsel (OSC)
+
+The [Office of Special Counsel](https://osc.gov/) is an independent federal investigative and prosecutorial agency:
+
+- Investigates prohibited personnel practices
+- Protects whistleblowers from retaliation
+- Can order corrective action
+
+**File a complaint:** [osc.gov/pages/file-complaint](https://osc.gov/pages/file-complaint.aspx)
+
+---
+
+## Legal Support Organizations
+
+### Free Legal Assistance
+
+| Organization | Focus | Contact |
+|--------------|-------|---------|
+| [Government Accountability Project](https://whistleblower.org/) | Whistleblower representation | 202-457-0034 |
+| [National Whistleblower Center](https://www.whistleblowers.org/) | Legal referrals and advocacy | 202-342-1903 |
+| [Whistleblower Network News](https://whistleblowernetwork.org/) | Resources and news | Website |
+| [Project On Government Oversight (POGO)](https://www.pogo.org/) | Investigation support | 202-347-1122 |
+
+### What Lawyers Can Help With
+
+- Assessing your legal protections
+- Navigating disclosure procedures
+- Protecting your identity
+- Defending against retaliation
+- Filing OSC complaints
+
+---
+
+## Schedule F and Whistleblower Risks
+
+### The Changed Landscape
+
+With Executive Order 14171 (Schedule F), federal employees in "policy-influencing" positions face:
+- Removal from civil service protections
+- At-will termination without appeal rights
+- No Merit Systems Protection Board recourse
+
+**If you've been reclassified to Schedule F:**
+- Whistleblower protections under WPA still apply
+- Consult a lawyer before disclosing
+- Document any retaliation immediately
+
+### Heightened Precautions
+
+Given Schedule F, whistleblowers should:
+1. **Consult legal counsel BEFORE disclosing**
+2. **Use only secure, personal communications**
+3. **Consider anonymous disclosure channels**
+4. **Build external support network before disclosure**
+
+---
+
+## Sustained Actions
+
+> Ongoing opportunities for deeper engagement
+
+### Document Ongoing Concerns
+
+If you're witnessing ongoing wrongdoing:
+- Keep a personal log (dates, times, witnesses)
+- Save copies of relevant documents to personal storage (following classification rules)
+- Note who else witnessed events
+- Preserve your own performance records
+
+### Connect with Others
+
+- **Government Accountability Project** hosts support networks
+- **POGO** connects whistleblowers facing similar issues
+- Consider connecting with journalists who cover your agency
+
+### Testify Before Congress
+
+If asked to testify:
+- You have the right to counsel
+- You can request closed (non-public) sessions
+- Prepare written testimony in advance
+- Agencies cannot retaliate for truthful congressional testimony
+
+---
+
+## If You Face Retaliation
+
+### Immediate Steps
+
+1. **Document the retaliation** - Dates, actions, witnesses
+2. **File OSC complaint within 45 days** of personnel action
+3. **Contact a whistleblower attorney**
+4. **Do NOT resign** - This may waive certain protections
+
+### Legal Remedies
+
+- OSC investigation and corrective action
+- Merit Systems Protection Board appeal
+- Federal court action in some cases
+- Congressional intervention
+
+---
+
+## Resources
+
+### Key Websites
+
+- [Office of Special Counsel](https://osc.gov/)
+- [CIGIE - Inspectors General](https://www.ignet.gov/)
+- [Government Accountability Project](https://whistleblower.org/)
+- [POGO Whistleblower Resources](https://www.pogo.org/topics/whistleblowers)
+
+### Secure Communication Guide
+
+1. Use [Signal](https://signal.org/) for messaging
+2. Use [ProtonMail](https://protonmail.com/) for email
+3. Use a personal device, not government-issued
+4. Use home internet or public wifi, not government networks
+5. Consider using [Tor](https://www.torproject.org/) for research
+
+---
+
+## Related Information
+
+- [LEARN: Schedule F and the Administrative State](/learn/schedule-f) - Context on civil service changes
+- [ACT: Contact Congress](/act/contact-congress) - How to reach oversight committees
+- [ACT: Join Litigation](/act/join-litigation) - If you've been retaliated against
+
+---
+
+**Tags:** `Civil Service` `Whistleblower` `Federal Employees` `Accountability` `Schedule F`
+
+**Urgency:** Ongoing
+
+*Last verified: January 2026*

@@ -1,0 +1,193 @@
+# Federal Law Enforcement Escalation: The Minneapolis Killings
+
+## Facts
+
+> This section contains only verifiable, primary-sourced information.
+
+### Timeline
+
+| Date | Event | Source |
+|------|-------|--------|
+| 2026-01-07 | Renee Nicole Good, 37, killed by ICE officer in Minneapolis | Witness reports, video footage |
+| 2026-01-22 | House passes H.R. 7147, DHS Appropriations Act 2026 | Congressional record |
+| 2026-01-24 | Alex Pretti, 37, killed by federal agents in Minneapolis | Witness reports, video footage |
+
+### Key Documents
+
+- **Department of Homeland Security Appropriations Act, 2026 (H.R. 7147)**
+  - Passed House: January 22, 2026
+  - Total funding: $64.4 billion
+  - ICE funding: Approximately $10 billion
+  - Increases funding for detention beds and enforcement operations
+
+- **Statement by Minneapolis Mayor Jacob Frey** (January 7, 2026)
+  - Disputed ICE's account of the shooting
+  - Described agents' use of force as "reckless"
+
+- **ICE Official Statement** (January 7, 2026)
+  - Claimed victim "weaponized her vehicle"
+  - Labeled incident as "domestic terrorism"
+  - Asserted officer fired in self-defense
+
+- **ACLU Statement on House Vote** (January 22, 2026)
+  - Criticized "excessive ICE funding"
+  - Called for oversight and accountability measures
+
+---
+
+## The Killings
+
+### Renee Nicole Good (January 7, 2026)
+
+**The Victim:**
+- 37-year-old U.S. citizen
+- Minneapolis resident
+
+**What Happened:**
+
+According to witnesses and video footage, Renee Nicole Good was shot and killed by an ICE officer while attempting to drive away from a confrontation involving ICE agents.
+
+**Official Account (ICE):**
+- Claimed Good "weaponized her vehicle"
+- Labeled the incident an act of "domestic terrorism"
+- Asserted the officer fired in self-defense
+
+**Disputed Account (Mayor Frey, witnesses):**
+- Described agents' use of force as "reckless"
+- Disputed the characterization of events
+- Called for independent investigation
+
+### Alex Pretti (January 24, 2026)
+
+**The Victim:**
+- 37-year-old U.S. citizen
+- Registered nurse at the VA Health Care System
+- Minneapolis resident
+
+**What Happened:**
+
+Less than three weeks after Good's killing, federal agents shot and killed Alex Pretti during immigration enforcement operations in Minneapolis.
+
+**Circumstances (per video evidence and witness reports):**
+- Pretti was attempting to defend a legal observer who had been shoved and sprayed with chemical agents by federal officers
+- Pretti was pepper-sprayed and tackled before being shot by an agent
+- Pretti was not the target of the enforcement operation
+
+---
+
+## The Pattern: Suppression of Observers
+
+### Tactics Against Non-Targets
+
+The Minneapolis operations have been characterized by aggressive tactics against people who are not enforcement targets:
+
+**Documented tactics:**
+- Use of chemical irritants against observers and protesters
+- Pepper spray projectiles
+- Physical force against individuals recording operations
+- Agents operating unmarked or wearing masks
+
+### Fourth Amendment Concerns
+
+The right of citizens to observe and document police activity in public spaces is protected by the First and Fourth Amendments. These tactics raise questions about:
+- The legality of dispersing observers
+- Use of force against non-targets
+- Destruction of evidence by preventing recording
+
+---
+
+## The Funding: H.R. 7147
+
+### DHS Appropriations Act, 2026
+
+Two days before Alex Pretti's killing, the House passed H.R. 7147:
+
+| Provision | Details |
+|-----------|---------|
+| **Total DHS Funding** | $64.4 billion |
+| **ICE Funding** | ~$10 billion |
+| **Detention Beds** | Increased funding |
+| **Enforcement Operations** | Increased funding |
+| **Oversight Amendments** | Rejected |
+
+**Vote:**
+- Passed with support from seven House Democrats
+- Democratic amendments to add oversight or limit funding were rejected
+
+---
+
+## Analysis
+
+> This section provides context and interpretation of the facts above.
+
+### What This Means
+
+**The Accountability Vacuum:**
+
+A critical barrier to justice in these cases is the Supreme Court's limitation on *Bivens* actions (lawsuits against federal officials for constitutional violations).
+
+| State Police | Federal Agents |
+|--------------|----------------|
+| Can be sued under 42 U.S.C. § 1983 | Near-total immunity from civil damages |
+| State/local oversight mechanisms | No equivalent federal statute for ICE |
+| Body camera requirements in many jurisdictions | Inconsistent documentation requirements |
+
+Without a specific statute authorizing lawsuits against ICE agents, families of victims have limited legal recourse.
+
+**The Escalation Pattern:**
+
+The two killings within three weeks suggest a shift in rules of engagement:
+- Aggressive neutralization of anyone perceived as interfering
+- Treating bystanders and observers as threats
+- Use of lethal force in situations involving vehicles
+
+**The Political Context:**
+
+The passage of H.R. 7147 two days before Pretti's death—with increased enforcement funding and rejected oversight amendments—signals legislative endorsement of current tactics. The Senate vote on this bill is the next pressure point.
+
+### Who Is Affected
+
+- **U.S. citizens in enforcement zones**: Both victims were American citizens, not enforcement targets
+- **Legal observers**: Targeted with chemical agents and force
+- **Immigrant communities**: Living under heightened enforcement with militarized tactics
+- **Healthcare workers**: Pretti's profession highlights the arbitrary nature of who gets caught in operations
+- **Families of victims**: Face near-impossible path to accountability
+
+### The Broader Pattern
+
+These killings occur in the context of:
+- Schedule F enabling removal of DHS personnel who might resist aggressive tactics
+- *Trump v. CASA* limiting judicial ability to issue broad injunctions against enforcement policies
+- Increased funding for enforcement without corresponding oversight
+
+---
+
+## Related Actions
+
+Take action on this issue:
+
+- [DHS Funding & Oversight Campaign](/act/dhs-funding) - Target Senate on H.R. 7147, demand accountability measures
+- [Contact Congress](/act/contact-congress) - Call scripts for DHS oversight
+- [Defend Immigrant Rights](/act/immigration) - Community defense resources
+
+---
+
+## Memorials
+
+### Renee Nicole Good
+1988-2026
+U.S. Citizen. Minneapolis.
+Killed by federal agents January 7, 2026.
+
+### Alex Pretti
+1988-2026
+U.S. Citizen. Registered Nurse. Minneapolis.
+Killed by federal agents January 24, 2026.
+
+---
+
+**Tags:** `Civil Rights` `Law Enforcement` `DHS` `ICE` `Minneapolis` `Ongoing`
+
+**Last Updated:** January 24, 2026
+
+**Sources Verified:** January 24, 2026
