@@ -18,46 +18,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "database",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  cookies: {
-    sessionToken: {
-      name: process.env.NODE_ENV === 'production'
-        ? '__Secure-authjs.session-token'
-        : 'authjs.session-token',
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        domain: process.env.NODE_ENV === 'production'
-          ? '.resistproject.com'
-          : undefined,
-      },
-    },
-    callbackUrl: {
-      name: process.env.NODE_ENV === 'production'
-        ? '__Secure-authjs.callback-url'
-        : 'authjs.callback-url',
-      options: {
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        domain: process.env.NODE_ENV === 'production'
-          ? '.resistproject.com'
-          : undefined,
-      },
-    },
-    csrfToken: {
-      name: process.env.NODE_ENV === 'production'
-        ? '__Host-authjs.csrf-token'
-        : 'authjs.csrf-token',
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    },
-  },
   pages: {
     signIn: "/auth/signin",
     verifyRequest: "/auth/verify-request",
