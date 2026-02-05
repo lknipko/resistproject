@@ -18,10 +18,13 @@ try {
   console.log('✅ Migrations completed successfully');
   console.log('🚀 Starting Next.js application...');
 
-  // Start the Next.js server
-  require('./server.js');
+  // Start the Next.js server using next start
+  execSync('npm start', {
+    stdio: 'inherit',
+    env: process.env
+  });
 
 } catch (error) {
-  console.error('❌ Migration failed:', error.message);
+  console.error('❌ Error:', error.message);
   process.exit(1);
 }
