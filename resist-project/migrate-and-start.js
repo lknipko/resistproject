@@ -8,6 +8,17 @@ const { execSync } = require('child_process');
 
 console.log('🔄 Running database migrations...');
 
+// Debug: Check if DATABASE_URL is set
+if (!process.env.DATABASE_URL) {
+  console.error('❌ DATABASE_URL environment variable is not set!');
+  process.exit(1);
+}
+
+// Debug: Show DATABASE_URL (masked for security)
+const dbUrl = process.env.DATABASE_URL;
+const maskedUrl = dbUrl.replace(/:([^:@]+)@/, ':***@');
+console.log('📊 Database URL (masked):', maskedUrl);
+
 try {
   // Run Prisma migrations
   execSync('npx prisma migrate deploy', {

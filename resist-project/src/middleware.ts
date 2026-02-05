@@ -1,10 +1,19 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { auth } from '@/lib/auth'
 
-// Simplified middleware - auth will be added later
-export function middleware(request: NextRequest) {
-  // All routes are public for now
-  // Admin protection will be added when authentication is configured
+export async function middleware(request: NextRequest) {
+  const session = await auth()
+
+  // Protect admin routes - require authentication
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    if (!session?.user) {
+      const signInUrl = new URL('/auth/signin', request.url)
+      signInUrl.searchParams.set('callbackUrl', request.nextUrl.pathname)
+      return NextResponse.redirect(signInUrl)
+    }
+  }
+
   return NextResponse.next()
 }
 

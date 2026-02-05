@@ -11,11 +11,19 @@ const contentDirectory = path.join(process.cwd(), 'content')
 export function getContentFiles(section: 'learn' | 'act'): string[] {
   const sectionPath = path.join(contentDirectory, section)
 
-  if (!fs.existsSync(sectionPath)) {
+  try {
+    if (!fs.existsSync(sectionPath)) {
+      console.warn(`Content directory not found: ${sectionPath}`)
+      return []
+    }
+
+    const files = fs.readdirSync(sectionPath).filter((file) => file.endsWith('.mdx'))
+    console.log(`Found ${files.length} ${section} files:`, files)
+    return files
+  } catch (error) {
+    console.error(`Error reading content directory ${sectionPath}:`, error)
     return []
   }
-
-  return fs.readdirSync(sectionPath).filter((file) => file.endsWith('.mdx'))
 }
 
 /**
