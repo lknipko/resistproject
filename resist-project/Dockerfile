@@ -40,7 +40,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/content ./content
 COPY --from=builder /app/prisma ./prisma
 
 # Copy startup script
-COPY --from=builder /app/migrate-and-start.js ./migrate-and-start.js
+COPY --from=builder --chown=nextjs:nodejs /app/migrate-and-start.js ./migrate-and-start.js
 
 USER nextjs
 
