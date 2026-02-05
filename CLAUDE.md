@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A civic engagement platform helping citizens understand government actions and take meaningful action. Uses a content-driven structure with verified facts from primary sources and actionable civic participation opportunities.
+This is a civic engagement platform designed to help citizens understand government actions and take meaningful, concrete action. The platform uses a wiki-based structure to provide verified facts with primary sources and actionable opportunities for civic participation.
 
 **Primary Goals:**
 - Empower citizens with fact-based information about government actions
@@ -11,415 +11,416 @@ A civic engagement platform helping citizens understand government actions and t
 - Focus on material resistance and consequences, not just awareness
 
 **Target Audience:**
-- Citizens opposing government actions who want to act effectively
-- People seeking verified, primary-source information
+- Citizens who oppose current government actions but don't know how to act effectively
+- People who want to go beyond symbolic protests to material action
+- Community members seeking verified, primary-source information
 - Activists looking for coordinated, effective resistance strategies
-
----
 
 ## Technology Stack
 
-**Framework:**
-- **Next.js 15** (App Router) - React framework with SSR
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-
-**Database & ORM:**
-- **PostgreSQL** - Production database (hosted on Railway)
-- **Prisma** - ORM and database toolkit
-
-**Authentication:**
-- **NextAuth.js v5** (Auth.js) - Email-based passwordless authentication
-- **Resend** - Email delivery service for magic links
-
-**Content:**
-- **MDX** - Markdown with React components for content pages
-- **next-mdx-remote** - Server-side MDX rendering
-- **gray-matter** - YAML frontmatter parsing
+**Core Platform:**
+- **Wiki.js 2.5** - Main application framework
+- **Docker & Docker Compose** - Local development
+- **PostgreSQL 15** - Database
+- **Node.js** - Runtime environment
+- **Markdown** - Primary content format
 
 **Hosting & Deployment:**
-- **Railway.app** - Production hosting (web service + PostgreSQL)
-- **GitHub** - Source control (repository: lknipko/resistproject)
-- **Custom domain:** resistproject.com (via Cloudflare DNS)
+- **Railway.app** - Production hosting
+- **Cloudflare** - DNS management
+- **GitHub** - Source control (repository: resistproject)
 
-**Development:**
-- **Node.js 20** - Runtime
-- **Docker** - Containerized deployment
-- **npm** - Package management
+**Development Environment:**
+- Arch Linux
+- Git for version control
+- VS Code (recommended editor)
+
+**Future Additions:**
+- Custom Node.js service for trending/analytics
+- Integration with external services (5 Calls, Resistbot, etc.)
 
 ---
 
-## Current Deployment Status
-
-### Production Environment
+## Production Deployment
 
 **Live Site:** https://resistproject.com
-**Railway Project:** resistproject-production
-**GitHub Repo:** https://github.com/lknipko/resistproject
+**Railway URL:** https://resistproject-production.up.railway.app
+**GitHub Repo:** https://github.com/[username]/resistproject
 
-**Services:**
-- **Web Service:** Next.js application (resistproject)
-- **Database Service:** PostgreSQL (Postgres - newly provisioned Feb 2026)
+### API Access
 
-**Environment Variables (Railway - Web Service):**
-- `DATABASE_URL` - PostgreSQL connection string (points to new database)
-- `AUTH_SECRET` - NextAuth.js secret key
-- `AUTH_RESEND_KEY` - Resend API key for email delivery
-- `NEXTAUTH_URL` - Full URL of the site (https://resistproject.com)
-- `EMAIL_FROM` - From address for magic link emails
+Production Wiki.js API is enabled. The API key is stored locally (not in git):
+- Local: `wiki-js-key.txt` (for local dev)
+- Production API key is in `scripts/sync-to-production.js`
 
-**Deployment Method:**
-- Dockerfile-based deployment
-- Automatic builds on git push to main branch
-- Build context: repository root
-- Dockerfile path: `resist-project/Dockerfile`
+**GraphQL Endpoint:** `https://resistproject-production.up.railway.app/graphql`
 
-### Startup Process
+---
 
-The application uses a custom startup script (`migrate-and-start.js`) that:
-1. Checks DATABASE_URL is set
-2. Runs Prisma migrations (`prisma migrate deploy`)
-3. Starts the Next.js server (`npm start`)
+## Development Scripts
 
-This ensures database schema is up-to-date before the app starts.
+All scripts are in `/scripts/`:
+
+### `sync-to-production.js`
+**Syncs all local content to production.** This is the main deployment script.
+
+```bash
+node scripts/sync-to-production.js
+```
+
+- Scans all `.md` files in `/content/`
+- Creates new pages if they don't exist on production
+- Updates existing pages with new content
+- Extracts title from first `# Heading` in each file
+
+### `create-page.js`
+Creates a single page on local Wiki.js instance.
+
+```bash
+node scripts/create-page.js <content-file> <path> <title> <description>
+```
+
+### `update-page.js`
+Updates an existing page on local Wiki.js by ID.
+
+```bash
+node scripts/update-page.js <page-id> <content-file>
+```
+
+---
+
+## Content File Structure
+
+```
+content/
+├── home.md                      # Landing page (path: /home)
+├── learn/                       # LEARN section pages
+│   ├── obbba-medicaid.md       # path: /learn/obbba-medicaid
+│   ├── birthright-citizenship.md
+│   ├── vaccine-schedule.md
+│   ├── schedule-f.md
+│   ├── digital-rights.md
+│   ├── casa-decision.md
+│   ├── trump-accounts.md
+│   └── federal-law-enforcement.md
+└── act/                         # ACT section pages
+    ├── contact-congress.md     # path: /act/contact-congress
+    ├── immigration.md
+    ├── join-litigation.md
+    ├── dhs-funding.md
+    ├── medicaid-enrollment.md
+    ├── pharmacy-access.md
+    ├── school-boards.md
+    └── whistleblower.md
+```
+
+**File naming convention:**
+- Filename becomes the URL path (e.g., `learn/obbba-medicaid.md` → `/learn/obbba-medicaid`)
+- Use lowercase with hyphens
+- No spaces or special characters
+
+---
+
+## Workflow: Adding/Updating Content
+
+### To add a new page:
+
+1. Create markdown file in appropriate directory:
+   ```bash
+   # For a LEARN page:
+   content/learn/new-topic.md
+
+   # For an ACT page:
+   content/act/new-action.md
+   ```
+
+2. Follow the template structure (see `/templates/`)
+
+3. Sync to production:
+   ```bash
+   node scripts/sync-to-production.js
+   ```
+
+4. Commit to git:
+   ```bash
+   git add content/
+   git commit -m "Add new page: topic name"
+   git push
+   ```
+
+### To update existing content:
+
+1. Edit the markdown file in `/content/`
+2. Run sync script:
+   ```bash
+   node scripts/sync-to-production.js
+   ```
+3. Commit changes to git
+
+---
+
+## Local Development
+
+### Start local Wiki.js:
+```bash
+docker compose up -d
+```
+
+Access at: http://localhost:3000
+
+### Local database:
+- PostgreSQL running in Docker
+- Credentials in `.env` file (not committed)
+
+### Stop local instance:
+```bash
+docker compose down
+```
 
 ---
 
 ## Project Structure
 
+### Content Organization
+
+The wiki has two main sections:
+
+#### **LEARN Section**
+Information organized by issue areas, with sub-pages for specific events/topics.
+
+Each LEARN page contains:
 ```
-resist-project/
-├── prisma/
-│   ├── schema.prisma              # Database schema (NextAuth + custom models)
-│   ├── migrations/                # Database migration files
-│   └── (SQL scripts for triggers/functions)
-├── src/
-│   ├── app/                       # Next.js App Router pages
-│   │   ├── page.tsx              # Homepage
-│   │   ├── layout.tsx            # Root layout
-│   │   ├── globals.css           # Global styles
-│   │   ├── learn/                # Learn section pages
-│   │   │   ├── page.tsx          # Learn index
-│   │   │   └── [slug]/page.tsx   # Dynamic learn pages
-│   │   ├── act/                  # Act section pages
-│   │   │   ├── page.tsx          # Act index
-│   │   │   └── [slug]/page.tsx   # Dynamic act pages
-│   │   ├── auth/                 # Authentication pages
-│   │   │   ├── signin/
-│   │   │   │   ├── page.tsx
-│   │   │   │   ├── SignInForm.tsx
-│   │   │   │   └── actions.ts
-│   │   │   ├── verify-request/page.tsx  # "Check your email" page
-│   │   │   ├── verify/page.tsx          # Token verification
-│   │   │   └── error/page.tsx           # Auth error page
-│   │   ├── about/page.tsx        # About page
-│   │   ├── test/page.tsx         # Test/development page
-│   │   └── api/
-│   │       └── auth/[...nextauth]/route.ts  # NextAuth API routes
-│   ├── components/
-│   │   ├── layout/               # Header, Footer, etc.
-│   │   ├── content/              # Content display components
-│   │   └── mdx-components.tsx    # MDX component mappings
-│   ├── lib/
-│   │   ├── auth.ts              # NextAuth configuration
-│   │   ├── db.ts                # Prisma client instance
-│   │   ├── content.ts           # Content loading utilities
-│   │   ├── mdx.ts               # MDX processing
-│   │   └── utils.ts             # General utilities
-│   ├── types/
-│   │   └── content.ts           # TypeScript type definitions
-│   └── middleware.ts            # Next.js middleware (auth, redirects)
-├── content/
-│   ├── home.mdx                 # Homepage content
-│   ├── learn/                   # Learn section MDX files
-│   │   ├── birthright-citizenship.mdx
-│   │   ├── casa-decision.mdx
-│   │   ├── digital-rights.mdx
-│   │   ├── federal-law-enforcement.mdx
-│   │   ├── obbba-medicaid.mdx
-│   │   ├── schedule-f.mdx
-│   │   ├── trump-accounts.mdx
-│   │   └── vaccine-schedule.mdx
-│   └── act/                     # Act section MDX files
-│       ├── contact-congress.mdx
-│       ├── dhs-funding.mdx
-│       ├── immigration.mdx
-│       ├── join-litigation.mdx
-│       ├── medicaid-enrollment.mdx
-│       ├── pharmacy-access.mdx
-│       ├── school-boards.mdx
-│       └── whistleblower.mdx
-├── public/                      # Static assets
-├── Dockerfile                   # Production Docker image
-├── migrate-and-start.js        # Startup script (migrations + server)
-├── package.json
-├── tsconfig.json
-├── tailwind.config.ts
-├── next.config.mjs
-└── railway.toml                # Railway deployment config
+├── FACTS Section (top of page)
+│   ├── Timeline of events with dates
+│   ├── Primary sources (direct links to government documents)
+│   ├── Direct quotes from source materials
+│   └── Clear, unfiltered factual information
+│
+├── ANALYSIS Section (below facts)
+│   ├── What this means (interpretation)
+│   ├── Who's affected
+│   ├── Legal/policy context
+│   ├── Expert perspectives (attributed)
+│   └── Unbiased but accessible explanations
+│
+└── RELATED ACTIONS (cross-links to ACT pages)
 ```
 
----
+**Critical: FACTS and ANALYSIS must be clearly separated**
+- FACTS = objective, verifiable, primary-sourced
+- ANALYSIS = interpretation, context, explanation
 
-## Content Structure
+#### **ACT Section**
+Action opportunities organized by issue or action type.
 
-### Learn Pages (Information)
-Located in `content/learn/` - informational content about government actions and policies.
-
-**Standard structure:**
-- **Quick Summary:** TL;DR of the issue
-- **Facts Section:** Timeline, primary sources, direct quotes
-- **Analysis Section:** Context, interpretation, who's affected
-- **Related Actions:** Links to relevant Act pages
-
-**Frontmatter (YAML):**
-```yaml
----
-title: "Page Title"
-description: "Brief description for SEO"
-category: "learn"
-tags: ["tag1", "tag2"]
----
+Each ACT page contains:
+```
+├── QUICK ACTIONS (<5 minutes, one-click when possible)
+│   ├── Email templates with pre-filled forms
+│   ├── Call scripts with tap-to-call functionality
+│   ├── Social media templates
+│   └── Petition links
+│
+├── SUSTAINED ACTIONS (ongoing, >5 minutes)
+│   ├── Organization memberships
+│   ├── Event/protest attendance
+│   ├── Public comment submission guides
+│   └── Volunteer opportunities
+│
+├── RESOURCES
+│   ├── Downloadable posters/flyers (PDF)
+│   ├── Social media graphics
+│   └── Talking points documents
+│
+└── IMPACT TRACKER
+    └── Metrics on action completion (manual for now)
 ```
 
-### Act Pages (Action Opportunities)
-Located in `content/act/` - concrete actions citizens can take.
+### Cross-Linking
+- LEARN pages link to relevant ACT pages
+- ACT pages link back to LEARN pages for context
+- Use clear visual indicators (icons/colors) to distinguish link types
 
-**Standard structure:**
-- **Quick Actions:** <5 minutes, one-click when possible
-- **Sustained Actions:** Ongoing, >5 minutes
-- **Resources:** Downloadable materials
-- **Related Learning:** Links to relevant Learn pages
+## Content Standards
 
----
+### Primary Sources Priority
+Always prioritize:
+1. Federal Register notices
+2. Executive orders (WhiteHouse.gov)
+3. Court filings and decisions
+4. Congressional bills (Congress.gov)
+5. Official agency statements (.gov domains)
+6. Inspector General reports
 
-## Database Schema
+Avoid:
+- News media as primary sources (use for context only)
+- Opinion pieces or editorials
+- Social media posts
+- Unverified claims
 
-### NextAuth Models (Required)
-- `User` - User accounts
-- `Account` - OAuth accounts (if using providers)
-- `Session` - User sessions
-- `VerificationToken` - Email verification tokens
+### Verification Requirements
+Every factual claim must have:
+- Direct link to primary source
+- Date of the action/event
+- Specific attribution (which agency, official, document)
 
-### Custom Models (Planned/Partial)
-- `UserExtended` - Additional user data (reputation, stats)
-- `PageMetadata` - Content scoring and trending
-- `EditProposal` - Collaborative editing proposals
-- `Vote` - Voting on edit proposals
-- `AuditLog` - Action tracking
-- `PageEvent` - Analytics events
-- `PageMetricsDaily` - Aggregated metrics
-- `PinnedPage` - Featured/pinned content
+### Tagging System
+Use multi-dimensional tags:
+- **Issue Categories:** Immigration, Press Freedom, Environment, Healthcare, etc.
+- **Rights Affected:** First Amendment, Due Process, Equal Protection, etc.
+- **Government Agencies:** DOJ, EPA, DHS, etc.
+- **Status:** Ongoing, Resolved, Under Litigation, Historical
 
-**Note:** Full collaborative editing not yet implemented. Basic auth and content display are working.
+## User Permissions & Moderation
 
----
+**Tiered Access Model:**
+1. **Public (read-only)** - Anyone can view all content
+2. **Contributors** - Can submit content for review (email verified)
+3. **Moderators** - Can approve/edit submissions (trusted volunteers)
+4. **Administrators** - Platform management (project maintainer)
 
-## Authentication Flow
+**Moderation Workflow:**
+- All new content goes through approval
+- Edit history maintained (like Wikipedia)
+- Flag system for disputed content
+- Transparent changelog
 
-**Email-based (Passwordless):**
-1. User enters email on `/auth/signin`
-2. Magic link sent via Resend
-3. User clicks link → redirected to `/auth/verify?token=...`
-4. Token validated → session created → redirected to homepage
-5. User is now signed in
+## Design Philosophy
 
-**Protected Routes:**
-- Currently: Most routes are public
-- Planned: Editing, voting, and admin features require authentication
+### Visual Design
+- **LEARN content:** Blue color scheme/accents
+- **ACT content:** Orange/Red color scheme (action colors)
+- Clean, accessible, mobile-first design
+- High contrast for readability, simple and concise language
+- Icon-based navigation where appropriate
 
-**Session Management:**
-- Sessions stored in PostgreSQL
-- Cookie-based session tokens
-- Auto-expires after period of inactivity
+### Content Principles
+- **Clarity over cleverness** - Plain language, accessible explanations
+- **Facts first** - Lead with verifiable information
+- **Action-oriented** - Every issue should have actionable responses
+- **Non-partisan framing** - Focus on rights and principles, not party politics
+- **Credibility is paramount** - One bad source undermines everything
 
----
+### User Experience
+- Progressive disclosure (don't overwhelm with information)
+- Mobile-optimized (many users will access via phone)
+- Accessibility (screen reader compatible, keyboard navigation)
 
-## Development Workflow
+## Development Guidelines
 
-### Local Development
+### For Adding Features
+1. **Start simple** - Use Wiki.js built-in features when possible
+2. **Test thoroughly** - Every feature must work on mobile
+3. **Document everything** - Future maintainers need to understand decisions
+4. **Preserve data** - Never delete, only archive
+5. **Plan for scale** - Assume this will grow larger than expected
 
-**Prerequisites:**
-- Node.js 20+
-- PostgreSQL database (local or cloud)
-- `.env` file with DATABASE_URL and auth keys
+### For Custom Code
+- Keep custom code minimal initially
+- Use standard npm packages when available
+- Comment thoroughly
+- Follow existing Wiki.js patterns
+- Security first - validate all inputs
 
-**Commands:**
-```bash
-# Install dependencies
-npm install
+### For Content Templates
+Create standardized Markdown templates for:
+- LEARN pages (with FACTS/ANALYSIS structure)
+- ACT pages (with Quick/Sustained actions)
+- Event listings
+- Organization profiles
+- Resource collections
 
-# Run Prisma migrations
-npx prisma migrate dev
+## Deployment Status
 
-# Generate Prisma Client
-npx prisma generate
+### Current Setup (LIVE)
+- **Production:** Railway.app with PostgreSQL
+- **Domain:** resistproject.com (via Cloudflare DNS)
+- **SSL:** Automatic via Railway
+- **Backups:** Railway automatic PostgreSQL backups
 
-# Start development server
-npm run dev
+### Phase 3: Scaling (Future)
+When traffic grows:
+- CDN for static assets (Cloudflare)
+- Database optimization
+- Caching layer
+- Load balancing (if needed)
 
-# Build for production
-npm run build
+## Developer Context
 
-# Start production server
-npm start
-```
+**Project Maintainer Profile:**
+- Engineering background (R&D Engineer, biomedical devices)
+- Strong technical skills, newer to web development
+- Fast learner, comfortable with technical documentation
 
-**Environment Variables (.env):**
-```
-DATABASE_URL="postgresql://user:pass@localhost:5432/dbname"
-AUTH_SECRET="generate-with-openssl-rand-base64-32"
-AUTH_RESEND_KEY="re_..."
-NEXTAUTH_URL="http://localhost:3000"
-EMAIL_FROM="noreply@resistproject.com"
-```
 
-### Git Workflow
+## Security Considerations
 
-**Important:** Always ensure source files are tracked before pushing:
-```bash
-# Check for untracked files
-git status
+1. **User Authentication:**
+   - Email verification for contributors
+   - Strong password requirements
+   - Rate limiting on login attempts
 
-# Add necessary files
-git add resist-project/src/
+2. **Content Security:**
+   - Sanitize all user inputs
+   - Validate external links
+   - Monitor for spam/abuse
 
-# Commit and push
-git commit -m "Description"
-git push origin main
-```
+3. **Data Protection:**
+   - Regular backups (automated)
+   - Secure database credentials
+   - HTTPS only (enforce SSL)
 
-**Common Issue:** Untracked files in `resist-project/src/` won't be included in Railway builds. Always verify files are committed before expecting them in deployment.
+4. **Privacy:**
+   - Minimal user data collection
+   - Clear privacy policy
+   - No tracking without consent
+   - GDPR compliance considerations
 
----
+## Features Roadmap
 
-## Known Issues & Next Steps
+**Completed:**
+- [x] Wiki.js setup and deployment
+- [x] Production hosting (Railway + custom domain)
+- [x] LEARN page template and 8 issue pages
+- [x] ACT page template and 8 action pages
+- [x] API-based content deployment scripts
+- [x] Cross-linking between LEARN and ACT sections
 
-### ✅ Completed (2026-02-04)
+**Short-term:**
+- [ ] Content tagging system (in Wiki.js admin)
+- [ ] Navigation menu setup
+- [ ] User contribution workflow
+- [ ] Visual styling (LEARN=blue, ACT=orange)
 
-1. **Authentication UI** - COMPLETE
-   - [x] Add user profile/account page
-   - [x] Add sign-out button in header
-   - [x] Show user email when signed in
-   - [x] User menu dropdown with avatar
-   - [x] Protected route redirects
-   - [x] Settings page
-   - [x] Tier and reputation display
+**Medium-term:**
+- [ ] Custom trending algorithm
+- [ ] Analytics dashboard
+- [ ] Email newsletter integration
+- [ ] Mobile PWA features
+- [ ] Advanced search
 
-   See `AUTH-UI-IMPLEMENTATION.md` for full documentation.
+**Long-term:**
+- [ ] Integrated email/call tools
+- [ ] Mobile app (native)
+- [ ] Multi-language support
+- [ ] API for third-party tools
+- [ ] Community forums
 
-### Immediate Priorities (Next Session)
+## Critical Success Factors
 
-1. **Mobile Navigation**
-   - [ ] Implement hamburger menu functionality
-   - [ ] Add auth button to mobile menu
-   - [ ] Test responsive design on mobile devices
+1. **Credibility** - Maintain rigorous source standards
+2. **Usability** - People must be able to find what they need quickly
+3. **Actionability** - Every issue needs concrete next steps
+4. **Sustainability** - Plan for ongoing maintenance and moderation
+5. **Community** - Build trusted moderator team early
 
-2. **Edit Profile Functionality**
-   - [ ] Server action to update display name
-   - [ ] Server action to update email preferences
-   - [ ] Form validation and error handling
 
-3. **Frontend Padding/Layout Issues**
-   - [ ] Add consistent left/right padding to all pages
-   - [ ] Ensure mobile responsiveness (especially padding on small screens)
-   - [ ] Test on actual mobile devices
-   - [ ] Fix any layout issues on Learn/Act pages
+## Notes on Scope
 
-4. **Content Pages Styling**
-   - [ ] Improve typography and readability
-   - [ ] Add proper spacing between sections
-   - [ ] Style MDX components (callouts, cards, etc.)
+**In Scope:**
+- Documented government actions since January 2025
+- Federal-level policies and executive orders
+- Active litigation and legal challenges
+- Current action opportunities with clear deadlines
+- Verified information with primary sources
 
-### Future Enhancements
-
-- **Collaborative Editing:**
-  - Edit proposal submission UI
-  - Review/voting interface
-  - Diff visualization
-
-- **Analytics:**
-  - Page view tracking
-  - Engagement metrics
-  - Trending algorithm
-
-- **Content Management:**
-  - Admin dashboard for content
-  - Batch content operations
-  - Content preview
-
----
-
-## Important Notes
-
-### Database Credentials
-- **2026-02-05:** Recreated PostgreSQL database due to credential corruption
-- Always use the DATABASE_URL directly from the Postgres service Variables tab
-- If authentication fails, check that DATABASE_URL matches actual Postgres credentials
-
-### Deployment Process
-- Railway automatically builds on push to main
-- Build takes ~2-3 minutes
-- Migrations run automatically on startup via `migrate-and-start.js`
-- Check Railway logs if deployment fails
-
-### Content Updates
-- MDX files in `content/` directory are read at build time
-- To update content: edit MDX files, commit, push → Railway rebuilds
-- For dynamic content updates, need to implement database-backed content
-
-### Security
-- Never commit `.env` files
-- Keep AUTH_SECRET and AUTH_RESEND_KEY secure
-- Database credentials are in Railway environment only
-
----
-
-## Helpful Commands
-
-**Prisma:**
-```bash
-# Create new migration
-npx prisma migrate dev --name description
-
-# Apply migrations (production)
-npx prisma migrate deploy
-
-# Open Prisma Studio (database GUI)
-npx prisma studio
-
-# Reset database (DESTRUCTIVE)
-npx prisma migrate reset
-```
-
-**Git:**
-```bash
-# Check what files need to be committed
-git status --short | grep "^??" | grep "resist-project/src/"
-
-# Add all source files
-git add resist-project/src/
-
-# Check recent commits
-git log --oneline -10
-```
-
-**Railway:**
-```bash
-# View recent logs (if Railway CLI installed)
-railway logs
-
-# Open Railway dashboard
-# Go to: https://railway.app
-```
-
----
-
-## Contact & Resources
-
-**GitHub Repository:** https://github.com/lknipko/resistproject
-**Live Site:** https://resistproject.com
-**Framework Docs:** https://nextjs.org/docs
-**NextAuth Docs:** https://authjs.dev
-**Prisma Docs:** https://www.prisma.io/docs
