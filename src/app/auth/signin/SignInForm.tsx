@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
+import { emailSignIn } from './actions'
 
 export default function SignInForm() {
   const [email, setEmail] = useState('')
@@ -17,14 +17,10 @@ export default function SignInForm() {
     setError('')
 
     try {
-      const result = await signIn('resend', {
-        email,
-        redirect: false,
-        callbackUrl,
-      })
+      const result = await emailSignIn(email, callbackUrl)
 
-      if (result?.error) {
-        setError('Failed to send email. Please try again.')
+      if (!result.success) {
+        setError(result.error || 'Failed to send email. Please try again.')
         setIsLoading(false)
       } else {
         // Redirect to verify-request page
