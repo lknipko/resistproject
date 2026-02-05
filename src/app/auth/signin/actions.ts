@@ -1,19 +1,21 @@
 'use server'
 
 import { signIn } from '@/lib/auth'
-import { AuthError } from 'next-auth'
+import { redirect } from 'next/navigation'
 
-export async function emailSignIn(email: string, callbackUrl: string = '/') {
+export async function emailSignIn(formData: FormData) {
+  const email = formData.get('email') as string
+  const callbackUrl = formData.get('callbackUrl') as string
+
   try {
     await signIn('resend', {
       email,
-      redirectTo: callbackUrl,
+      redirectTo: '/auth/verify-request',
     })
-    return { success: true }
   } catch (error) {
-    if (error instanceof AuthError) {
-      return { success: false, error: error.message }
-    }
+    // signIn throws NEXT_REDIRECT which we should allow
     throw error
   }
+
+  redirect('/auth/verify-request')
 }
