@@ -1,6 +1,9 @@
 FROM node:20-alpine AS base
 
-# Cache buster: 2026-02-05-v2
+# Cache buster: Force rebuild
+ARG CACHEBUST=1
+RUN echo "Cache bust: $CACHEBUST"
+
 # Install dependencies
 FROM base AS deps
 RUN apk add --no-cache libc6-compat openssl
