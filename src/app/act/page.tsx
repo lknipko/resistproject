@@ -1,12 +1,15 @@
 import Link from 'next/link'
 import { getAllPages } from '@/lib/content'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export const metadata = {
   title: 'Act',
   description: 'Take meaningful action with concrete, low-barrier opportunities for civic participation',
 }
 
-export default function ActPage() {
+export default async function ActPage() {
   const actPages = getAllPages('act')
 
   return (
