@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
+import DisplayNameForm from './DisplayNameForm'
+import EmailPreferencesForm from './EmailPreferencesForm'
 
 export const metadata = {
   title: 'Account Settings',
@@ -35,53 +37,10 @@ export default async function SettingsPage() {
         {/* Email Preferences */}
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Email Preferences</h2>
-          <div className="space-y-4">
-            <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  id="email-notifications"
-                  type="checkbox"
-                  defaultChecked={userExtended?.emailNotifications ?? true}
-                  className="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
-                  disabled
-                />
-              </div>
-              <div className="ml-3">
-                <label htmlFor="email-notifications" className="font-medium text-gray-900">
-                  Email Notifications
-                </label>
-                <p className="text-sm text-gray-600">
-                  Receive notifications when your edits are reviewed or approved
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  id="weekly-digest"
-                  type="checkbox"
-                  defaultChecked={userExtended?.weeklyDigest ?? true}
-                  className="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
-                  disabled
-                />
-              </div>
-              <div className="ml-3">
-                <label htmlFor="weekly-digest" className="font-medium text-gray-900">
-                  Weekly Digest
-                </label>
-                <p className="text-sm text-gray-600">
-                  Get a weekly summary of platform activity and trending content
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
-            <p className="text-sm text-yellow-800">
-              <strong>Note:</strong> Email preference updates are coming soon. These settings are currently read-only.
-            </p>
-          </div>
+          <EmailPreferencesForm
+            initialEmailNotifications={userExtended?.emailNotifications ?? true}
+            initialWeeklyDigest={userExtended?.weeklyDigest ?? true}
+          />
         </div>
 
         {/* Account Information */}
@@ -102,16 +61,8 @@ export default async function SettingsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Display Name</label>
-              <input
-                type="text"
-                value={userExtended?.displayName || session.user.name || ''}
-                disabled
-                className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-gray-900"
-              />
-              <p className="mt-1 text-xs text-gray-500">
-                Display name updates coming soon
-              </p>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Display Name</label>
+              <DisplayNameForm initialDisplayName={userExtended?.displayName || session.user.name || ''} />
             </div>
           </div>
         </div>
