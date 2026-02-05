@@ -1,7 +1,7 @@
 FROM node:20.18-alpine3.20 AS base
 
 # Cache buster - change this value to force rebuild
-ARG CACHEBUST=2025-01-29-v1
+ARG CACHEBUST=2026-02-04-v2
 RUN echo "Cache bust: ${CACHEBUST}"
 
 # Install dependencies only when needed
@@ -41,6 +41,9 @@ RUN adduser --system --uid 1001 nextjs
 
 # Copy public assets
 COPY --from=builder /app/public ./public
+
+# Copy content directory (MDX files)
+COPY --from=builder /app/content ./content
 
 # Copy standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
