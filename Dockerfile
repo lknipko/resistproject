@@ -1,5 +1,6 @@
 FROM node:20-alpine AS base
 
+# Cache buster: 2026-02-05-v2
 # Install dependencies
 FROM base AS deps
 RUN apk add --no-cache libc6-compat openssl
