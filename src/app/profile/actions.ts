@@ -20,10 +20,24 @@ export async function updateDisplayName(displayName: string) {
     return { error: 'Display name must be 100 characters or less' }
   }
 
+  const trimmedName = displayName.trim()
+
+  // Check for duplicate display names
+  const existingUser = await prisma.userExtended.findFirst({
+    where: {
+      displayName: trimmedName,
+      userId: { not: session.user.id }, // Exclude current user
+    },
+  })
+
+  if (existingUser) {
+    return { error: 'This display name is already taken. Please choose another.' }
+  }
+
   try {
     await prisma.userExtended.update({
       where: { userId: session.user.id },
-      data: { displayName: displayName.trim() },
+      data: { displayName: trimmedName },
     })
 
     revalidatePath('/profile')

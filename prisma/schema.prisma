@@ -86,7 +86,7 @@ model UserExtended {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   email        String  @unique
-  displayName  String? @map("display_name") @db.VarChar(100)
+  displayName  String? @unique @map("display_name") @db.VarChar(100)
 
   // Contributor tier system (1-5)
   userTier Int @default(1) @map("user_tier")
