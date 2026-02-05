@@ -105,10 +105,16 @@ resistproject/                    # ← Working directory (git repo root)
 
 **User Profile:**
 - Profile page (`/profile`) - Shows tier, reputation, badges, stats
-- Settings page (`/profile/settings`) - Account preferences
+- Settings page (`/profile/settings`) - Account preferences with editable fields
 - Auto-creates `UserExtended` record on first sign-in
 - Displays user tier (1-5) and reputation score
 - Shows edit statistics and badges
+- **Profile Editing:**
+  - Display name editing with Edit/Save/Cancel workflow
+  - Email preferences (notifications, weekly digest)
+  - Server actions with validation and error handling
+  - Real-time feedback with success/error messages
+  - Automatic page revalidation after updates
 
 **Database:**
 - Full Prisma schema with NextAuth models
@@ -119,10 +125,10 @@ resistproject/                    # ← Working directory (git repo root)
 ### 🔄 Next Steps
 
 **User Experience:**
-- [ ] Test end-to-end sign-in flow
+- [ ] Test end-to-end sign-in flow in production
 - [ ] Verify email delivery works in production
-- [ ] Test profile page with real user data
-- [ ] Implement edit profile functionality (update display name, preferences)
+- [ ] Test profile editing (display name, email preferences)
+- [x] Implement edit profile functionality (update display name, preferences)
 - [ ] Add user avatar upload (optional)
 
 **Mobile:**
