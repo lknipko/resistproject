@@ -13,10 +13,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      allowDangerousEmailAccountLinking: true,
     }),
     Resend({
       apiKey: process.env.RESEND_API_KEY,
       from: process.env.EMAIL_FROM || "noreply@resistproject.com",
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   session: {
@@ -30,68 +32,82 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account, profile }) {
-      // Create UserExtended record if it doesn't exist
+      // Create or link UserExtended record
       if (user.id && user.email) {
         try {
-          const existing = await prisma.userExtended.findUnique({
+          // First check if UserExtended exists for this userId
+          let existing = await prisma.userExtended.findUnique({
             where: { userId: user.id }
           })
 
+          // If not found by userId, check by email (account linking scenario)
           if (!existing) {
-            // Generate display name from email
-            let baseDisplayName = user.email.split('@')[0]
-            // Clean it up - remove special chars, limit length
-            baseDisplayName = baseDisplayName.replace(/[^a-zA-Z0-9_]/g, '').substring(0, 20)
-
-            // Fallback if cleaning removed everything
-            if (!baseDisplayName) {
-              baseDisplayName = 'user'
-            }
-
-            // Make it unique by checking if it exists (max 100 attempts)
-            let displayName = baseDisplayName
-            let counter = 1
-            let attempts = 0
-            while (attempts < 100) {
-              const nameExists = await prisma.userExtended.findUnique({
-                where: { displayName }
-              })
-              if (!nameExists) break
-              displayName = `${baseDisplayName}${counter}`
-              counter++
-              attempts++
-            }
-
-            // If we couldn't find a unique name, add timestamp
-            if (attempts >= 100) {
-              displayName = `${baseDisplayName}_${Date.now()}`
-            }
-
-            await prisma.userExtended.create({
-              data: {
-                userId: user.id,
-                email: user.email, // Required field
-                displayName: displayName, // Auto-generated, user can change later
-                userTier: 1, // New users start at tier 1
-                reputationScore: 0,
-                badges: [],
-                editsProposed: 0,
-                editsApproved: 0,
-                editsRejected: 0,
-                votesCast: 0,
-                reviewsCompleted: 0,
-                dailyEditCount: 0,
-                dailyVoteCount: 0,
-                lastActivityReset: new Date(),
-                emailNotifications: true,
-                weeklyDigest: true,
-              }
+            const existingByEmail = await prisma.userExtended.findUnique({
+              where: { email: user.email }
             })
+
+            if (existingByEmail) {
+              // Link existing UserExtended to new provider's userId
+              // This happens when user signs in with different provider but same email
+              await prisma.userExtended.update({
+                where: { email: user.email },
+                data: { userId: user.id }
+              })
+              console.log(`Linked existing UserExtended (${user.email}) to new account (${user.id})`)
+            } else {
+              // No existing record - create new one
+              // Generate display name from email
+              let baseDisplayName = user.email.split('@')[0]
+              baseDisplayName = baseDisplayName.replace(/[^a-zA-Z0-9_]/g, '').substring(0, 20)
+
+              if (!baseDisplayName) {
+                baseDisplayName = 'user'
+              }
+
+              // Make it unique
+              let displayName = baseDisplayName
+              let counter = 1
+              let attempts = 0
+              while (attempts < 100) {
+                const nameExists = await prisma.userExtended.findUnique({
+                  where: { displayName }
+                })
+                if (!nameExists) break
+                displayName = `${baseDisplayName}${counter}`
+                counter++
+                attempts++
+              }
+
+              if (attempts >= 100) {
+                displayName = `${baseDisplayName}_${Date.now()}`
+              }
+
+              await prisma.userExtended.create({
+                data: {
+                  userId: user.id,
+                  email: user.email,
+                  displayName: displayName,
+                  userTier: 1,
+                  reputationScore: 0,
+                  badges: [],
+                  editsProposed: 0,
+                  editsApproved: 0,
+                  editsRejected: 0,
+                  votesCast: 0,
+                  reviewsCompleted: 0,
+                  dailyEditCount: 0,
+                  dailyVoteCount: 0,
+                  lastActivityReset: new Date(),
+                  emailNotifications: true,
+                  weeklyDigest: true,
+                }
+              })
+              console.log(`Created new UserExtended for ${user.email}`)
+            }
           }
         } catch (error) {
-          // Log error but don't block sign-in
-          console.error('Error creating UserExtended record:', error)
-          // User can still sign in, profile will be created on next visit
+          console.error('Error creating/linking UserExtended record:', error)
+          // User can still sign in
         }
       }
       return true
