@@ -5,7 +5,7 @@
  */
 
 import { prisma } from './db'
-import { createAuditLog } from './audit'
+import { logBadgeAward } from './audit'
 
 export interface Badge {
   id: string
@@ -191,18 +191,8 @@ export async function awardBadge(userId: string, badgeId: string): Promise<boole
       }
     })
 
-    // Create audit log
-    await createAuditLog({
-      userId,
-      action: 'badge_awarded',
-      targetType: 'user',
-      targetId: userId,
-      details: {
-        badgeId,
-        badgeName: badge.name,
-        rarity: badge.rarity
-      }
-    })
+    // Create audit log using helper function
+    await logBadgeAward(userId, badgeId, badge.name)
 
     console.log(`🏅 Badge "${badge.name}" awarded to user ${userId}`)
 

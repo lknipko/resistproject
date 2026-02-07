@@ -240,14 +240,14 @@ export async function getProposalDetails(proposalId: number) {
           name: true,
           email: true,
           image: true,
-        }
-      },
-      proposerExtended: {
-        select: {
-          userTier: true,
-          reputationScore: true,
-          editsApproved: true,
-          editsRejected: true,
+          extended: {
+            select: {
+              userTier: true,
+              reputationScore: true,
+              editsApproved: true,
+              editsRejected: true,
+            }
+          }
         }
       },
       votes: {

@@ -5,7 +5,7 @@
  */
 
 import { prisma } from './db'
-import { createAuditLog } from './audit'
+import { logReputationAward } from './audit'
 
 export interface ReputationChange {
   userId: string
@@ -60,19 +60,8 @@ export async function awardReputation(change: ReputationChange) {
       }
     })
 
-    // Create audit log
-    await createAuditLog({
-      userId,
-      action: 'reputation_awarded',
-      targetType: 'user',
-      targetId: userId,
-      details: {
-        points,
-        reason,
-        source,
-        newScore: userExtended.reputationScore
-      }
-    })
+    // Create audit log using helper function
+    await logReputationAward(userId, points, reason)
 
     return userExtended
   } catch (error) {

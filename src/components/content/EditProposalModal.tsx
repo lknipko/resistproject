@@ -22,13 +22,15 @@ interface EditProposalModalProps {
   slug: string
   currentContent: string
   onClose: () => void
+  isNewPage?: boolean
 }
 
 export function EditProposalModal({
   section,
   slug,
   currentContent,
-  onClose
+  onClose,
+  isNewPage = false
 }: EditProposalModalProps) {
   const router = useRouter()
   const [proposedContent, setProposedContent] = useState(currentContent)

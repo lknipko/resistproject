@@ -7,7 +7,7 @@
 import { prisma } from './db'
 import { awardReputation } from './reputation'
 import { awardBadge } from './badges'
-import { createAuditLog } from './audit'
+import { logTierPromotion } from './audit'
 
 export interface TierRequirements {
   tier: number
@@ -122,19 +122,8 @@ export async function checkAndPromoteUserTier(userId: string): Promise<number | 
       source: 'tier-promotion'
     })
 
-    // Create audit log
-    await createAuditLog({
-      userId,
-      action: 'tier_promotion',
-      targetType: 'user',
-      targetId: userId,
-      details: {
-        oldTier: currentTier,
-        newTier,
-        tierName: TIER_REQUIREMENTS[newTier - 1].name,
-        bonusReputation
-      }
-    })
+    // Create audit log using helper function
+    await logTierPromotion(userId, currentTier, newTier)
 
     console.log(`✨ User ${userId} promoted from Tier ${currentTier} to Tier ${newTier}`)
 
@@ -246,19 +235,8 @@ export async function manuallyPromoteUser(
     const badgeId = `tier-${newTier}`
     await awardBadge(userId, badgeId)
 
-    // Create audit log
-    await createAuditLog({
-      userId: promotedBy,
-      action: 'manual_tier_promotion',
-      targetType: 'user',
-      targetId: userId,
-      details: {
-        oldTier,
-        newTier,
-        reason,
-        promotedBy
-      }
-    })
+    // Create audit log using helper function
+    await logTierPromotion(userId, oldTier, newTier)
 
     console.log(`Admin ${promotedBy} manually promoted user ${userId} to Tier ${newTier}: ${reason}`)
 
