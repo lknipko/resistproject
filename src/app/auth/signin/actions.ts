@@ -19,3 +19,9 @@ export async function emailSignIn(formData: FormData) {
 
   redirect('/auth/verify-request')
 }
+
+export async function googleSignIn(callbackUrl: string = '/') {
+  await signIn('google', {
+    redirectTo: callbackUrl,
+  })
+}

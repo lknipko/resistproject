@@ -10,15 +10,9 @@ description: "The One Big Beautiful Bill Act (P.L. 119-21) restructured how Medi
 
 <PageHeader type="learn" />
 
-<div className="max-w-5xl mx-auto px-4 py-8">
+<PageContent>
 
-<div className="text-center py-8 mb-8">
-
-<h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3 leading-tight">The One Big Beautiful Bill Act</h1>
-
-<p className="text-xl md:text-2xl text-gray-600 font-normal">Medicaid and Safety Net Changes</p>
-
-</div>
+# The One Big Beautiful Bill Act
 
 <TopSection>
   <QuickSummary highlight="An estimated 7.8 million Americans will lose health coverage by 2034.">
@@ -29,15 +23,30 @@ description: "The One Big Beautiful Bill Act (P.L. 119-21) restructured how Medi
   </ActNowBox>
 </TopSection>
 
-<div className="grid md:grid-cols-[1fr_200px] gap-8">
-
-<div className="max-w-content">
+<MainContentLayout
+  sidebar={
+    <ContentSidebar>
+      <ul className="space-y-3">
+        <li className="font-semibold"><a href="#facts" className="text-teal hover:underline">FACTS</a>
+          <ul className="ml-6 mt-2 space-y-1.5 font-normal">
+            <li><a href="#what-the-law-does" className="text-teal hover:underline">What the Law Does</a></li>
+            <li><a href="#key-documents" className="text-teal hover:underline">Key Documents</a></li>
+            <li><a href="#timeline" className="text-teal hover:underline">Timeline</a></li>
+          </ul>
+        </li>
+        <li className="font-semibold"><a href="#analysis" className="text-orange hover:underline">ANALYSIS</a>
+          <ul className="ml-6 mt-2 space-y-1.5 font-normal">
+            <li><a href="#what-this-means" className="text-orange hover:underline">What This Means</a></li>
+            <li><a href="#who-is-affected" className="text-orange hover:underline">Who Is Affected</a></li>
+            <li><a href="#legalpolicy-context" className="text-orange hover:underline">Legal/Policy Context</a></li>
+          </ul>
+        </li>
+      </ul>
+    </ContentSidebar>
+  }
+>
 
 <FactsSection>
-
-## FACTS
-
-<p className="text-sm italic text-gray-600 mb-6">This section contains only verifiable, primary-sourced information.</p>
 
 ### What the Law Does
 
@@ -118,9 +127,7 @@ Raised the federal debt ceiling by $5 trillion to $41.1 trillion.
 
 </FactsSection>
 
-<h2 className="text-2xl md:text-3xl font-semibold text-orange mt-12 mb-4 pt-4 border-t-2 border-orange -ml-8 pl-8" id="analysis">Analysis</h2>
-
-<p className="text-sm italic text-gray-600 mb-6">This section provides context and interpretation of the facts above.</p>
+<AnalysisSection>
 
 ### What This Means
 
@@ -211,24 +218,8 @@ Take action on this issue:
 
 </div>
 
-</div>
+</AnalysisSection>
 
-<div className="hidden md:block">
-  <div className="sticky top-32 bg-white border border-gray-200 p-6">
-    <h3 className="text-base font-semibold text-orange mb-4 !m-0 !mb-4 !p-0 !border-0">Contents</h3>
-    <ul className="space-y-1 text-sm">
-      <li><a href="#facts" className="text-teal hover:text-orange">FACTS</a></li>
-      <li className="pl-4"><a href="#what-the-law-does" className="text-teal hover:text-orange">What the Law Does</a></li>
-      <li className="pl-4"><a href="#key-documents" className="text-teal hover:text-orange">Key Documents</a></li>
-      <li className="pl-4"><a href="#timeline" className="text-teal hover:text-orange">Timeline</a></li>
-      <li><a href="#analysis" className="text-teal hover:text-orange">Analysis</a></li>
-      <li className="pl-4"><a href="#what-this-means" className="text-teal hover:text-orange">What This Means</a></li>
-      <li className="pl-4"><a href="#who-is-affected" className="text-teal hover:text-orange">Who Is Affected</a></li>
-      <li className="pl-4"><a href="#legalp olicy-context" className="text-teal hover:text-orange">Legal/Policy Context</a></li>
-    </ul>
-  </div>
-</div>
+</MainContentLayout>
 
-</div>
-
-</div>
+</PageContent>

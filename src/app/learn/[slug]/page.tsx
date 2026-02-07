@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getPageBySlug, generateStaticParams as getStaticParams } from '@/lib/content'
 import { compilePage } from '@/lib/mdx'
+import { EditPageButton } from '@/components/content/EditPageButton'
+import { getCachedResolvedContent } from '@/lib/content-resolver'
 
 export async function generateStaticParams() {
   return getStaticParams('learn')
@@ -45,7 +47,28 @@ export default async function LearnPage({
     notFound()
   }
 
-  const { content } = await compilePage(page.content)
+  // Get resolved content with approved edits applied
+  const resolvedData = await getCachedResolvedContent('learn', slug)
+  const { content } = await compilePage(resolvedData.content)
 
-  return <article>{content}</article>
+  return (
+    <article>
+      {content}
+      {resolvedData.version > 0 && (
+        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800">
+          <p className="font-semibold">
+            📝 This page includes {resolvedData.version} community edit{resolvedData.version > 1 ? 's' : ''}
+          </p>
+          <p className="text-xs mt-1">
+            Community members have improved this content through collaborative editing.
+          </p>
+        </div>
+      )}
+      <EditPageButton
+        section="learn"
+        slug={slug}
+        currentContent={resolvedData.content}
+      />
+    </article>
+  )
 }

@@ -10,9 +10,10 @@ interface UserMenuProps {
     email?: string | null
     image?: string | null
   }
+  userTier?: number
 }
 
-export default function UserMenu({ user }: UserMenuProps) {
+export default function UserMenu({ user, userTier = 1 }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
@@ -86,6 +87,25 @@ export default function UserMenu({ user }: UserMenuProps) {
             >
               Your Profile
             </Link>
+            <Link
+              href="/review"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Review Proposals
+            </Link>
+
+            {/* Moderator Dashboard - Tier 3+ */}
+            {userTier >= 3 && (
+              <Link
+                href="/admin/review-edits"
+                className="block px-4 py-2 text-sm text-teal-700 font-medium hover:bg-teal-50 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                🛡️ Moderator Dashboard
+              </Link>
+            )}
+
             <Link
               href="/profile/settings"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"

@@ -68,7 +68,7 @@ export const mdxComponents: MDXComponents = {
   ),
   h2: ({ children, ...props }) => (
     <h2
-      className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 -ml-16"
+      className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 outdent"
       {...props}
     >
       {children}
@@ -76,7 +76,7 @@ export const mdxComponents: MDXComponents = {
   ),
   h3: ({ children, ...props }) => (
     <h3
-      className="text-xl font-bold text-gray-900 mt-8 mb-4 pt-4 border-t-2 border-teal -ml-16"
+      className="text-xl font-bold text-gray-900 mt-8 mb-4 pt-4 border-t-2 border-gray-300 outdent"
       {...props}
     >
       {children}

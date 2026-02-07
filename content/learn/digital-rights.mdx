@@ -9,15 +9,42 @@ description: "Three Supreme Court decisions reshape digital privacy, educational
 
 <PageHeader type="learn" />
 
-<div className="max-w-5xl mx-auto px-4 py-8">
+<PageContent>
 
-<div className="text-center py-8 mb-8">
-<h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3 leading-tight">Digital Rights, Education, and the Courts</h1>
-</div>
+# Digital Rights, Education, and the Courts
 
-## Facts
+<TopSection>
+  <QuickSummary highlight="Three Supreme Court decisions in 2025 reshaped digital privacy, education, and healthcare rights.">
+    Free Speech Coalition v. Paxton upheld age verification requirements, Mahmoud v. Taylor granted parental opt-outs from LGBTQ+ curriculum, and United States v. Skrmetti allowed states to ban gender-affirming care for minors.
+  </QuickSummary>
 
-<SectionIntro>This section contains only verifiable, primary-sourced information.</SectionIntro>
+  <ActNowBox href="/act/school-boards">
+    Don't just read, act. Support digital rights and inclusive education policies
+  </ActNowBox>
+</TopSection>
+
+<MainContentLayout
+  sidebar={
+    <ContentSidebar>
+      <ul className="space-y-3">
+        <li className="font-semibold"><a href="#facts" className="text-teal hover:underline">FACTS</a>
+          <ul className="ml-6 mt-2 space-y-1.5 font-normal">
+            <li><a href="#timeline" className="text-teal hover:underline">Timeline</a></li>
+            <li><a href="#key-documents" className="text-teal hover:underline">Key Documents</a></li>
+          </ul>
+        </li>
+        <li className="font-semibold"><a href="#analysis" className="text-orange hover:underline">ANALYSIS</a>
+          <ul className="ml-6 mt-2 space-y-1.5 font-normal">
+            <li><a href="#the-protect-the-children-pattern" className="text-orange hover:underline">Protect Children Pattern</a></li>
+            <li><a href="#who-is-affected" className="text-orange hover:underline">Who Is Affected</a></li>
+          </ul>
+        </li>
+      </ul>
+    </ContentSidebar>
+  }
+>
+
+<FactsSection>
 
 ### Timeline
 
@@ -138,9 +165,9 @@ Source: [Broadband Breakfast](https://broadbandbreakfast.com/what-to-know-about-
 
 ---
 
-<h2 className="text-2xl md:text-3xl font-semibold text-orange mt-12 mb-4 pt-4 border-t-2 border-orange -ml-8 pl-8" id="analysis">Analysis</h2>
+</FactsSection>
 
-<SectionIntro>This section provides context and interpretation of the facts above.</SectionIntro>
+<AnalysisSection>
 
 ### The "Protect the Children" Pattern
 
@@ -189,4 +216,8 @@ Take action on this issue:
 
 **Sources Verified:** January 24, 2026
 
-</div>
+</AnalysisSection>
+
+</MainContentLayout>
+
+</PageContent>

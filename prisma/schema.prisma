@@ -216,9 +216,10 @@ model EditProposal {
   status String @default("pending") @db.VarChar(20)
 
   // Voting scores
-  approvalScore    Int @default(0) @map("approval_score")
-  rejectionScore   Int @default(0) @map("rejection_score")
-  approvalThreshold Int @default(5) @map("approval_threshold")
+  approvalScore      Int @default(0) @map("approval_score")
+  rejectionScore     Int @default(0) @map("rejection_score")
+  approvalThreshold  Int @default(5) @map("approval_threshold")
+  rejectionThreshold Int @default(-5) @map("rejection_threshold")
 
   // Resolution
   resolvedById    String?   @map("resolved_by")

@@ -4,12 +4,30 @@
 
 :root {
   --header-height: 64px;
-  --outdent: 2rem;
+  --outdent: 0;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 640px) {
   :root {
-    --outdent: 0;
+    --outdent: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --outdent: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --outdent: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --outdent: 3.5rem;
   }
 }
 
@@ -23,6 +41,59 @@ body {
 @layer utilities {
   .outdent {
     margin-left: calc(-1 * var(--outdent));
-    padding-left: var(--outdent);
   }
+}
+
+/* Force mobile layout in preview - override responsive breakpoints */
+/* This ensures the preview always uses mobile/stacked layout regardless of screen size */
+.force-mobile-layout {
+  /* Set a max width to trigger mobile breakpoints naturally */
+  max-width: 100%;
+  container-type: inline-size;
+}
+
+/* Prevent sticky/fixed positioning (for TOC sidebar) */
+.force-mobile-layout [class*="sticky"],
+.force-mobile-layout [class*="fixed"] {
+  position: static !important;
+}
+
+/* Force grids to single column */
+.force-mobile-layout [class*="grid-cols-2"],
+.force-mobile-layout [class*="grid-cols-3"],
+.force-mobile-layout [class*="grid-cols-4"],
+.force-mobile-layout [class*="lg:grid"],
+.force-mobile-layout [class*="md:grid"] {
+  display: block !important;
+}
+
+.force-mobile-layout [class*="lg:grid-cols"],
+.force-mobile-layout [class*="md:grid-cols"] {
+  grid-template-columns: 1fr !important;
+}
+
+/* Force flex containers to stack */
+.force-mobile-layout [class*="lg:flex-row"],
+.force-mobile-layout [class*="md:flex-row"] {
+  flex-direction: column !important;
+}
+
+/* Disable outdent in preview */
+.force-mobile-layout .outdent {
+  margin-left: 0 !important;
+}
+
+/* Reduce wide margins/padding */
+.force-mobile-layout [class*="lg:px-"],
+.force-mobile-layout [class*="xl:px-"] {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+/* Make sidebars full width */
+.force-mobile-layout aside,
+.force-mobile-layout [class*="sidebar"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  position: static !important;
 }

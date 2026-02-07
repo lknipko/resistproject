@@ -14,9 +14,9 @@ export function ActNowBox({ href, children }: ActNowBoxProps) {
       <h2 className="text-3xl font-bold mb-2 !m-0 !mb-2 !p-0 !border-0 !bg-transparent !text-white">
         ACT NOW
       </h2>
-      <p className="italic text-white/90 text-sm !mb-0">
+      <div className="italic text-white/90 text-sm !mb-0">
         {children}
-      </p>
+      </div>
     </Link>
   )
 }
