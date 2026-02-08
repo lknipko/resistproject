@@ -1,0 +1,66 @@
+---
+title: "Test Simple Syntax"
+subtitle: "Testing the new heading-based formatting"
+type: "learn"
+tags: ["test"]
+lastUpdated: "2026-02-07"
+description: "A test page using simple markdown headings instead of JSX components"
+---
+
+<PageHeader type="learn" />
+
+<PageContent>
+
+# Test Simple Syntax
+
+## Quick Summary
+
+**Key Point:** This is a test of the new simple syntax using markdown headings instead of JSX components.
+
+[→ Take Action: Contact Congress](/act/contact-congress)
+
+<MainContentLayout
+  sidebar={
+    <ContentSidebar>
+      <ul className="space-y-3">
+        <li className="font-semibold"><a href="#facts" className="text-teal hover:underline">FACTS</a>
+          <ul className="ml-6 mt-2 space-y-1.5 font-normal">
+            <li><a href="#timeline" className="text-teal hover:underline">Timeline</a></li>
+          </ul>
+        </li>
+        <li className="font-semibold"><a href="#analysis" className="text-orange hover:underline">ANALYSIS</a>
+          <ul className="ml-6 mt-2 space-y-1.5 font-normal">
+            <li><a href="#what-this-means" className="text-orange hover:underline">What This Means</a></li>
+          </ul>
+        </li>
+      </ul>
+    </ContentSidebar>
+  }
+>
+
+## Facts
+
+### Timeline
+
+- **February 7, 2026:** Test page created
+
+This section should have a teal background and "FACTS" heading in uppercase.
+
+[source: Example Document](https://example.com)
+
+## Analysis
+
+### What This Means
+
+This section should have an orange "ANALYSIS" heading in uppercase.
+
+The plugin should:
+1. Transform `## Quick Summary` into a grey QuickSummary box
+2. Transform `[→ Take Action: ...]` into an ActNowBox component
+3. Transform `## Facts` into a teal FactsSection component
+4. Transform `## Analysis` into an AnalysisSection component
+5. Transform `[source: Label](url)` into a SourceLink component
+
+</MainContentLayout>
+
+</PageContent>

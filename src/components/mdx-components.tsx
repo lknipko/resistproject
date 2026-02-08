@@ -92,11 +92,22 @@ export const mdxComponents: MDXComponents = {
       {children}
     </p>
   ),
-  a: ({ children, ...props }) => (
-    <a className="text-teal hover:underline" {...props}>
-      {children}
-    </a>
-  ),
+  a: ({ children, href, ...props }) => {
+    // Check if link is external (starts with http:// or https://)
+    const isExternal = href && (href.startsWith('http://') || href.startsWith('https://'))
+
+    return (
+      <a
+        href={href}
+        className="text-link hover:text-link-hover underline font-medium"
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+        {...props}
+      >
+        {children}
+      </a>
+    )
+  },
   ul: ({ children, ...props }) => (
     <ul className="list-disc pl-6 mb-4 space-y-2" {...props}>
       {children}

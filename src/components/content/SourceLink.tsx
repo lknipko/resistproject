@@ -38,7 +38,7 @@ export function SourceLink({ href, label, children }: SourceLinkProps) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-teal hover:underline"
+        className="text-link hover:text-link-hover underline font-medium"
       >
         {displayText}
       </a>

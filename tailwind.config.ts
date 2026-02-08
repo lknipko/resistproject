@@ -21,6 +21,11 @@ const config: Config = {
           dark: '#a84d1d',
           light: '#d97a45',
         },
+        // Link colors
+        link: {
+          DEFAULT: '#0056b3', // Deep, accessible blue
+          hover: '#003d82',   // Darker on hover
+        },
         // Neutrals
         gray: {
           100: '#f5f5f5',

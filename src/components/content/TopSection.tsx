@@ -4,7 +4,7 @@ interface TopSectionProps {
 
 export function TopSection({ children }: TopSectionProps) {
   return (
-    <div className="grid md:grid-cols-[2fr_1fr] gap-6 mb-12">
+    <div className="grid md:grid-cols-[2fr_1fr] gap-6 mb-12 outdent">
       {children}
     </div>
   )
