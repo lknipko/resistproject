@@ -11,92 +11,125 @@ interface ProposeNewPageButtonProps {
 const NEW_PAGE_TEMPLATES = {
   learn: `# [Page Title]
 
-## Overview
-Brief introduction to the topic and why it matters.
+## Quick Summary
 
-## FACTS
+**Key Point:** Brief one-sentence summary of this issue.
+
+Additional context about why this matters and what happened.
+
+[→ Take Action: Related Action Page Title](/act/action-slug)
+
+## Facts
 
 ### Timeline
-- **Date:** What happened
-- **Date:** Additional events
 
-### Primary Sources
-- [Source Title](URL) - Official government document
-- [Source Title](URL) - Court filing or decision
+| Date | Event | Source |
+|------|-------|--------|
+| 2025-XX-XX | What happened | [source: Document Title](https://example.gov/document) |
+| 2025-XX-XX | Additional event | [source: Document Title](https://example.gov/document) |
+
+### Key Documents
+
+- **Document Title** (Date)
+  - [source: Full Document (PDF)](https://example.gov/document.pdf)
+  - [source: Official Summary](https://example.gov/summary)
 
 ### Key Points
-- Important fact with source citation
-- Another important fact
 
-## ANALYSIS
+- Important fact with inline citation [source: Document Title](https://example.gov)
+- Another important fact [source: Document Title](https://example.gov)
+
+## Analysis
 
 ### What This Means
-Explanation of the implications and context.
+
+Explanation of the implications and context. This section provides interpretation
+of the facts above.
 
 ### Who's Affected
-Description of communities or groups impacted.
+
+- **Group 1**: How they're impacted
+- **Group 2**: How they're impacted
+- **Group 3**: How they're impacted
 
 ### Legal/Policy Context
-Background on relevant laws, policies, or precedents.
 
-## Related Resources
-- Additional information links
-- Expert analysis (attributed)
+Background on relevant laws, policies, or precedents that provide context.
+
+---
 
 ## Related Actions
-Links to ACT pages will be added after approval.
+
+- [Action Title](/act/slug) - Brief description
+- [Another Action](/act/slug) - Brief description
 `,
   act: `# [Action Title]
 
-## Overview
-What this action is about and why it's important.
+## Quick Summary
 
-## QUICK ACTIONS (< 5 minutes)
+**Goal:** One-sentence description of what this action accomplishes.
+
+Brief explanation of why this action is important and what impact it will have.
+
+[← Learn More: Related Learn Page Title](/learn/topic-slug)
+
+## Quick Actions
 
 ### Call Your Representatives
+
 **Script:**
 "Hello, my name is [NAME] and I'm calling from [CITY, STATE]. I'm calling to urge [REPRESENTATIVE NAME] to [SPECIFIC ASK]."
 
-**Phone Numbers:**
-- Find your representative: https://www.house.gov/representatives/find-your-representative
+**Find Your Representatives:**
+- House: https://www.house.gov/representatives/find-your-representative
+- Senate: https://www.senate.gov/senators/senators-contact.htm
 
 ### Send an Email
+
 **Template:**
 Dear [REPRESENTATIVE],
 
-[Your message here]
+[Your message here - explain the issue and your specific ask]
 
 Sincerely,
 [Your name]
 [Your city, state]
 
 ### Share on Social Media
-Sample post: "[Your call to action]"
 
-## SUSTAINED ACTIONS (ongoing, >5 minutes)
+**Sample Post:**
+"[Your call to action with relevant hashtags]"
+
+## Sustained Actions
 
 ### Join Organizations
-- **Organization Name** - [Website](URL)
+
+- **Organization Name** ([Website](https://example.org))
   - What they do and how to get involved
+  - Contact information or sign-up link
 
 ### Attend Events
-Information about protests, town halls, or other events.
+
+Information about upcoming protests, town halls, community meetings, or other
+relevant events.
 
 ### Submit Public Comments
-How to submit formal comments to government agencies.
 
-## RESOURCES
+Instructions for submitting formal comments to government agencies about
+proposed regulations or policies.
 
-### Downloadable Materials
-- Flyers (PDF)
-- Social media graphics
-- Talking points
+## Resources
 
-## IMPACT
-How this action helps and what success looks like.
+- Downloadable flyers and graphics (coming soon)
+- Talking points document
+- Additional reading: [source: Title](https://example.com)
+
+---
 
 ## Related Topics
-Links to LEARN pages will be added after approval.
+
+- [Learn Page Title](/learn/slug) - Context about this issue
+- [Another Learn Page](/learn/slug) - Related background
 `
 }
 

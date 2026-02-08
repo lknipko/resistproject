@@ -65,7 +65,8 @@ resistproject/                    # ← Working directory (git repo root)
 │   ├── lib/
 │   │   ├── auth.ts             # NextAuth configuration
 │   │   ├── db.ts               # Prisma client
-│   │   └── mdx.ts              # MDX processing
+│   │   ├── mdx.ts              # MDX processing
+│   │   └── remark-section-wrapper.ts  # MDX simple syntax plugin
 │   └── types/
 │       └── next-auth.d.ts      # NextAuth type extensions
 ├── prisma/
@@ -121,6 +122,96 @@ resistproject/                    # ← Working directory (git repo root)
 - `UserExtended` table with tier/reputation/badge system
 - Edit proposal, voting, and moderation tables
 - Audit logging system
+
+---
+
+## MDX Content Authoring
+
+### ✅ Simple Syntax System (2026-02-08)
+
+**Overview:**
+All content is written in MDX using simple markdown syntax that automatically transforms into styled React components. This system reduces content verbosity by ~70% and makes it easier for contributors to write and edit pages.
+
+**Core Implementation:**
+- **Remark Plugin** (`src/lib/remark-section-wrapper.ts`) - Transforms markdown AST during MDX compilation
+- Headings like `## Quick Summary`, `## Facts`, `## Analysis` automatically wrap content in styled components
+- Special link syntax auto-converts to interactive components
+- Auto-generates side-by-side layouts for Quick Summary + CTA boxes
+
+**Writing Content - Simple Syntax:**
+
+```markdown
+# Page Title
+
+## Quick Summary
+
+**Key Point:** Brief one-sentence summary.
+
+Additional context about the issue.
+
+[→ Take Action: Contact Congress](/act/contact-congress)
+
+## Facts
+
+### Timeline
+
+| Date | Event | Source |
+|------|-------|--------|
+| 2025-01-20 | Event occurred | [source: Document Title](https://example.gov) |
+
+### Key Documents
+
+- Important fact [source: Executive Order](https://whitehouse.gov/eo)
+- Another fact [source: Court Filing](https://supremecourt.gov)
+
+## Analysis
+
+### What This Means
+
+Explanation and interpretation of the facts above.
+
+### Who's Affected
+
+- **Group 1**: Impact description
+- **Group 2**: Impact description
+```
+
+**Heading Recognition:**
+- `## Quick Summary` → QuickSummary component (grey box with left border)
+- `## Facts` → FactsSection component (teal background, disclaimer)
+- `## Analysis` → AnalysisSection component (orange heading, disclaimer)
+- `## Quick Actions` → Section with auto-inserted intro text (Act pages)
+- `## Sustained Actions` → Section with auto-inserted intro text (Act pages)
+- `## Resources` → Resources section wrapper (Act pages)
+
+**Special Link Syntax:**
+- `[→ Take Action: Text](url)` → ActNowBox component (orange CTA)
+- `[← Learn More: Text](url)` → LearnMoreBox component (teal CTA)
+- `[source: Label](url)` → SourceLink component (right-aligned citation)
+
+**How It Works:**
+1. Content is written in plain markdown with special headings
+2. Remark plugin runs during MDX compilation
+3. Plugin walks the markdown AST looking for recognized patterns
+4. Transforms headings and links into MDX component nodes
+5. Components render with full styling and interactivity
+
+**Templates:**
+- `templates/learn-page.md` - Template for Learn pages
+- `templates/act-page.md` - Template for Act pages
+- Templates built into "Propose New Page" button
+
+**Migration:**
+- All 16 production MDX files migrated on 2026-02-08
+- Migration script: `scripts/migrate-mdx-to-simple.ts`
+- Can be run on individual files with `--file=path/to/file.mdx`
+
+**Benefits:**
+- ~70% less code (e.g., 50 lines vs 170 lines)
+- Contributors write plain markdown instead of JSX
+- Consistent structure enforced automatically
+- Easier to review edit proposals (cleaner diffs)
+- Lower barrier to entry for community contributions
 
 ---
 
