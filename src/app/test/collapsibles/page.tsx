@@ -58,8 +58,8 @@ export default function CollapsiblesTestPage() {
         </Collapsible>
       </Collapsible>
 
-      <Collapsible title="Empty Section Test" level="h2" section="learn">
-        {/* This collapsible has no content to test empty state handling */}
+      <Collapsible title="Minimal Content Test" level="h2" section="learn">
+        <p>This collapsible has minimal content.</p>
       </Collapsible>
 
       <div className="mt-12 p-6 bg-blue-50 border-l-4 border-blue-500">
