@@ -63,7 +63,7 @@ function getHeadingText(heading: Heading): string {
   }
 
   heading.children.forEach(extractText)
-  return textParts.join('').trim().toLowerCase()
+  return textParts.join('').trim()
 }
 
 /**
@@ -294,8 +294,9 @@ function processCollapsibles(children: any[], section: 'learn' | 'act' = 'learn'
  * Find which section definition matches a heading
  */
 function matchSection(headingText: string): SectionDefinition | null {
+  const lower = headingText.toLowerCase()
   return SECTION_DEFINITIONS.find(def =>
-    def.matchHeadings.includes(headingText)
+    def.matchHeadings.includes(lower)
   ) || null
 }
 

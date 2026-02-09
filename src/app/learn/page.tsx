@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { getAllPages } from '@/lib/content'
-import { ProposeNewPageButton } from '@/components/content/ProposeNewPageButton'
+import { ProposeNewPageCard } from '@/components/content/ProposeNewPageCard'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -16,20 +16,13 @@ export default async function LearnPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="mb-12">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-          <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Learn
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl">
-              Understand government actions with verified facts and primary sources.
-              Every claim is backed by official documents and court filings.
-            </p>
-          </div>
-          <div className="flex-shrink-0">
-            <ProposeNewPageButton section="learn" />
-          </div>
-        </div>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Learn
+        </h1>
+        <p className="text-xl text-gray-600 max-w-3xl">
+          Understand government actions with verified facts and primary sources.
+          Every claim is backed by official documents and court filings.
+        </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -61,6 +54,7 @@ export default async function LearnPage() {
             )}
           </Link>
         ))}
+        <ProposeNewPageCard section="learn" />
       </div>
 
       {learnPages.length === 0 && (

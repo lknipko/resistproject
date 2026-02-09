@@ -52,7 +52,7 @@ export default async function ActPage({
   const { content } = await compilePage(resolvedData.content)
 
   return (
-    <article className="max-w-[1200px] mx-auto px-8 py-12">
+    <article>
       {content}
       {resolvedData.version > 0 && (
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800">

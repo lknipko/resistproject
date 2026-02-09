@@ -156,4 +156,28 @@ export const mdxComponents: MDXComponents = {
     </td>
   ),
   hr: ({ ...props }) => <hr className="border-0 border-t border-gray-300 my-8" {...props} />,
+  pre: ({ children, ...props }) => (
+    <pre
+      className="bg-gray-100 border border-gray-200 rounded-lg p-4 my-4 overflow-x-auto whitespace-pre text-sm leading-relaxed"
+      {...props}
+    >
+      {children}
+    </pre>
+  ),
+  code: ({ children, ...props }) => {
+    // Check if this is an inline code (not wrapped in pre)
+    const isInline = typeof children === 'string' && !children.includes('\n')
+    if (isInline) {
+      return (
+        <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
+          {children}
+        </code>
+      )
+    }
+    return (
+      <code className="block whitespace-pre-wrap font-mono text-sm" {...props}>
+        {children}
+      </code>
+    )
+  },
 }
