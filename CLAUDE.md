@@ -213,6 +213,90 @@ Explanation and interpretation of the facts above.
 - Easier to review edit proposals (cleaner diffs)
 - Lower barrier to entry for community contributions
 
+### ✅ Collapsible Sections (2026-02-08)
+
+**Overview:**
+For pages with extensive evidence and primary sources, collapsible sections allow comprehensive information to be presented without overwhelming readers. Sections are collapsed by default, keeping pages scannable while allowing users to drill down into details.
+
+**Component:**
+- `src/components/mdx/Collapsible.tsx` - Client-side interactive collapsible component
+- Supports headings (h2, h3, h4) and list items
+- Auto-detects section (learn/act) for accent colors
+- Full keyboard accessibility (Tab, Enter, Space)
+- Smooth animations and transitions
+
+**Syntax:**
+
+**Collapsible Headings:**
+```markdown
+## [+] Evidence Section
+
+This content is collapsed by default.
+
+### [+] Nested Timeline
+
+This is nested and also collapsible.
+
+### Regular Heading
+
+This is NOT collapsible (no [+] marker).
+```
+
+**Collapsible List Items:**
+```markdown
+- [+] Primary Sources
+
+  This content is hidden until expanded (note: blank line and 2-space indent).
+
+  - Executive Order 12345
+  - Court Filing ABC-2025
+
+- Regular list item (not collapsible)
+
+- [+] Another Collapsible Item
+
+  More hidden content.
+```
+
+**Important Markdown Syntax:**
+- List item content MUST have a blank line before it
+- List item content MUST be indented with 2 spaces
+- Without proper formatting, content won't be recognized as part of the list item
+
+**Visual Design:**
+
+**Collapsed State:**
+- Looks like regular content with small chevron icon (▸)
+- No background boxes or borders
+- Blends naturally with page flow
+- Hover: title underlines, color darkens
+
+**Expanded State:**
+- Chevron rotates down (▾)
+- Content appears with subtle left border
+- Indentation increases with nesting level:
+  - h2: No extra indent
+  - h3: Medium indent (pl-6 md:pl-8)
+  - h4: Deep indent (pl-8 md:pl-10)
+  - li: Medium indent (pl-6 md:pl-8)
+
+**Section Colors:**
+- Learn pages: Teal accent (`border-teal-500`)
+- Act pages: Orange accent (`border-orange-500`)
+- Auto-detected from frontmatter `type` field
+
+**Use Cases:**
+- Evidence sections with 10+ primary sources
+- Detailed timelines with many events
+- Technical documentation or legal details
+- Any content that's comprehensive but not immediately essential
+
+**Testing:**
+- Test pages: `/test/collapsibles` and `/test/mdx-collapsibles`
+- Works inside Facts/Analysis sections
+- Supports nested collapsibles (multiple levels)
+- Mobile responsive with appropriate indentation
+
 ---
 
 ## Collaborative Editing System

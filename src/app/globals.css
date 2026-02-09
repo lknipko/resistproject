@@ -5,6 +5,7 @@
 :root {
   --header-height: 64px;
   --outdent: 0;
+  --font-inter: 'Inter', system-ui, sans-serif;
 }
 
 @media (min-width: 640px) {

@@ -9,7 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Primary Colors
+        // Brand Colors
+        brand: {
+          orange: '#EA580C',      // Primary brand color (orange-600)
+          'orange-dark': '#C2410C', // Darker orange (orange-700)
+          'orange-light': '#FB923C', // Lighter orange (orange-400)
+          teal: '#0891B2',        // Secondary brand color (cyan-600)
+          'teal-dark': '#0E7490', // Darker teal (cyan-700)
+          'teal-light': '#22D3EE', // Lighter teal (cyan-400)
+        },
+        // Legacy colors (keep for now, transition gradually)
         teal: {
           DEFAULT: '#2d5a6b',
           dark: '#1e3d4a',
@@ -17,14 +26,14 @@ const config: Config = {
           medium: '#3a7a8c',
         },
         orange: {
-          DEFAULT: '#c65d24',
-          dark: '#a84d1d',
-          light: '#d97a45',
+          DEFAULT: '#EA580C',     // Updated to match brand
+          dark: '#C2410C',
+          light: '#FB923C',
         },
         // Link colors
         link: {
-          DEFAULT: '#0056b3', // Deep, accessible blue
-          hover: '#003d82',   // Darker on hover
+          DEFAULT: '#0056b3',
+          hover: '#003d82',
         },
         // Neutrals
         gray: {
@@ -38,7 +47,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['Segoe UI', '-apple-system', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        heading: ['Inter', 'system-ui', 'sans-serif'],
       },
       spacing: {
         'xs': '0.25rem',

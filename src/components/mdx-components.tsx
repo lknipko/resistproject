@@ -27,6 +27,7 @@ import { PageMeta } from './content/PageMeta'
 import { SectionIntro } from './content/SectionIntro'
 import { RelatedActions } from './content/RelatedActions'
 import { RelatedLinks } from './content/RelatedLinks'
+import { Collapsible } from './mdx/Collapsible'
 
 export const mdxComponents: MDXComponents = {
   PageHeader,
@@ -57,6 +58,7 @@ export const mdxComponents: MDXComponents = {
   SectionIntro,
   RelatedActions,
   RelatedLinks,
+  Collapsible,
   // Default HTML elements with custom styling
   h1: ({ children, ...props }) => (
     <h1

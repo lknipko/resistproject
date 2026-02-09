@@ -1,0 +1,158 @@
+---
+title: "Collapsible Sections Test"
+description: "Testing collapsible sections feature"
+type: "learn"
+lastUpdated: "2026-02-08"
+---
+
+# Collapsible Sections Test Page
+
+This page tests the new collapsible sections feature using the `[+]` syntax.
+
+## [+] Level 2 Collapsible
+
+This is top-level collapsible content at the h2 level. It should have:
+- Light gray background (bg-gray-50)
+- No extra indentation
+- Teal border accent
+
+### [+] Nested Level 3
+
+This is nested inside the h2 collapsible. It should have:
+- Medium gray background (bg-gray-100)
+- Medium indentation (pl-4 md:pl-6)
+- Teal border accent
+
+#### [+] Deeply Nested Level 4
+
+This is the deepest level (h4). It should have:
+- Darker gray background (bg-gray-200)
+- Deep indentation (pl-8 md:pl-12)
+- Teal border accent
+
+### Regular Heading (Not Collapsible)
+
+This is a regular h3 heading without the `[+]` marker. It should display as a normal heading.
+
+### [+] Another Level 3 Collapsible
+
+This is a second h3 collapsible at the same level as the previous one. Each collapsible maintains its own state.
+
+## Regular H2 Section
+
+This is not collapsible - just a regular h2 heading.
+
+## [+] Mix of Content Types
+
+This section contains various types of content to test compatibility.
+
+### [+] Timeline
+
+This collapsible contains a list:
+
+- **Event 1:** Description of the first event
+- **Event 2:** Description of the second event
+- **Event 3:** Description of the third event
+
+### [+] Primary Sources
+
+This collapsible contains source links:
+
+1. [source: Executive Order 12345](https://example.gov/eo-12345)
+2. [source: Court Filing](https://example.gov/filing)
+3. [source: Congressional Record](https://congress.gov/record)
+
+### [+] Tables
+
+This collapsible contains a table:
+
+| Date | Event | Source |
+|------|-------|--------|
+| 2025-01-20 | Event A | [source: Document](https://example.gov) |
+| 2025-01-22 | Event B | [source: Document](https://example.gov) |
+
+## Facts
+
+This is a regular Facts section with the teal background and disclaimer.
+
+### [+] Key Evidence
+
+This is a collapsible INSIDE the Facts section. It should:
+- Be nested within the teal Facts background
+- Have its own collapsible behavior
+- Work independently of the Facts section
+
+**Evidence item 1:** Some factual information with [source: Primary Document](https://example.gov)
+
+**Evidence item 2:** More factual information with [source: Another Document](https://example.gov)
+
+### Regular Facts Subsection
+
+This is a regular h3 within Facts, not collapsible.
+
+## Analysis
+
+This is the Analysis section with orange accents.
+
+### [+] Impact Analysis
+
+This is a collapsible inside Analysis. Testing that collapsibles work inside special sections.
+
+**Impact on Group A:** Description of impacts
+
+**Impact on Group B:** Description of impacts
+
+## [+] Empty Section Test
+
+## Next Regular Section
+
+This tests that empty collapsible sections don't break the parser.
+
+## [+] Keyboard Navigation Test
+
+This section is for testing keyboard accessibility:
+
+1. Tab to the collapsible header
+2. Press Enter or Space to toggle
+3. Screen reader should announce "expanded" or "collapsed" state
+4. Arrow keys should navigate between different collapsibles
+
+## [+] Nested Independence Test
+
+Each nested collapsible should maintain independent state.
+
+### [+] Child 1
+
+Content for child 1.
+
+#### [+] Grandchild 1
+
+Content for grandchild 1.
+
+### [+] Child 2
+
+Content for child 2.
+
+#### [+] Grandchild 2
+
+Content for grandchild 2.
+
+---
+
+## Test Checklist
+
+When testing this page, verify:
+
+- ✅ h2 collapsibles render with light gray background
+- ✅ h3 collapsibles render with medium gray and indentation
+- ✅ h4 collapsibles render with dark gray and deep indentation
+- ✅ Chevron icon rotates smoothly on expand/collapse
+- ✅ Content transitions smoothly (no jumps)
+- ✅ Nested collapsibles maintain independent state
+- ✅ Mix of collapsible and regular headings works
+- ✅ Collapsibles inside Facts/Analysis sections work
+- ✅ Border color matches page type (teal for learn pages)
+- ✅ Keyboard navigation works (Tab, Enter, Space)
+- ✅ Screen reader announces state correctly
+- ✅ Mobile responsive (proper indentation on small screens)
+- ✅ Empty collapsible sections don't break

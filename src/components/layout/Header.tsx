@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import AuthButtonClient from './AuthButtonClient'
+import Logo from './Logo'
 
 interface HeaderProps {
   session: {
@@ -22,9 +23,7 @@ export default function Header({ session, userTier = 1 }: HeaderProps) {
     <header className="sticky top-0 z-50 bg-teal-dark text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold hover:text-teal-light transition-colors">
-            Resist Project
-          </Link>
+          <Logo variant="wordmark" theme="white" />
 
           <nav className="hidden md:flex items-center gap-8">
             <Link href="/learn" className="hover:text-teal-light transition-colors font-medium">
