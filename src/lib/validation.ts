@@ -6,21 +6,6 @@
  */
 
 import { diffWords } from 'diff'
-// bad-words is a CommonJS module, requires dynamic import
-import type { Constructor } from 'bad-words'
-
-// Initialize profanity filter lazily (CommonJS compatibility)
-let BadWordsConstructor: any
-try {
-  BadWordsConstructor = require('bad-words')
-} catch {
-  // Fallback if require fails
-  BadWordsConstructor = class {
-    isProfane() { return false }
-    addWords() {}
-  }
-}
-const profanityFilter = new BadWordsConstructor()
 
 export interface ValidationParams {
   originalContent: string
@@ -42,19 +27,63 @@ export interface ValidationResult {
 }
 
 /**
- * Custom words to add to profanity filter.
- * The bad-words library handles most profanity, but we add spam-related terms.
+ * Comprehensive profanity and spam word list.
+ * Includes common profanity, spam terms, and inappropriate content.
  */
-const CUSTOM_BAD_WORDS = [
-  'spam',
-  'scam',
-  'viagra',
-  'casino',
-  'porn',
+const PROFANITY_LIST = [
+  // Spam and scam terms
+  'spam', 'scam', 'viagra', 'cialis', 'casino', 'lottery', 'prize',
+  'bitcoin scam', 'crypto scam', 'investment scam', 'forex scam', 'mlm', 'pyramid',
+
+  // Adult content indicators
+  'porn', 'xxx', 'sex site', 'nude site', 'adult site',
+
+  // Common profanity
+  'fuck', 'shit', 'ass hole', 'asshole', 'damn it', 'bitch', 'bastard',
+  'crap', 'piss', 'cock', 'dick', 'pussy', 'whore', 'slut',
+
+  // Hate speech (extremely important to filter)
+  'nigger', 'nigga', 'faggot', 'fag', 'retard', 'kike', 'chink',
+
+  // Violence indicators
+  'kill yourself', 'murder you', 'rape', 'terrorist attack', 'bomb threat',
 ]
 
-// Add custom words to filter
-profanityFilter.addWords(...CUSTOM_BAD_WORDS)
+/**
+ * Check if text contains profanity or spam.
+ * Case-insensitive word boundary check with leet-speak detection.
+ */
+function isProfane(text: string): boolean {
+  const lowerText = text.toLowerCase()
+
+  for (const word of PROFANITY_LIST) {
+    // Create regex with word boundaries
+    const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(`\\b${escapedWord}\\b`, 'i')
+
+    if (regex.test(lowerText)) {
+      return true
+    }
+
+    // Check for common character substitutions (l33t sp34k)
+    const leetText = lowerText
+      .replace(/@/g, 'a')
+      .replace(/4/g, 'a')
+      .replace(/3/g, 'e')
+      .replace(/1/g, 'i')
+      .replace(/!/g, 'i')
+      .replace(/0/g, 'o')
+      .replace(/\$/g, 's')
+      .replace(/5/g, 's')
+      .replace(/7/g, 't')
+
+    if (regex.test(leetText)) {
+      return true
+    }
+  }
+
+  return false
+}
 
 /**
  * Suspicious URL patterns that might indicate spam or phishing.
@@ -95,11 +124,6 @@ export function validateEditProposal(params: ValidationParams): ValidationResult
   const changedWords = changes.filter(c => c.added || c.removed).length
   details.changedWords = changedWords
 
-  // Removed minimum word requirement to allow single-word corrections
-  // if (changedWords < 3) {
-  //   errors.push('Edit too small - must change at least 3 words')
-  // }
-
   // 3. Maximum change size (prevent vandalism)
   const originalLength = originalContent.length
   const proposedLength = proposedContent.length
@@ -112,13 +136,13 @@ export function validateEditProposal(params: ValidationParams): ValidationResult
     warnings.push('Edit removes more than 70% of content - may need review')
   }
 
-  // 4. Profanity filter (using bad-words library)
-  if (profanityFilter.isProfane(proposedContent)) {
+  // 4. Profanity filter (custom implementation)
+  if (isProfane(proposedContent)) {
     errors.push('Edit contains inappropriate language')
   }
 
   // Also check edit summary for profanity
-  if (profanityFilter.isProfane(editSummary)) {
+  if (isProfane(editSummary)) {
     errors.push('Edit summary contains inappropriate language')
   }
 
@@ -151,7 +175,6 @@ export function validateEditProposal(params: ValidationParams): ValidationResult
   if (editType === 'sources') {
     const govLinks = (proposedContent.match(/\.gov/g) || []).length
     const eduLinks = (proposedContent.match(/\.edu/g) || []).length
-    const orgLinks = (proposedContent.match(/\.org/g) || []).length
 
     details.govLinkCount = govLinks
 
@@ -160,7 +183,6 @@ export function validateEditProposal(params: ValidationParams): ValidationResult
     }
 
     if (govLinks > 0) {
-      // Award points for using government sources (could be used for reputation later)
       details.govLinkCount = govLinks
     }
   }
@@ -187,7 +209,7 @@ export function validateEditProposal(params: ValidationParams): ValidationResult
   }
 
   // 8. Check for HTML tags (not allowed in markdown)
-  const htmlTagPattern = /<(?!\/?(PageHeader|PageContent|TopSection|QuickSummary|ActNowBox|LearnMoreBox|FactsSection|AnalysisSection|MainContentLayout|ContentSidebar|SourceLink|RelatedActions|CallScript|ContactInfo))[a-z][\s\S]*?>/gi
+  const htmlTagPattern = /<(?!\/?(PageHeader|PageContent|TopSection|QuickSummary|ActNowBox|LearnMoreBox|FactsSection|AnalysisSection|MainContentLayout|ContentSidebar|SourceLink|RelatedActions|CallScript|ContactInfo|TrackableLink))[a-z][\s\S]*?>/gi
   const htmlTags = proposedContent.match(htmlTagPattern)
 
   if (htmlTags && htmlTags.length > 0) {

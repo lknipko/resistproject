@@ -14,7 +14,6 @@
     "@auth/prisma-adapter": "^2.11.1",
     "@prisma/client": "^6.19.2",
     "@types/diff": "^8.0.0",
-    "bad-words": "^4.0.0",
     "clsx": "^2.1.1",
     "diff": "^8.0.3",
     "gray-matter": "^4.0.3",
