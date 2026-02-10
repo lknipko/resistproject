@@ -6,10 +6,10 @@
  */
 
 import { diffWords } from 'diff'
-import Filter from 'bad-words'
+import BadWords from 'bad-words'
 
 // Initialize profanity filter
-const profanityFilter = new Filter()
+const profanityFilter = new BadWords()
 
 export interface ValidationParams {
   originalContent: string

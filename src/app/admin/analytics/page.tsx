@@ -142,7 +142,10 @@ export default async function AnalyticsPage() {
 
   if (!userExtended) redirect('/auth/signin')
 
-  const adminPerms = await canAdminister({ userExtended })
+  const adminPerms = await canAdminister({
+    userId: session.user.id,
+    userExtended
+  })
   if (!adminPerms.allowed) {
     return (
       <div className="container mx-auto px-4 py-8">
