@@ -415,3 +415,33 @@ model PinnedPage {
   @@index([pinLocation, pinPosition], name: "idx_pinned_pages_active_location")
   @@map("pinned_pages")
 }
+
+// ============================================================================
+// Privacy-Friendly External Link Analytics
+// ============================================================================
+// Tracks ONLY aggregate click counts - NO personal data, NO sessions, NO IPs
+// Used to measure civic action impact: "How many people called Congress?"
+
+model ExternalLinkClick {
+  id BigInt @id @default(autoincrement())
+
+  // Link information
+  url      String @db.VarChar(1000)  // External URL that was clicked
+  category String @db.VarChar(50)     // e.g., "contact-congress", "donate", "petition"
+  label    String? @db.VarChar(200)   // Link text/description
+
+  // Source information
+  sourcePage    String @db.VarChar(500)  // Page where click originated
+  sourceSection String @db.VarChar(20)   // "learn" or "act"
+
+  // Timestamp only - NO user tracking, NO IP, NO session
+  clickedAt DateTime @default(now()) @map("clicked_at") @db.Timestamptz
+  clickDate DateTime @default(now()) @map("click_date") @db.Date
+
+  @@index([category])
+  @@index([sourcePage])
+  @@index([clickDate])
+  @@index([category, clickDate])
+  @@index([sourcePage, clickDate])
+  @@map("external_link_clicks")
+}

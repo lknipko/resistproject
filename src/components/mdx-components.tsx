@@ -28,6 +28,7 @@ import { SectionIntro } from './content/SectionIntro'
 import { RelatedActions } from './content/RelatedActions'
 import { RelatedLinks } from './content/RelatedLinks'
 import { Collapsible } from './mdx/Collapsible'
+import TrackableLink from './analytics/TrackableLink'
 
 export const mdxComponents: MDXComponents = {
   PageHeader,
@@ -59,6 +60,7 @@ export const mdxComponents: MDXComponents = {
   RelatedActions,
   RelatedLinks,
   Collapsible,
+  TrackableLink,
   // Default HTML elements with custom styling
   h1: ({ children, ...props }) => (
     <h1
@@ -98,12 +100,25 @@ export const mdxComponents: MDXComponents = {
     // Check if link is external (starts with http:// or https://)
     const isExternal = href && (href.startsWith('http://') || href.startsWith('https://'))
 
+    // For external links, use TrackableLink to track clicks
+    if (isExternal) {
+      return (
+        <TrackableLink
+          href={href}
+          category="" // Auto-detected from URL
+          label={typeof children === 'string' ? children : undefined}
+          className="text-link hover:text-link-hover underline font-medium"
+        >
+          {children}
+        </TrackableLink>
+      )
+    }
+
+    // For internal links, use regular anchor
     return (
       <a
         href={href}
         className="text-link hover:text-link-hover underline font-medium"
-        target={isExternal ? '_blank' : undefined}
-        rel={isExternal ? 'noopener noreferrer' : undefined}
         {...props}
       >
         {children}
