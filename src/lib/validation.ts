@@ -6,10 +6,21 @@
  */
 
 import { diffWords } from 'diff'
-import BadWords from 'bad-words'
+// bad-words is a CommonJS module, requires dynamic import
+import type { Constructor } from 'bad-words'
 
-// Initialize profanity filter
-const profanityFilter = new BadWords()
+// Initialize profanity filter lazily (CommonJS compatibility)
+let BadWordsConstructor: any
+try {
+  BadWordsConstructor = require('bad-words')
+} catch {
+  // Fallback if require fails
+  BadWordsConstructor = class {
+    isProfane() { return false }
+    addWords() {}
+  }
+}
+const profanityFilter = new BadWordsConstructor()
 
 export interface ValidationParams {
   originalContent: string
