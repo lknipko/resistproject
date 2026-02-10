@@ -13,7 +13,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: true,
+      // SECURITY: Set to false to prevent account takeover via email access
+      // Users must choose one sign-in method (Google OR email) per account
+      allowDangerousEmailAccountLinking: false,
     }),
     Resend({
       apiKey: process.env.RESEND_API_KEY,

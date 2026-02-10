@@ -6,6 +6,10 @@
  */
 
 import { diffWords } from 'diff'
+import Filter from 'bad-words'
+
+// Initialize profanity filter
+const profanityFilter = new Filter()
 
 export interface ValidationParams {
   originalContent: string
@@ -27,15 +31,19 @@ export interface ValidationResult {
 }
 
 /**
- * Basic profanity word list.
- * In production, use a more comprehensive library like 'bad-words'.
+ * Custom words to add to profanity filter.
+ * The bad-words library handles most profanity, but we add spam-related terms.
  */
-const PROFANITY_LIST = [
-  // Add words to filter (keeping it minimal for now)
+const CUSTOM_BAD_WORDS = [
   'spam',
   'scam',
-  // Expand this list as needed
+  'viagra',
+  'casino',
+  'porn',
 ]
+
+// Add custom words to filter
+profanityFilter.addWords(...CUSTOM_BAD_WORDS)
 
 /**
  * Suspicious URL patterns that might indicate spam or phishing.
@@ -93,14 +101,14 @@ export function validateEditProposal(params: ValidationParams): ValidationResult
     warnings.push('Edit removes more than 70% of content - may need review')
   }
 
-  // 4. Profanity filter (basic)
-  const lowerContent = proposedContent.toLowerCase()
+  // 4. Profanity filter (using bad-words library)
+  if (profanityFilter.isProfane(proposedContent)) {
+    errors.push('Edit contains inappropriate language')
+  }
 
-  for (const word of PROFANITY_LIST) {
-    if (lowerContent.includes(word.toLowerCase())) {
-      errors.push('Edit contains inappropriate language')
-      break
-    }
+  // Also check edit summary for profanity
+  if (profanityFilter.isProfane(editSummary)) {
+    errors.push('Edit summary contains inappropriate language')
   }
 
   // 5. Link validation
