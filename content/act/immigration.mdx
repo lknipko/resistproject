@@ -25,7 +25,8 @@ Mass deportation policies bypassing judicial review threaten due process protect
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">Quick Actions</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#contact-your-representatives" className="text-orange hover:underline">Contact Representatives</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Reps</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Reps</a></li>
             <li><a href="#know-your-rights---share-widely" className="text-orange hover:underline">Know Your Rights</a></li>
           </ul>
         </li>
@@ -35,6 +36,8 @@ Mass deportation policies bypassing judicial review threaten due process protect
             <li><a href="#join-local-rapid-response-networks" className="text-orange hover:underline">Rapid Response</a></li>
             <li><a href="#become-a-legal-observer-or-accompaniment-volunteer" className="text-orange hover:underline">Legal Observers</a></li>
             <li><a href="#support-immigrant-led-organizations" className="text-orange hover:underline">Immigrant-Led Orgs</a></li>
+            <li><a href="#if-you-are-an-employer" className="text-orange hover:underline">If You're An Employer</a></li>
+            <li><a href="#if-you-are-a-landlord-or-property-owner" className="text-orange hover:underline">If You're A Landlord</a></li>
           </ul>
         </li>
         <li className="font-semibold"><a href="#resources" className="text-orange hover:underline">Resources</a></li>
@@ -47,40 +50,68 @@ Mass deportation policies bypassing judicial review threaten due process protect
 
 ## Quick Actions
 
-### Contact Your Representatives
+### Email Your Representatives
 
-**Call Script:**
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative] to defend due process protections for immigrants and oppose mass deportation policies that bypass judicial review. Every person on U.S. soil has constitutional rights, regardless of immigration status. Thank you for your time."
+<EmailTemplate
+  subject="Protect due process rights for all immigrants"
+  repType="senator"
+  body={`Dear Senator {repName},
 
-- **Find Your Representatives:** [5 Calls - Immigration Issues](https://5calls.org/issue/immigration)
-- **Text to Call:** Text RESIST to 50409, then text CALL to connect
+I am writing as your constituent from {zipCode} to express deep concern about immigration enforcement actions that bypass established legal procedures.
 
-**Email Your Members of Congress:**
-
-Use [Resistbot](https://resist.bot/) - Text RESIST to 50409, then follow prompts to send letters to all your representatives at once.
-
-**Sample Message:**
-```
-Subject: Protect Due Process for All
-
-Dear [Representative],
-
-I am writing as your constituent to express deep concern about
-immigration enforcement actions that bypass established legal
-procedures. The Constitution guarantees due process to all persons
-within U.S. borders, not just citizens.
+The Constitution guarantees due process to all persons within U.S. borders, not just citizens. Current mass deportation policies threaten these fundamental protections.
 
 I urge you to:
 - Oppose funding for enforcement that circumvents immigration courts
 - Support legislation requiring judicial review before deportation
 - Conduct oversight of ICE and CBP enforcement practices
+- Restore protections for schools, churches, and hospitals
 
-The rule of law must apply equally. Thank you for your attention.
+The rule of law must apply equally to all.
+
+Thank you for your attention to this urgent matter.
 
 Sincerely,
-[Your Name]
-[Your Address]
-```
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+<EmailTemplate
+  subject="Defend constitutional rights for immigrants"
+  repType="representative"
+  body={`Dear Representative {repName},
+
+I am writing from {zipCode} to urge you to defend due process protections for immigrants and oppose mass deportation policies that bypass judicial review.
+
+Every person on U.S. soil has constitutional rights, regardless of immigration status. I urge you to conduct oversight of ICE and CBP practices and support legislation protecting due process.
+
+Thank you,
+{firstName} {lastName}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, my name is {firstName} {lastName} and I'm calling from {zipCode}.
+
+I'm urging Senator {repName} to defend due process protections for immigrants and oppose mass deportation policies that bypass judicial review.
+
+The Constitution guarantees due process to all persons on U.S. soil, regardless of immigration status.
+
+Thank you.`}
+/>
+
+<CallRepButton
+  repType="representative"
+  script={`Hi, I'm {firstName} {lastName} from {zipCode}.
+
+I'm calling to urge Representative {repName} to conduct oversight of ICE and CBP enforcement practices.
+
+Current policies bypass established legal procedures and threaten constitutional protections for all.
+
+Thank you for your time.`}
+/>
 
 ### Know Your Rights - Share Widely
 
@@ -135,24 +166,20 @@ Rapid response networks mobilize community members when immigration enforcement 
 - [CASA](https://wearecasa.org/) - Mid-Atlantic immigrant advocacy
 - [Coalition for Humane Immigrant Rights (CHIRLA)](https://www.chirla.org/) - California-based organizing
 
----
-
-## If You Are An Employer
+### [+] If You Are An Employer
 
 - [I-9 Audit Preparation Guide](https://www.nilc.org/issues/workersrights/) - Know your obligations and rights
 - You can require a judicial warrant (signed by a judge) before allowing ICE access to non-public workspaces
 - Document any enforcement interactions
 
----
-
-## If You Are A Landlord or Property Owner
+### [+] If You Are A Landlord or Property Owner
 
 - ICE generally requires a judicial warrant to enter private property
 - [Know the difference](https://www.ilrc.org/warrants) between administrative warrants (signed by ICE agent) and judicial warrants (signed by judge)
 
 ---
 
-## Resources
+## [+] Resources
 
 ### Hotlines (Save These Numbers)
 

@@ -25,10 +25,10 @@ The DOJ has been transformed from an independent law enforcement agency into a t
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">QUICK ACTIONS</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-your-senators-about-doj-independence" className="text-orange hover:underline">Call Senators</a></li>
-            <li><a href="#call-about-january-6th-pardons" className="text-orange hover:underline">Call About Pardons</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Reps</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Reps</a></li>
             <li><a href="#target-judiciary-committee-members" className="text-orange hover:underline">Judiciary Committee</a></li>
-            <li><a href="#send-an-email" className="text-orange hover:underline">Email Template</a></li>
+            <li><a href="#share-your-concern" className="text-orange hover:underline">Share Your Concern</a></li>
           </ul>
         </li>
         <li className="font-semibold"><a href="#sustained-actions" className="text-orange hover:underline">SUSTAINED ACTIONS</a>
@@ -63,31 +63,46 @@ The DOJ has been transformed from an independent law enforcement agency into a t
 
 ## Quick Actions
 
-### Call Your Senators About DOJ Independence
+### Email Your Representatives
 
-**Why this matters:** The Senate confirms the Attorney General and oversees DOJ. Senators on the Judiciary Committee have direct authority to investigate DOJ politicization and hold hearings.
+<EmailTemplate
+  subject="Defend DOJ Independence -- Constituent Request"
+  repType="senator"
+  body={`Dear Senator {repName},
 
-<CallScript>
-"Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge Senator [NAME] to defend the independence of the Department of Justice. The mass pardon of January 6th defendants -- including people who assaulted 140 police officers and were convicted of seditious conspiracy -- undermines the rule of law. Career prosecutors are being forced out for doing their jobs, and DOJ is being used to investigate political opponents. I urge the Senator to demand oversight hearings on DOJ politicization and to oppose any DOJ action that targets prosecutors for their prior case assignments. Thank you."
-</CallScript>
+I am writing as your constituent from {zipCode} to urge you to defend the independence of the Department of Justice.
 
-<div className="my-6">
-  <Button href="tel:202-224-3121" variant="primary">
-    Call Senate Switchboard: 202-224-3121
-  </Button>
-</div>
+The blanket pardon of approximately 1,500 January 6th defendants -- including people convicted of seditious conspiracy and assaulting over 140 police officers -- has eliminated the deterrent against political violence. Five officers died following the attack. Their assailants are now free.
 
-**Find your Senators:** [Senate.gov Contact Directory](https://www.senate.gov/senators/senators-contact.htm)
+Simultaneously, the DOJ is being weaponized against the prosecutors who investigated January 6th and against political opponents of the president. The Public Integrity Section -- which has prosecuted corruption by officials of both parties -- has lost its senior leadership. Career prosecutors have been reassigned or forced out for doing their jobs.
 
----
+I urge you to:
 
-### Call About January 6th Pardons
+1. Hold oversight hearings on DOJ politicization
+2. Demand testimony from Attorney General Bondi
+3. Support legislation protecting career prosecutors from retaliation
+4. Publicly condemn the use of DOJ to target political opponents
+5. Oppose any nominations to DOJ that prioritize loyalty over qualifications
 
-<CallScript>
-"Hello, my name is [NAME] from [CITY/ZIP]. I'm calling about the blanket pardon of January 6th defendants. People convicted of assaulting police officers with flagpoles, bear spray, and fire extinguishers -- people convicted of seditious conspiracy to overthrow the government -- have been freed. Five officers died. Over 140 were injured. This pardon tells future attackers there will be no consequences. I urge Senator [NAME] to publicly condemn these pardons and to support legislation protecting the independence of federal prosecutors. Thank you."
-</CallScript>
+The rule of law depends on DOJ independence. Please act.
 
----
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge Senator {repName} to defend the independence of the Department of Justice. The mass pardon of January 6th defendants -- including people who assaulted 140 police officers and were convicted of seditious conspiracy -- undermines the rule of law.
+
+Career prosecutors are being forced out for doing their jobs, and DOJ is being used to investigate political opponents.
+
+I urge the Senator to demand oversight hearings on DOJ politicization and to oppose any DOJ action that targets prosecutors for their prior case assignments. Thank you.`}
+/>
 
 ### Target Judiciary Committee Members
 
@@ -106,59 +121,6 @@ The Senate Judiciary Committee has direct oversight of DOJ. These members have t
 | Cory Booker | NJ | Member | (202) 224-3224 |
 | Alex Padilla | CA | Member | (202) 224-3553 |
 | Peter Welch | VT | Member | (202) 224-4242 |
-
-**Script for Judiciary Committee members:**
-
-<CallScript>
-"Hello, I'm [NAME] from [STATE/ZIP]. As a constituent of a Judiciary Committee member, I'm calling to urge Senator [NAME] to hold oversight hearings on the politicization of the Department of Justice. The Attorney General has created a weaponization task force targeting prosecutors who investigated January 6th, while pardoning everyone convicted in that investigation -- including seditious conspirators. The Public Integrity Section has been gutted. I urge the Senator to use their Judiciary Committee position to demand testimony from AG Bondi and to investigate whether DOJ is being used for political retaliation. Thank you."
-</CallScript>
-
----
-
-### Send an Email
-
-**Subject:** Defend DOJ Independence -- Constituent Request from [CITY]
-
-```
-Dear Senator [LAST NAME],
-
-I am writing as your constituent from [CITY, STATE, ZIP] to urge you to
-defend the independence of the Department of Justice.
-
-The blanket pardon of approximately 1,500 January 6th defendants --
-including people convicted of seditious conspiracy and assaulting over
-140 police officers -- has eliminated the deterrent against political
-violence. Five officers died following the attack. Their assailants are
-now free.
-
-Simultaneously, the DOJ is being weaponized against the prosecutors who
-investigated January 6th and against political opponents of the
-president. The Public Integrity Section -- which has prosecuted
-corruption by officials of both parties -- has lost its senior
-leadership. Career prosecutors have been reassigned or forced out for
-doing their jobs.
-
-I urge you to:
-
-1. Hold oversight hearings on DOJ politicization
-2. Demand testimony from Attorney General Bondi
-3. Support legislation protecting career prosecutors from retaliation
-4. Publicly condemn the use of DOJ to target political opponents
-5. Oppose any nominations to DOJ that prioritize loyalty over
-   qualifications
-
-The rule of law depends on DOJ independence. Please act.
-
-Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone]
-```
-
-**How to send:**
-- **Resistbot**: Text RESIST to 50409 -- guides you through sending to all reps
-- **Senate.gov**: Find email forms at [senate.gov/senators](https://www.senate.gov/senators/senators-contact.htm)
-- **House.gov**: Find your rep at [house.gov/representatives](https://www.house.gov/representatives/find-your-representative)
 
 ---
 

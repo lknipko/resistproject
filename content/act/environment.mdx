@@ -25,9 +25,9 @@ The EPA has been gutted, the Paris Agreement abandoned, the value of human life 
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">QUICK ACTIONS</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-your-representatives-about-epa-budget" className="text-orange hover:underline">Call About EPA Budget</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Representatives</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Representatives</a></li>
             <li><a href="#submit-public-comments-on-proposed-rollbacks" className="text-orange hover:underline">Submit Public Comments</a></li>
-            <li><a href="#email-your-senators-about-paris-agreement" className="text-orange hover:underline">Email About Paris Agreement</a></li>
             <li><a href="#check-your-air-and-water-quality" className="text-orange hover:underline">Check Your Air & Water</a></li>
           </ul>
         </li>
@@ -55,33 +55,44 @@ The EPA has been gutted, the Paris Agreement abandoned, the value of human life 
 
 ## Quick Actions
 
-### Call Your Representatives About EPA Budget
+### Email Your Representatives
+
+<EmailTemplate
+  subject="Oppose Paris Agreement Withdrawal"
+  repType="senator"
+  body={`Dear Senator {repName},
+
+I am writing as your constituent from {zipCode} to express strong opposition to the United States withdrawal from the Paris Climate Agreement (Executive Order 14166).
+
+The U.S. is responsible for 25% of cumulative global CO2 emissions. Our withdrawal undermines global climate action at a time when extreme weather costs American taxpayers over $90 billion annually in insured losses alone. In 2024, the U.S. experienced 27 billion-dollar weather disasters -- a record.
+
+The Paris Agreement was not a burden on American industry. Renewable energy already employs 3.4 million Americans. Solar and wind are the cheapest forms of new electricity generation. Withdrawal isolates us from the fastest-growing global economic sector.
+
+I urge you to support the Senate's authority under the Treaty Clause and to introduce legislation reaffirming U.S. climate commitments.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
 
 The EPA budget must pass through Congress. Your call is logged, tallied, and reported to your representative. High call volume demonstrably changes votes.
 
-**Script for EPA Budget:**
+<CallRepButton repType="all">
+  <CallScript topic="EPA Budget Cuts" script={`Hi, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-<CallScript>
-"Hi, my name is [YOUR NAME] and I'm a constituent from [ZIP CODE]. I'm calling to urge [REPRESENTATIVE/SENATOR NAME] to oppose the proposed 65% cut to the EPA budget in the FY2026 appropriations.
+I'm calling to urge {repName} to oppose the proposed 65% cut to the EPA budget in the FY2026 appropriations.
 
 The EPA protects the air my family breathes and the water we drink. Cutting Superfund cleanup by 67% leaves toxic waste sites in communities like ours. Cutting state environmental grants by 70% means our state can't enforce clean water standards.
 
-I urge [NAME] to fully fund the EPA. Thank you."
-</CallScript>
+I urge {repName} to fully fund the EPA. Thank you.`} />
+  <CallScript topic="Air Quality Standards" script={`Hi, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-**Script for Clean Air Standards:**
+I'm calling about the proposed rollback of PM2.5 fine particulate matter standards. EPA's own analysis shows the current standards prevent thousands of premature deaths each year.
 
-<CallScript>
-"Hi, my name is [YOUR NAME] and I'm a constituent from [ZIP CODE]. I'm calling about the proposed rollback of PM2.5 fine particulate matter standards. EPA's own analysis shows the current standards prevent thousands of premature deaths each year.
-
-I urge [REPRESENTATIVE/SENATOR NAME] to oppose any weakening of the National Ambient Air Quality Standards. Clean air is not a luxury. Thank you."
-</CallScript>
-
-**Who to call:**
-- Find your Representative: [House.gov](https://www.house.gov/representatives/find-your-representative)
-- Find your Senators: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- **House Switchboard:** 202-225-3121
-- **Senate Switchboard:** 202-224-3121
+I urge {repName} to oppose any weakening of the National Ambient Air Quality Standards. Clean air is not a luxury. Thank you.`} />
+</CallRepButton>
 
 ---
 
@@ -139,31 +150,6 @@ Respectfully submitted,
 [Your City, State]
 [Your credentials, if relevant]
 ```
-
----
-
-### Email Your Senators About Paris Agreement
-
-**Subject:** Oppose Paris Agreement Withdrawal - Constituent from [YOUR CITY]
-
-```
-Dear Senator [LAST NAME],
-
-I am writing as your constituent from [CITY, STATE, ZIP] to express strong opposition to the United States withdrawal from the Paris Climate Agreement (Executive Order 14166).
-
-The U.S. is responsible for 25% of cumulative global CO2 emissions. Our withdrawal undermines global climate action at a time when extreme weather costs American taxpayers over $90 billion annually in insured losses alone. In 2024, the U.S. experienced 27 billion-dollar weather disasters -- a record.
-
-The Paris Agreement was not a burden on American industry. Renewable energy already employs 3.4 million Americans. Solar and wind are the cheapest forms of new electricity generation. Withdrawal isolates us from the fastest-growing global economic sector.
-
-I urge you to support the Senate's authority under the Treaty Clause and to introduce legislation reaffirming U.S. climate commitments.
-
-Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone]
-```
-
-Find your Senators' contact forms: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
 
 ---
 
@@ -281,9 +267,9 @@ Lawsuits are currently the most effective mechanism for blocking environmental r
 
 ---
 
-## Resources
+## [+] Resources
 
-### Air and Water Quality Tools
+### [+] Air and Water Quality Tools
 
 | Tool | What It Does | Link |
 |------|-------------|------|
@@ -294,7 +280,7 @@ Lawsuits are currently the most effective mechanism for blocking environmental r
 | **EPA TRI Explorer** | Toxic chemical releases by facility | [epa.gov/tri](https://www.epa.gov/toxics-release-inventory-tri-program) |
 | **EPA Superfund Search** | Contaminated sites near you | [epa.gov/superfund](https://www.epa.gov/superfund/search-superfund-sites-where-you-live) |
 
-### Environmental Justice Tools
+### [+] Environmental Justice Tools
 
 | Tool | What It Does | Link |
 |------|-------------|------|
@@ -302,7 +288,7 @@ Lawsuits are currently the most effective mechanism for blocking environmental r
 | **CEJST** | Climate and Economic Justice Screening Tool | [screeningtool.geoplatform.gov](https://screeningtool.geoplatform.gov/) |
 | **CalEnviroScreen** | California environmental justice data (model for other states) | [oehha.ca.gov/calenviroscreen](https://oehha.ca.gov/calenviroscreen) |
 
-### Public Lands Resources
+### [+] Public Lands Resources
 
 | Tool | What It Does | Link |
 |------|-------------|------|
@@ -311,7 +297,7 @@ Lawsuits are currently the most effective mechanism for blocking environmental r
 | **Wilderness.net** | National Wilderness Preservation System | [wilderness.net](https://www.wilderness.net/) |
 | **Protected Areas Database** | All protected areas in the U.S. | [usgs.gov/pad-us](https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-overview) |
 
-### Congressional Resources
+### [+] Congressional Resources
 
 | Resource | What It Does | Link |
 |----------|-------------|------|
@@ -320,7 +306,7 @@ Lawsuits are currently the most effective mechanism for blocking environmental r
 | **Resistbot** | Text RESIST to 50409 to send letters to all your representatives | [resist.bot](https://resist.bot/) |
 | **5 Calls** | Issue-specific call scripts and tracking | [5calls.org](https://5calls.org) |
 
-### How to Buy a Personal Air Quality Monitor
+### [+] How to Buy a Personal Air Quality Monitor
 
 Low-cost air quality monitors let you track pollution levels at your home. This is especially important as EPA monitoring budgets are cut.
 

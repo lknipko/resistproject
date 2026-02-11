@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 
 interface CollapsibleProps {
@@ -9,6 +9,7 @@ interface CollapsibleProps {
   section?: 'learn' | 'act'
   children: React.ReactNode
   defaultOpen?: boolean
+  id?: string // Heading slug from rehype-slug
 }
 
 export function Collapsible({
@@ -16,10 +17,33 @@ export function Collapsible({
   level,
   section = 'learn',
   children,
-  defaultOpen = false
+  defaultOpen = false,
+  id
 }: CollapsibleProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen)
   const contentId = `collapsible-${title.replace(/\s+/g, '-').toLowerCase()}`
+
+  // Auto-expand if URL hash matches this section
+  useEffect(() => {
+    if (typeof window === 'undefined' || !id) return
+
+    const checkHash = () => {
+      const hash = window.location.hash.slice(1) // Remove #
+      if (hash === id) {
+        setIsOpen(true)
+      }
+    }
+
+    // Check on mount
+    checkHash()
+
+    // Listen for hash changes (when clicking Contents links)
+    window.addEventListener('hashchange', checkHash)
+
+    return () => {
+      window.removeEventListener('hashchange', checkHash)
+    }
+  }, [id])
 
   // Section-based accent colors
   const accentColor = section === 'learn' ? 'text-teal-600' : 'text-orange-600'
@@ -27,9 +51,10 @@ export function Collapsible({
   const hoverColor = section === 'learn' ? 'hover:text-teal-700' : 'hover:text-orange-700'
 
   // Font sizes and styling based on level (matches regular headings/list items)
+  // Include 'outdent' class to match the negative left margin of regular headings
   const headingStyles = {
-    h2: 'text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6',
-    h3: 'text-xl font-bold text-gray-900 mt-8 mb-4',
+    h2: 'text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 outdent',
+    h3: 'text-xl font-bold text-gray-900 mt-8 mb-4 pt-4 border-t-2 border-gray-300 outdent',
     h4: 'text-base font-semibold text-gray-800 mt-6 mb-2',
     li: 'text-base text-gray-800 mb-2'
   }
@@ -58,7 +83,7 @@ export function Collapsible({
   const wrapperClass = level === 'li' ? 'list-none' : 'my-4'
 
   return (
-    <WrapperTag className={wrapperClass}>
+    <WrapperTag className={wrapperClass} id={id}>
       {/* Header - looks like a regular heading/list item with chevron */}
       <button
         onClick={handleToggle}

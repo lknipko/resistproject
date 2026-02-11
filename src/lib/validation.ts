@@ -305,3 +305,123 @@ export function extractUrls(content: string): string[] {
 export function countGovSources(content: string): number {
   return (content.match(/\.gov/g) || []).length
 }
+
+/**
+ * Validate US zip code format.
+ * Accepts 5-digit or 5+4 digit formats (12345 or 12345-6789).
+ *
+ * @param zipCode - Zip code to validate
+ * @returns Validation result with valid flag and error message
+ */
+export function validateZipCode(zipCode: string): {
+  valid: boolean
+  error?: string
+} {
+  if (!zipCode || zipCode.trim().length === 0) {
+    return { valid: false, error: 'Zip code is required' }
+  }
+
+  const trimmed = zipCode.trim()
+
+  // 5-digit format: 12345
+  const fiveDigitPattern = /^\d{5}$/
+  // 5+4 format: 12345-6789
+  const nineDashPattern = /^\d{5}-\d{4}$/
+
+  if (!fiveDigitPattern.test(trimmed) && !nineDashPattern.test(trimmed)) {
+    return { valid: false, error: 'Zip code must be 5 digits (12345) or 5+4 format (12345-6789)' }
+  }
+
+  return { valid: true }
+}
+
+/**
+ * Validate US phone number format.
+ * Accepts 10 digits in various formats: 2025551234, 202-555-1234, (202) 555-1234
+ *
+ * @param phone - Phone number to validate
+ * @returns Validation result with valid flag and error message
+ */
+export function validatePhoneNumber(phone: string): {
+  valid: boolean
+  error?: string
+} {
+  if (!phone || phone.trim().length === 0) {
+    return { valid: false, error: 'Phone number is required' }
+  }
+
+  // Extract only digits
+  const digitsOnly = phone.replace(/\D/g, '')
+
+  if (digitsOnly.length !== 10) {
+    return { valid: false, error: 'Phone number must be 10 digits' }
+  }
+
+  // Check for invalid patterns (all same digit)
+  if (/^(\d)\1{9}$/.test(digitsOnly)) {
+    return { valid: false, error: 'Invalid phone number' }
+  }
+
+  return { valid: true }
+}
+
+/**
+ * Format phone number to standard display format: (202) 555-1234
+ *
+ * @param phone - Phone number to format (any format with 10 digits)
+ * @returns Formatted phone number
+ */
+export function formatPhoneNumber(phone: string): string {
+  const digitsOnly = phone.replace(/\D/g, '')
+
+  if (digitsOnly.length !== 10) {
+    return phone // Return original if not 10 digits
+  }
+
+  const areaCode = digitsOnly.slice(0, 3)
+  const prefix = digitsOnly.slice(3, 6)
+  const lineNumber = digitsOnly.slice(6, 10)
+
+  return `(${areaCode}) ${prefix}-${lineNumber}`
+}
+
+/**
+ * Validate a name field (first name or last name).
+ * Must be 2-100 characters, letters, spaces, hyphens, and apostrophes only.
+ *
+ * @param name - Name to validate
+ * @param fieldName - Field name for error messages (e.g., "First name")
+ * @returns Validation result with valid flag and error message
+ */
+export function validateName(name: string, fieldName: string): {
+  valid: boolean
+  error?: string
+} {
+  if (!name || name.trim().length === 0) {
+    return { valid: false, error: `${fieldName} is required` }
+  }
+
+  const trimmed = name.trim()
+
+  if (trimmed.length < 2) {
+    return { valid: false, error: `${fieldName} must be at least 2 characters` }
+  }
+
+  if (trimmed.length > 100) {
+    return { valid: false, error: `${fieldName} must be less than 100 characters` }
+  }
+
+  // Allow letters (including international), spaces, hyphens, apostrophes
+  const namePattern = /^[\p{L}\s'\-]+$/u
+
+  if (!namePattern.test(trimmed)) {
+    return { valid: false, error: `${fieldName} can only contain letters, spaces, hyphens, and apostrophes` }
+  }
+
+  // Check for profanity
+  if (isProfane(trimmed)) {
+    return { valid: false, error: `${fieldName} contains inappropriate language` }
+  }
+
+  return { valid: true }
+}

@@ -56,50 +56,38 @@ description: "Concrete actions to demand financial transparency, support anti-co
 
 ## Quick Actions
 
-### Call Your Representative About Corruption
+### Call Your Representatives
 
-**Why it works:** Congressional staff tally calls by issue. High call volume on corruption signals constituent priority and builds pressure for oversight hearings. Your call takes 2 minutes.
+Congressional staff tally calls by issue. High call volume on corruption signals constituent priority and builds pressure for oversight hearings.
 
-**Script -- General Corruption/Conflicts:**
+<CallRepButton repType="all">
+  <CallScript topic="General Corruption/Conflicts" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-<CallScript>
-"Hello, my name is [NAME] and I'm a constituent from [ZIP CODE]. I'm calling to urge [Senator/Representative NAME] to demand oversight hearings on the president's financial conflicts of interest. The president launched a cryptocurrency that earned his affiliated entities billions while simultaneously signing executive orders benefiting the crypto industry. Foreign governments continue spending millions at Trump properties. I urge [NAME] to support legislation requiring presidential divestiture and to demand subpoena power for investigating these conflicts. Thank you."
-</CallScript>
+I'm calling to urge {repName} to demand oversight hearings on the president's financial conflicts of interest. The president launched a cryptocurrency that earned his affiliated entities billions while simultaneously signing executive orders benefiting the crypto industry. Foreign governments continue spending millions at Trump properties.
 
-**Script -- Crypto Conflicts Specifically:**
+I urge {repName} to support legislation requiring presidential divestiture and to demand subpoena power for investigating these conflicts. Thank you.`} />
+  <CallScript topic="Crypto Conflicts" script={`Hello, my name is {firstName} {lastName} from {zipCode}.
 
-<CallScript>
-"Hello, my name is [NAME] from [ZIP CODE]. I'm calling about the president's cryptocurrency conflicts of interest. Three days before inauguration, Trump launched a memecoin where his entities control 80% of the supply. He then signed pro-crypto executive orders and hosted a dinner for top token holders at his golf club. This is selling presidential access. I urge [NAME] to support the bipartisan ETHICS Act to ban elected officials from launching financial products. Thank you."
-</CallScript>
+I'm calling about the president's cryptocurrency conflicts of interest. Three days before inauguration, Trump launched a memecoin where his entities control 80% of the supply. He then signed pro-crypto executive orders and hosted a dinner for top token holders at his golf club. This is selling presidential access.
 
-**Script -- Saudi Arabia/Foreign Payments:**
+I urge {repName} to support the bipartisan ETHICS Act to ban elected officials from launching financial products. Thank you.`} />
+  <CallScript topic="Saudi Arabia/Foreign Payments" script={`Hello, my name is {firstName} {lastName} from {zipCode}.
 
-<CallScript>
-"Hello, my name is [NAME] from [ZIP CODE]. I'm calling about foreign government payments to the Trump family. Jared Kushner received $2 billion from Saudi Arabia's sovereign wealth fund after serving as a senior White House advisor. Saudi-backed LIV Golf holds tournaments at Trump properties. I urge [NAME] to support the Foreign Emoluments Accountability Act and demand financial disclosure from all senior officials and their family members. Thank you."
-</CallScript>
+I'm calling about foreign government payments to the Trump family. Jared Kushner received $2 billion from Saudi Arabia's sovereign wealth fund after serving as a senior White House advisor. Saudi-backed LIV Golf holds tournaments at Trump properties.
 
-**Who to call:**
-- Find your Representative: [House.gov](https://www.house.gov/representatives/find-your-representative)
-- Find your Senators: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- **House Switchboard:** 202-225-3121
-- **Senate Switchboard:** 202-224-3121
-
-**Key Congressional Committees to contact:**
-- Senate Committee on Homeland Security and Governmental Affairs (oversight)
-- House Committee on Oversight and Accountability
-- Senate Banking Committee (crypto regulation)
-- Senate Finance Committee (tax/financial disclosure)
+I urge {repName} to support the Foreign Emoluments Accountability Act and demand financial disclosure from all senior officials and their family members. Thank you.`} />
+</CallRepButton>
 
 ---
 
-### Send an Email About Conflicts of Interest
+### Email Your Representatives
 
-**Subject:** Demand Oversight of Presidential Financial Conflicts -- [YOUR CITY] Constituent
+<EmailTemplate
+  subject="Demand Oversight of Presidential Financial Conflicts"
+  repType="all"
+  body={`Dear {repName},
 
-```
-Dear [Representative/Senator] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] to urge you to take action on the president's unprecedented financial conflicts of interest.
+I am writing as your constituent from {zipCode} to urge you to take action on the president's unprecedented financial conflicts of interest.
 
 The documented facts are deeply troubling:
 
@@ -121,10 +109,9 @@ I urge you to:
 The Constitution exists to prevent exactly this kind of self-enrichment through public office. Please act.
 
 Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone -- optional]
-```
+{firstName} {lastName}
+{zipCode}`}
+/>
 
 ---
 

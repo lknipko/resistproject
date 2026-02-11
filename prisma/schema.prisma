@@ -125,6 +125,13 @@ model UserExtended {
   emailNotifications Boolean @default(true) @map("email_notifications")
   weeklyDigest       Boolean @default(true) @map("weekly_digest")
 
+  // Civic engagement profile
+  firstName              String?  @map("first_name") @db.VarChar(100)
+  lastName               String?  @map("last_name") @db.VarChar(100)
+  zipCode                String?  @map("zip_code") @db.VarChar(10)
+  phoneNumber            String?  @map("phone_number") @db.VarChar(20)
+  civicProfileCompleted  Boolean  @default(false) @map("civic_profile_completed")
+
   // Security tracking
   lastLogin             DateTime? @map("last_login")
   failedLoginAttempts   Int       @default(0) @map("failed_login_attempts")
@@ -139,6 +146,7 @@ model UserExtended {
   @@index([reputationScore(sort: Desc)])
   @@index([accountStatus])
   @@index([registrationIpHash])
+  @@index([civicProfileCompleted])
   @@map("users_extended")
 }
 
@@ -444,4 +452,32 @@ model ExternalLinkClick {
   @@index([category, clickDate])
   @@index([sourcePage, clickDate])
   @@map("external_link_clicks")
+}
+
+// ============================================================================
+// Privacy-Friendly Civic Action Tracking
+// ============================================================================
+// Tracks ONLY aggregate action counts - NO user PII, NO personally identifiable data
+// Used to measure civic engagement impact: "How many people emailed their Senator?"
+
+model CivicAction {
+  id BigInt @id @default(autoincrement())
+
+  // Action information (NO user data)
+  actionType String @db.VarChar(50)     // "email_clicked", "call_clicked"
+  repOffice  String? @db.VarChar(100)   // "US Senate", "US House of Representatives"
+  repName    String? @db.VarChar(200)   // Representative name (NOT user data)
+
+  // Source information
+  sourcePage String @db.VarChar(500)    // Page where action was taken
+
+  // Timestamp only - NO user tracking, NO IP, NO session
+  actionDate DateTime @default(now()) @map("action_date") @db.Date
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@index([actionType])
+  @@index([actionDate])
+  @@index([actionType, actionDate])
+  @@index([sourcePage, actionDate])
+  @@map("civic_actions")
 }

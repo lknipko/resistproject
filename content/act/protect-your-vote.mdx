@@ -82,39 +82,38 @@ Every state has its own Secretary of State website with voter registration looku
 
 ---
 
-### Call Congress About Voting Rights
+### Call Your Representatives
 
-**Why it works:** Congressional offices tally calls by issue. High call volume on voting rights signals constituent priority and influences votes on the SAVE Act and other voting legislation.
+Congressional offices tally calls by issue. High call volume on voting rights signals constituent priority and influences votes on the SAVE Act and other voting legislation.
 
-**Call Script -- Opposing the SAVE Act:**
+<CallRepButton repType="all">
+  <CallScript topic="Oppose the SAVE Act" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP CODE]. I'm calling to urge [Senator/Representative NAME] to oppose the SAVE Act and any legislation that imposes proof-of-citizenship requirements for voter registration. An estimated 21 million eligible American citizens lack readily accessible documentary proof of citizenship. This bill would prevent more eligible voters from registering than any noncitizen it could possibly catch. Noncitizen voting is already a federal crime. I urge [NAME] to protect every citizen's right to vote. Thank you."
+I'm calling to urge {repName} to oppose the SAVE Act and any legislation that imposes proof-of-citizenship requirements for voter registration. An estimated 21 million eligible American citizens lack readily accessible documentary proof of citizenship. This bill would prevent more eligible voters from registering than any noncitizen it could possibly catch.
 
-**Call Script -- Supporting the John Lewis Voting Rights Advancement Act:**
+Noncitizen voting is already a federal crime. I urge {repName} to protect every citizen's right to vote. Thank you.`} />
+  <CallScript topic="Support John Lewis VRA" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP CODE]. I'm calling to urge [Senator/Representative NAME] to co-sponsor and support the John Lewis Voting Rights Advancement Act. Since the Supreme Court gutted the Voting Rights Act in Shelby County v. Holder, states have closed over 1,600 polling places and enacted dozens of new voting restrictions. We need federal oversight restored. Thank you."
+I'm calling to urge {repName} to co-sponsor and support the John Lewis Voting Rights Advancement Act. Since the Supreme Court gutted the Voting Rights Act in Shelby County v. Holder, states have closed over 1,600 polling places and enacted dozens of new voting restrictions.
 
-**Call Script -- Opposing Voter Roll Purges:**
+We need federal oversight restored. Thank you.`} />
+  <CallScript topic="Oppose Voter Roll Purges" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP CODE]. I'm calling about the mass voter roll purges happening in [STATE]. These purges have removed eligible citizens from the rolls without proper notice or due process. I urge [NAME] to support oversight of state purge programs and fully fund the Election Assistance Commission. Thank you."
+I'm calling about mass voter roll purges. These purges have removed eligible citizens from the rolls without proper notice or due process.
 
-**Who to call:**
-- **House Switchboard:** 202-225-3121
-- **Senate Switchboard:** 202-224-3121
-- **[Find Your Representative](https://www.house.gov/representatives/find-your-representative)**
-- **[Find Your Senators](https://www.senate.gov/senators/senators-contact.htm)**
-- **Text your ZIP to [Resistbot](https://resist.bot/) at 50409** for quick contact with all your reps
+I urge {repName} to support oversight of state purge programs and fully fund the Election Assistance Commission. Thank you.`} />
+</CallRepButton>
 
 ---
 
-### Send an Email About Voting Rights
+### Email Your Representatives
 
-**Subject:** Protect Voting Rights -- Constituent from [CITY]
+<EmailTemplate
+  subject="Protect Voting Rights"
+  repType="all"
+  body={`Dear {repName},
 
-```
-Dear [Representative/Senator] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] to express my deep concern about the ongoing attacks on voting rights in our country.
+I am writing as your constituent from {zipCode} to express my deep concern about the ongoing attacks on voting rights in our country.
 
 Mass voter roll purges have removed eligible citizens from registration rolls without adequate notice. The SAVE Act would require documentary proof of citizenship that an estimated 21 million Americans lack. Federal election security funding has been frozen. The DOJ Voting Rights Division has been gutted.
 
@@ -128,15 +127,9 @@ I urge you to:
 The right to vote is the foundation of our democracy. I am watching how you vote on these issues and will remember at the ballot box.
 
 Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone - optional]
-```
-
-**Send via:**
-- **[Resistbot](https://resist.bot/)** -- Text RESIST to 50409 to send to all your representatives at once
-- **[5 Calls](https://5calls.org)** -- Issue-specific calling and emailing scripts
-- **Direct email** -- Find your representative's email on [House.gov](https://www.house.gov) or [Senate.gov](https://www.senate.gov)
+{firstName} {lastName}
+{zipCode}`}
+/>
 
 ---
 

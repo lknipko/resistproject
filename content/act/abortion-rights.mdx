@@ -25,8 +25,8 @@ description: "Take action to defend abortion access: contact Congress to repeal 
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">QUICK ACTIONS</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-congress" className="text-orange hover:underline">Call Congress</a></li>
-            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Representatives</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Reps</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Reps</a></li>
             <li><a href="#support-repeal-legislation" className="text-orange hover:underline">Support Repeal Bills</a></li>
           </ul>
         </li>
@@ -47,51 +47,14 @@ description: "Take action to defend abortion access: contact Congress to repeal 
 
 ## Quick Actions
 
-### Call Congress
-
-**Why it works:** Phone calls are tracked by congressional offices and directly influence how representatives vote. Personal calls from constituents are the most effective form of advocacy.
-
-**Who to call:**
-- **Find your Representative:** [House.gov](https://www.house.gov/representatives/find-your-representative)
-- **Find your Senators:** [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- **Capitol Switchboard:** 202-224-3121 (will connect you to any congressional office)
-
-**Script for Hyde Amendment Repeal:**
-
-"Hi, my name is [YOUR NAME] and I'm calling from [ZIP CODE].
-
-I'm calling to urge [REPRESENTATIVE/SENATOR NAME] to support repealing the Hyde Amendment, which bans federal funding for abortion and disproportionately harms low-income women, women of color, and military service members.
-
-Every person deserves access to comprehensive reproductive healthcare, regardless of their income or insurance coverage.
-
-I also urge [REPRESENTATIVE/SENATOR NAME] to oppose any enforcement of the Comstock Act and to vote against any legislation that further restricts abortion access.
-
-Thank you for your time."
-
-**Script for Comstock Act Repeal:**
-
-"Hi, my name is [YOUR NAME] and I'm calling from [ZIP CODE].
-
-I'm calling to urge [REPRESENTATIVE/SENATOR NAME] to co-sponsor legislation to repeal the Comstock Act, an 1873 anti-obscenity law that could be used to ban abortion nationwide by criminalizing the mailing of abortion pills.
-
-This zombie law threatens reproductive healthcare for millions of Americans, even in states where abortion is legal.
-
-Please support Senator Tina Smith's bill to repeal the Comstock Act and protect medication abortion access.
-
-Thank you."
-
----
-
 ### Email Your Representatives
 
-**Subject:** Protect Reproductive Healthcare - Oppose Federal Abortion Restrictions
+<EmailTemplate
+  subject="Protect Reproductive Healthcare - Oppose Federal Abortion Restrictions"
+  repType="all"
+  body={`Dear {repName},
 
-**Body:**
-
-```
-Dear [Representative/Senator] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] to urge you to defend reproductive healthcare and oppose the Trump administration's systematic attacks on abortion access.
+I am writing as your constituent from {zipCode} to urge you to defend reproductive healthcare and oppose the administration's systematic attacks on abortion access.
 
 Since January 2025, the administration has:
 - Reinstated the Hyde Amendment restrictions across all federal programs
@@ -112,11 +75,24 @@ Reproductive healthcare is a fundamental right. I expect you to stand up for you
 Thank you for your consideration.
 
 Sincerely,
-[Your Name]
-[Your Address]
-[Your Email]
-[Your Phone]
-```
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton
+  repType="all"
+  script={`Hi, my name is {firstName} {lastName} and I'm calling from {zipCode}.
+
+I'm calling to urge {repName} to support repealing the Hyde Amendment, which bans federal funding for abortion and disproportionately harms low-income women, women of color, and military service members.
+
+I also urge {repName} to co-sponsor legislation to repeal the Comstock Act and to oppose any enforcement of this 1873 law that could ban abortion nationwide.
+
+Every person deserves access to comprehensive reproductive healthcare, regardless of their income or insurance coverage.
+
+Thank you for your time.`}
+/>
 
 ---
 

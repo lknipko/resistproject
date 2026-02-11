@@ -25,9 +25,9 @@ description: "Actions to demand Congress enforce the Impoundment Control Act, pr
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">Quick Actions</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Reps</a></li>
             <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Reps</a></li>
             <li><a href="#target-the-appropriations-committees" className="text-orange hover:underline">Appropriations Committees</a></li>
-            <li><a href="#send-an-email" className="text-orange hover:underline">Send an Email</a></li>
           </ul>
         </li>
         <li className="font-semibold"><a href="#why-this-is-bipartisan" className="text-orange hover:underline">Why Bipartisan</a></li>
@@ -48,67 +48,14 @@ description: "Actions to demand Congress enforce the Impoundment Control Act, pr
 
 ## Quick Actions
 
-### Call Your Representatives
+### Email Your Representatives
 
-**Why calling works:** Congressional staff tally calls on specific issues. High call volume on the Impoundment Control Act signals that constituents understand this is a constitutional issue, not just a policy disagreement. Calls are especially effective when they come from constituents in the representative's own district or state.
+<EmailTemplate
+  subject="Enforce the Impoundment Control Act -- Defend Congressional Authority"
+  repType="all"
+  body={`Dear {repName},
 
-**Call Script -- Impoundment and Congressional Authority:**
-
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to enforce the Impoundment Control Act. The administration has illegally withheld billions in congressionally appropriated funds, and the GAO has confirmed these are violations of federal law. Congress has the constitutional power of the purse, and it must defend that authority regardless of party. I urge [NAME] to support oversight hearings, demand the release of frozen funds, and co-sponsor legislation to strengthen the Impoundment Control Act. This is about protecting Congress's authority, not partisan politics. Thank you."
-
-**Who to call:**
-- **Senate Switchboard:** 202-224-3121
-- **House Switchboard:** 202-225-3121
-- [Find your Representative](https://www.house.gov/representatives/find-your-representative)
-- [Find your Senators](https://www.senate.gov/senators/senators-contact.htm)
-- **Fastest Method:** Text your zip code to [Resistbot](https://resist.bot/) at **50409**
-
-**Pro Tips:**
-- Call the **DC office** for policy issues (impoundment is a DC policy issue)
-- Be brief -- under 30 seconds
-- State your zip code clearly so they log you as a constituent
-- Ask to be **logged on the issue of impoundment** specifically
-- If you get voicemail, leave the message -- it still gets tallied
-
----
-
-### Target the Appropriations Committees
-
-The Appropriations Committees write the spending bills. Their members have the most direct interest in defending Congress's power of the purse. These are the most important offices to contact on impoundment.
-
-**Senate Appropriations Committee:**
-- [Full Committee Members](https://www.appropriations.senate.gov/about/members)
-- Committee Phone: 202-224-7363
-
-**House Appropriations Committee:**
-- [Full Committee Members](https://appropriations.house.gov/about/members)
-- Committee Phone: 202-225-2771
-
-**Call Script for Appropriations Committee Members:**
-
-> "Hello, I'm [NAME] from [CITY/ZIP]. I'm calling because [Senator/Representative NAME] sits on the Appropriations Committee, which means defending Congress's spending authority is literally their job. The administration has illegally impounded billions that this committee appropriated. The GAO has confirmed violations of the Impoundment Control Act. I urge [NAME] to hold hearings on these impoundment violations and to ensure that every dollar Congress appropriated is spent as the law requires. The Appropriations Committee exists to control spending -- please exercise that control. Thank you."
-
-**Senate Budget Committee:**
-- Also relevant because impoundment is a budget process issue
-- [Committee Members](https://www.budget.senate.gov/about/membership)
-- Committee Phone: 202-224-0642
-
-**House Budget Committee:**
-- [Committee Members](https://budget.house.gov/about/membership)
-- Committee Phone: 202-226-7270
-
----
-
-### Send an Email
-
-**Subject:** Enforce the Impoundment Control Act -- Defend Congressional Authority
-
-**Email Template:**
-
-```
-Dear [Representative/Senator] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] to urge you to take immediate action to enforce the Impoundment Control Act and defend Congress's constitutional authority over federal spending.
+I am writing as your constituent from {zipCode} to urge you to take immediate action to enforce the Impoundment Control Act and defend Congress's constitutional authority over federal spending.
 
 The administration has illegally withheld billions in congressionally appropriated funds. The Government Accountability Office has confirmed that multiple funding pauses constitute violations of the Impoundment Control Act of 1974. Federal courts have issued injunctions ordering the release of frozen funds. Yet Congress has not taken meaningful action to enforce its own authority.
 
@@ -126,15 +73,43 @@ If Congress does not defend its own authority now, every future president will c
 Thank you for your attention to this critical constitutional issue.
 
 Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone - optional]
-```
+{firstName} {lastName}
+{zipCode}`}
+/>
 
-**Where to send:**
-- Representatives: Available on [House.gov member pages](https://www.house.gov/representatives/find-your-representative)
-- Senators: Available on [Senate.gov member pages](https://www.senate.gov/senators/senators-contact.htm)
-- **Resistbot**: Text RESIST to 50409 to send to all your representatives at once
+### Call Your Representatives
+
+<CallRepButton
+  repType="all"
+  script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge {repName} to enforce the Impoundment Control Act. The administration has illegally withheld billions in congressionally appropriated funds, and the GAO has confirmed these are violations of federal law.
+
+Congress has the constitutional power of the purse, and it must defend that authority regardless of party. I urge {repName} to support oversight hearings, demand the release of frozen funds, and co-sponsor legislation to strengthen the Impoundment Control Act.
+
+This is about protecting Congress's authority, not partisan politics. Thank you.`}
+/>
+
+### Target the Appropriations Committees
+
+The Appropriations Committees write the spending bills. Their members have the most direct interest in defending Congress's power of the purse. These are the most important offices to contact on impoundment.
+
+**Senate Appropriations Committee:**
+- [Full Committee Members](https://www.appropriations.senate.gov/about/members)
+- Committee Phone: 202-224-7363
+
+**House Appropriations Committee:**
+- [Full Committee Members](https://appropriations.house.gov/about/members)
+- Committee Phone: 202-225-2771
+
+**Senate Budget Committee:**
+- Also relevant because impoundment is a budget process issue
+- [Committee Members](https://www.budget.senate.gov/about/membership)
+- Committee Phone: 202-224-0642
+
+**House Budget Committee:**
+- [Committee Members](https://budget.house.gov/about/membership)
+- Committee Phone: 202-226-7270
 
 ---
 

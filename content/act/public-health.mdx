@@ -49,47 +49,31 @@ Public health infrastructure is being dismantled at every level: WHO withdrawal,
 
 ## Quick Actions
 
-### Call Congress About WHO Withdrawal
+### Call Your Representatives
 
-<CallScript>
-"Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to oppose U.S. withdrawal from the World Health Organization. The WHO is our early warning system for pandemics and coordinates disease surveillance across 194 countries. Withdrawal leaves Americans blind to emerging threats. I urge [NAME] to co-sponsor legislation requiring congressional approval for WHO withdrawal and to restore U.S. funding for global health security. Thank you."
-</CallScript>
+<CallRepButton repType="all">
+  <CallScript topic="WHO Withdrawal" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-<div className="my-6">
-  <Button href="tel:202-224-3121" variant="primary">
-    Call Senate Switchboard: 202-224-3121
-  </Button>
-</div>
+I'm calling to urge {repName} to oppose U.S. withdrawal from the World Health Organization. The WHO is our early warning system for pandemics and coordinates disease surveillance across 194 countries. Withdrawal leaves Americans blind to emerging threats.
 
-**Find your representatives:**
-- [House.gov - Find Your Representative](https://www.house.gov/representatives/find-your-representative)
-- [Senate.gov - Find Your Senators](https://www.senate.gov/senators/senators-contact.htm)
+I urge {repName} to co-sponsor legislation requiring congressional approval for WHO withdrawal and to restore U.S. funding for global health security. Thank you.`} />
+  <CallScript topic="NIH Funding Cuts" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-### Call Congress About NIH Funding
+I'm calling about the proposed 40% cut to NIH funding. NIH-funded research generates $103 billion in economic activity across all 50 states and has led to treatments for cancer, Alzheimer's, and infectious diseases. These cuts threaten medical breakthroughs, cost jobs, and send our best researchers to other countries.
 
-<CallScript>
-"Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling about the proposed 40% cut to NIH funding. NIH-funded research generates $103 billion in economic activity across all 50 states and has led to treatments for cancer, Alzheimer's, and infectious diseases. [STATE] has [NUMBER] institutions receiving NIH grants. These cuts threaten medical breakthroughs, cost jobs, and send our best researchers to other countries. I urge [NAME] to support full NIH funding restoration in the FY2026 budget. Thank you."
-</CallScript>
+I urge {repName} to support full NIH funding restoration in the FY2026 budget. Thank you.`} />
+</CallRepButton>
 
 **Tip:** Find your state's NIH funding at [NIH RePORTER](https://reporter.nih.gov/) to personalize your call with local impact data.
 
-### Email the Senate HELP Committee
+### Email Your Representatives
 
-The Senate Health, Education, Labor, and Pensions (HELP) Committee oversees HHS, CDC, FDA, and NIH. Key members to contact:
+<EmailTemplate
+  subject="Protect Public Health Infrastructure"
+  repType="all"
+  body={`Dear {repName},
 
-| Senator | Role | Contact |
-|---------|------|---------|
-| Committee Chair | Check [HELP Committee](https://www.help.senate.gov/) | Via Senate.gov |
-| Ranking Member | Check [HELP Committee](https://www.help.senate.gov/) | Via Senate.gov |
-
-**Sample Email:**
-
-```
-Subject: Protect Public Health Infrastructure - Constituent from [STATE]
-
-Dear [Senator NAME],
-
-I am writing as your constituent from [CITY, ZIP] to express grave concern about the systematic dismantling of America's public health infrastructure.
+I am writing as your constituent from {zipCode} to express grave concern about the systematic dismantling of America's public health infrastructure.
 
 The combination of WHO withdrawal, proposed 40% NIH budget cuts, politicization of CDC scientific guidance, and mass firings at HHS agencies leaves our country dangerously unprepared for the next health emergency. COVID-19 killed over 1.2 million Americans when we had these systems in place. Without them, the consequences of the next pandemic will be far worse.
 
@@ -102,11 +86,9 @@ I urge you to:
 Thank you for your attention to this matter.
 
 Sincerely,
-[Your Name]
-[Your Address]
-```
-
-**Send via Resistbot:** Text RESIST to **50409** to send this letter to all your representatives at once.
+{firstName} {lastName}
+{zipCode}`}
+/>
 
 ### Protect Yourself and Your Family
 

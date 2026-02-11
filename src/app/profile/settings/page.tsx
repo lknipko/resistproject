@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import DisplayNameForm from './DisplayNameForm'
 import EmailPreferencesForm from './EmailPreferencesForm'
+import CivicProfileForm from './CivicProfileForm'
 
 export const metadata = {
   title: 'Account Settings',
@@ -65,6 +66,23 @@ export default async function SettingsPage() {
               <DisplayNameForm initialDisplayName={userExtended?.displayName || session.user.name || ''} />
             </div>
           </div>
+        </div>
+
+        {/* Civic Engagement Profile */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Civic Engagement Profile
+          </h2>
+          <p className="text-sm text-gray-600 mb-4">
+            Complete your profile to get personalized action templates for contacting your representatives.
+            Your information is used only to identify your federal representatives and customize templates.
+          </p>
+          <CivicProfileForm
+            initialFirstName={userExtended?.firstName || ''}
+            initialLastName={userExtended?.lastName || ''}
+            initialZipCode={userExtended?.zipCode || ''}
+            initialPhoneNumber={userExtended?.phoneNumber || ''}
+          />
         </div>
 
         {/* Privacy & Security */}

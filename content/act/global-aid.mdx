@@ -47,86 +47,48 @@ The dismantling of USAID and the freeze on foreign aid has put millions of lives
 
 ## Quick Actions
 
-### Call Congress Now
+### Call Your Representatives
 
-**Why calling works:** Congressional offices tally every call by issue. High call volume on foreign aid signals constituent priority and is harder to ignore than emails. Members of the Appropriations and Foreign Relations/Affairs committees have the most direct power to act.
+Congressional offices tally every call by issue. High call volume on foreign aid signals constituent priority and is harder to ignore than emails. Members of the Appropriations and Foreign Relations/Affairs committees have the most direct power to act.
 
-**Call Script -- USAID Restoration:**
+<CallRepButton repType="all" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to demand the restoration of USAID and the release of congressionally appropriated foreign aid funds. The administration is illegally withholding billions that Congress directed be spent on programs that save millions of lives, including PEPFAR, which provides HIV treatment to over 20 million people. Withholding these funds violates the Impoundment Control Act. I urge [NAME] to use every tool available -- including hearings, legislation, and the power of the purse -- to restore these lifesaving programs. Thank you."
+I'm calling to urge {repName} to demand the restoration of USAID and the release of congressionally appropriated foreign aid funds. The administration is illegally withholding billions that Congress directed be spent on programs that save millions of lives, including PEPFAR, which provides HIV treatment to over 20 million people.
 
-**Who to Call:**
-
-**Senate Appropriations Committee -- State, Foreign Operations Subcommittee:**
-- **Senate Switchboard:** 202-224-3121 (ask for your Senator)
-- [Find Your Senators](https://www.senate.gov/senators/senators-contact.htm)
-
-**House Appropriations Committee -- State, Foreign Operations Subcommittee:**
-- **House Switchboard:** 202-225-3121 (ask for your Representative)
-- [Find Your Representative](https://www.house.gov/representatives/find-your-representative)
-
-**Key Committee Members to Target:**
-
-| Committee | Chair | Ranking Member |
-|-----------|-------|----------------|
-| Senate Appropriations | Contact your Senator regardless | Contact your Senator regardless |
-| Senate Foreign Relations | Contact your Senator regardless | Contact your Senator regardless |
-| House Appropriations | Contact your Representative regardless | Contact your Representative regardless |
-| House Foreign Affairs | Contact your Representative regardless | Contact your Representative regardless |
-
-**Pro Tips:**
-- Call the **DC office** for policy issues (not district office)
-- Be brief -- under 30 seconds
-- **State your zip code** clearly so they log you as a constituent
-- Ask to be **logged on the issue of USAID/foreign aid restoration**
-- Call back weekly -- repeat callers are noticed
-
-**Fastest Method:** Text your zip code to [Resistbot](https://resist.bot/) at **50409** to be connected to your representatives.
+Withholding these funds violates the Impoundment Control Act. I urge {repName} to use every tool available -- including hearings, legislation, and the power of the purse -- to restore these lifesaving programs. Thank you.`} />
 
 ---
 
-### Email the Appropriations Committees
+### Email Your Representatives
 
-**Sample Email -- Ready to Send:**
+<EmailTemplate
+  subject="Restore USAID and Release Appropriated Foreign Aid Funds"
+  repType="all"
+  body={`Dear {repName},
 
-```
-Subject: Restore USAID and Release Appropriated Foreign Aid Funds
-
-Dear [Senator/Representative NAME],
-
-I am writing as your constituent from [CITY, ZIP] to demand
-the restoration of USAID operations and the immediate release
-of congressionally appropriated foreign aid funds.
+I am writing as your constituent from {zipCode} to demand the restoration of USAID operations and the immediate release of congressionally appropriated foreign aid funds.
 
 The administration's freeze on foreign assistance is:
 
-1. Potentially illegal under the Impoundment Control Act of
-   1974 -- Congress appropriated these funds and the president
-   cannot unilaterally refuse to spend them
-2. Putting 20+ million people on PEPFAR HIV treatment at risk
-   of death from treatment interruption
-3. Removing the world's largest emergency food donor during
-   active famines
-4. Destroying 60+ years of institutional expertise that cannot
-   be rebuilt
+1. Potentially illegal under the Impoundment Control Act of 1974 -- Congress appropriated these funds and the president cannot unilaterally refuse to spend them
+2. Putting 20+ million people on PEPFAR HIV treatment at risk of death from treatment interruption
+3. Removing the world's largest emergency food donor during active famines
+4. Destroying 60+ years of institutional expertise that cannot be rebuilt
 
-PEPFAR, created by President George W. Bush with bipartisan
-support, has saved 25 million lives. Ending it is not a
-partisan issue -- it is a humanitarian catastrophe.
+PEPFAR, created by President George W. Bush with bipartisan support, has saved 25 million lives. Ending it is not a partisan issue -- it is a humanitarian catastrophe.
 
 I urge you to:
 - Hold hearings on the legality of the aid freeze
-- Introduce or support legislation requiring release of
-  appropriated foreign aid funds
+- Introduce or support legislation requiring release of appropriated foreign aid funds
 - Investigate DOGE access to sensitive USAID systems
 - Use every tool at your disposal to restore these programs
 
 Lives are at stake every day this continues. Please act now.
 
 Sincerely,
-[Your Name]
-[Your Address]
-```
+{firstName} {lastName}
+{zipCode}`}
+/>
 
 **How to Send:**
 - **Resistbot:** Text RESIST to **50409**, then follow prompts to send to all your representatives at once (free)

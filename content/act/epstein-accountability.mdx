@@ -25,9 +25,8 @@ description: "Concrete actions to demand full release of sealed Epstein document
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">QUICK ACTIONS</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-your-senators-demand-an-epstein-investigation" className="text-orange hover:underline">Call Your Senators</a></li>
-            <li><a href="#call-your-representative" className="text-orange hover:underline">Call Your Representative</a></li>
-            <li><a href="#email-the-senate-judiciary-committee" className="text-orange hover:underline">Email Judiciary Committee</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Representatives</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Representatives</a></li>
             <li><a href="#share-the-facts" className="text-orange hover:underline">Share on Social Media</a></li>
             <li><a href="#sign-key-petitions" className="text-orange hover:underline">Sign Petitions</a></li>
           </ul>
@@ -57,68 +56,14 @@ description: "Concrete actions to demand full release of sealed Epstein document
 
 ## Quick Actions
 
-### Call Your Senators: Demand an Epstein Investigation
+### Email Your Representatives
 
-**Why it works:** Senators serve on the Judiciary Committee, which has subpoena power over the DOJ and FBI. A bipartisan Senate investigation could access sealed materials, compel testimony, and force disclosure of the FBI investigative file. Congressional staff tally calls by issue -- high volume signals constituent priority. Your call takes 2 minutes.
+<EmailTemplate
+  subject="Constituent Request: Bipartisan Investigation into the Epstein Case"
+  repType="senator"
+  body={`Dear Senator {repName},
 
-**Script -- Full Investigation:**
-
-<CallScript>
-"Hello, my name is [NAME] and I'm a constituent from [ZIP CODE]. I'm calling to urge Senator [NAME] to support a comprehensive bipartisan investigation into the Jeffrey Epstein sex trafficking case. Over 100 identified victims were children. Only two people have been federally charged. The FBI investigative file has not been released. The contents of Epstein's safe have never been disclosed. The 2008 non-prosecution agreement granted blanket immunity to unnamed co-conspirators. The Senate Judiciary Committee has subpoena power to access sealed materials and compel testimony from DOJ officials. I urge the Senator to support a full investigation. Thank you."
-</CallScript>
-
-**Script -- Document Release:**
-
-<CallScript>
-"Hello, my name is [NAME] from [ZIP CODE]. I'm calling about the Epstein case. Thousands of pages of court documents remain sealed. The FBI's investigative file has not been released despite FOIA requests. The contents of the safe found in Epstein's Manhattan home -- CDs labeled with names and photographs -- have never been disclosed. I urge Senator [NAME] to demand that the DOJ and FBI release all non-classified Epstein-related materials to the public. Survivors and the American people deserve full transparency. Thank you."
-</CallScript>
-
-**Script -- Co-Conspirator Prosecution:**
-
-<CallScript>
-"Hello, my name is [NAME] from [ZIP CODE]. I'm calling about accountability in the Epstein case. Jeffrey Epstein ran a sex trafficking network for decades with the help of numerous associates. Only Ghislaine Maxwell has been federally charged. The Southern District of New York said its investigation was 'ongoing' in 2019 -- six years later, no additional charges have been filed. I urge Senator [NAME] to demand an update from the DOJ on the status of the investigation and to push for prosecution of any identifiable co-conspirators. No one should be above the law. Thank you."
-</CallScript>
-
-**Who to call:**
-- Find your Senators: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- **Senate Switchboard:** 202-224-3121
-
-**Key Senate Committees:**
-- **Senate Judiciary Committee** -- Oversight of DOJ and FBI; subpoena power
-  - Chair: [Check current membership at judiciary.senate.gov](https://www.judiciary.senate.gov/)
-- **Senate Commerce Committee** -- Oversight of trafficking issues
-- **Senate Homeland Security & Governmental Affairs** -- Government accountability
-
----
-
-### Call Your Representative
-
-**Why it matters:** The House Judiciary Committee and House Oversight Committee also have subpoena power. House members represent smaller constituencies, so individual calls carry more weight.
-
-**Script -- House Investigation:**
-
-<CallScript>
-"Hello, my name is [NAME] and I'm a constituent from [ZIP CODE]. I'm calling to urge Representative [NAME] to support a full House investigation into the Epstein sex trafficking case. The 2008 non-prosecution agreement brokered by Alexander Acosta let a serial child sex trafficker serve 13 months in county jail with work release and granted blanket immunity to unnamed co-conspirators. The DOJ Inspector General found 'poor judgment' but no one was held accountable. Over 100 victims were children. The House has the power to investigate. Please use it. Thank you."
-</CallScript>
-
-**Who to call:**
-- Find your Representative: [House.gov](https://www.house.gov/representatives/find-your-representative)
-- **House Switchboard:** 202-225-3121
-
-**Key House Committees:**
-- **House Judiciary Committee** -- [judiciary.house.gov](https://judiciary.house.gov/)
-- **House Oversight and Accountability Committee** -- [oversight.house.gov](https://oversight.house.gov/)
-
----
-
-### Email the Senate Judiciary Committee
-
-**Subject:** Constituent Request: Bipartisan Investigation into the Epstein Sex Trafficking Case
-
-```
-Dear [Senator/Committee Chair] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] to request that the Senate Judiciary Committee conduct a comprehensive, bipartisan investigation into the Jeffrey Epstein sex trafficking case and the Department of Justice's handling of it.
+I am writing as your constituent from {zipCode} to request that the Senate Judiciary Committee conduct a comprehensive, bipartisan investigation into the Jeffrey Epstein sex trafficking case and the Department of Justice's handling of it.
 
 The documented facts demand investigation:
 
@@ -142,15 +87,44 @@ Over 100 identified victims were children when they were abused. They deserve a 
 I urge you to act.
 
 Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone -- optional]
-```
+{firstName} {lastName}
+{zipCode}`}
+/>
 
-**Where to send:**
-- Your own Senators: [senate.gov/senators](https://www.senate.gov/senators/senators-contact.htm) -- Use each Senator's contact form
-- Senate Judiciary Committee: [judiciary.senate.gov/contact](https://www.judiciary.senate.gov/)
-- You can also send the same letter to the House Judiciary Committee: [judiciary.house.gov](https://judiciary.house.gov/)
+### Call Your Representatives
+
+Senators serve on the Judiciary Committee, which has subpoena power over the DOJ and FBI. A bipartisan Senate investigation could access sealed materials, compel testimony, and force disclosure of the FBI investigative file. Congressional staff tally calls by issue -- high volume signals constituent priority.
+
+<CallRepButton repType="senator">
+  <CallScript topic="Senate Investigation" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge Senator {repName} to support a comprehensive bipartisan investigation into the Jeffrey Epstein sex trafficking case.
+
+Over 100 identified victims were children. Only two people have been federally charged. The FBI investigative file has not been released. The contents of Epstein's safe have never been disclosed. The 2008 non-prosecution agreement granted blanket immunity to unnamed co-conspirators.
+
+The Senate Judiciary Committee has subpoena power to access sealed materials and compel testimony from DOJ officials. I urge the Senator to support a full investigation. Thank you.`} />
+  <CallScript topic="Release Sealed Materials" script={`Hello, my name is {firstName} {lastName} from {zipCode}.
+
+I'm calling about the Epstein case. Thousands of pages of court documents remain sealed. The FBI's investigative file has not been released despite FOIA requests. The contents of the safe found in Epstein's Manhattan home -- CDs labeled with names and photographs -- have never been disclosed.
+
+I urge Senator {repName} to demand that the DOJ and FBI release all non-classified Epstein-related materials to the public. Survivors and the American people deserve full transparency. Thank you.`} />
+  <CallScript topic="Prosecute Co-Conspirators" script={`Hello, my name is {firstName} {lastName} from {zipCode}.
+
+I'm calling about accountability in the Epstein case. Jeffrey Epstein ran a sex trafficking network for decades with the help of numerous associates. Only Ghislaine Maxwell has been federally charged. The Southern District of New York said its investigation was 'ongoing' in 2019 -- six years later, no additional charges have been filed.
+
+I urge Senator {repName} to demand an update from the DOJ on the status of the investigation and to push for prosecution of any identifiable co-conspirators. No one should be above the law. Thank you.`} />
+</CallRepButton>
+
+<CallRepButton
+  repType="representative"
+  script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge Representative {repName} to support a full House investigation into the Epstein sex trafficking case.
+
+The 2008 non-prosecution agreement brokered by Alexander Acosta let a serial child sex trafficker serve 13 months in county jail with work release and granted blanket immunity to unnamed co-conspirators. The DOJ Inspector General found 'poor judgment' but no one was held accountable. Over 100 victims were children.
+
+The House has the power to investigate. Please use it. Thank you.`}
+/>
 
 ---
 
@@ -446,9 +420,9 @@ These reporters have done the most significant investigative work on the Epstein
 
 ---
 
-## Resources
+## [+] Resources
 
-### Court Document Databases
+### [+] Court Document Databases
 
 | Database | What It Contains | Link |
 |----------|-----------------|------|
@@ -458,7 +432,7 @@ These reporters have done the most significant investigative work on the Epstein
 | **DOJ OIG Reports** | Inspector General investigations of BOP failures and NPA handling | [oig.justice.gov](https://oig.justice.gov/) |
 | **SDNY Press Releases** | Official DOJ announcements on indictments, convictions, sentencing | [justice.gov/usao-sdny](https://www.justice.gov/usao-sdny) |
 
-### Research Tools
+### [+] Research Tools
 
 | Tool | Purpose | Link |
 |------|---------|------|
@@ -470,7 +444,7 @@ These reporters have done the most significant investigative work on the Epstein
 | **Congress.gov** | Official source for bills, committee hearings, and legislative action | [congress.gov](https://www.congress.gov/) |
 | **OpenSecrets** | Campaign finance data -- see who funds members on key committees | [opensecrets.org](https://www.opensecrets.org/) |
 
-### Educational Resources
+### [+] Educational Resources
 
 **Understanding Sex Trafficking Law:**
 - [DOJ Human Trafficking Prosecution Unit](https://www.justice.gov/crt/human-trafficking-prosecution-unit-htpu) -- Federal trafficking law overview

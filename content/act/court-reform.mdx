@@ -27,9 +27,8 @@ The Supreme Court operates under a voluntary ethics code with no enforcement mec
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">Quick Actions</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-your-senators-about-scotus-ethics" className="text-orange hover:underline">Call About Ethics</a></li>
-            <li><a href="#email-the-judiciary-committee" className="text-orange hover:underline">Email Judiciary Committee</a></li>
-            <li><a href="#contact-your-representative-about-term-limits" className="text-orange hover:underline">Call About Term Limits</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Reps</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Reps</a></li>
             <li><a href="#share-the-facts" className="text-orange hover:underline">Share the Facts</a></li>
           </ul>
         </li>
@@ -51,97 +50,62 @@ The Supreme Court operates under a voluntary ethics code with no enforcement mec
 
 ## Quick Actions
 
-### Call Your Senators About SCOTUS Ethics
+### Email Your Representatives
 
-**Why this matters:** The Supreme Court Ethics, Recusal, and Transparency Act (S. 359 in the 118th Congress, reintroduced in the 119th) would create the first enforceable ethics code for Supreme Court justices. It needs Senate support. Calls are the most effective form of constituent contact -- they are logged, tallied, and reported directly to your senator.
+<EmailTemplate
+  subject="Support Enforceable Supreme Court Ethics Rules"
+  repType="senator"
+  body={`Dear Senator {repName},
 
-**Call Script:**
+I am writing as your constituent from {zipCode} to urge you to support enforceable ethics rules for the Supreme Court.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP CODE]. I'm calling to urge Senator [NAME] to support enforceable ethics rules for the Supreme Court.
+ProPublica's investigations documented over $4 million in undisclosed gifts to Justice Thomas from billionaire Harlan Crow, including luxury travel, real estate transactions, and private school tuition payments. Justice Alito accepted an undisclosed fishing trip from a hedge fund manager who later had a case before the Court -- and Alito voted in his favor without recusing.
 
-> Justice Thomas accepted over $4 million in undisclosed gifts from a billionaire donor. Justice Alito accepted a luxury trip from a hedge fund manager who later had a case before the Court. The Supreme Court's current ethics code has no enforcement mechanism and no consequences for violations.
-
-> I urge Senator [NAME] to co-sponsor and support the Supreme Court Ethics, Recusal, and Transparency Act, which would create binding ethics rules with an independent enforcement mechanism.
-
-> Every other federal judge in America is bound by enforceable ethics rules. Supreme Court justices should be held to the same standard. Thank you."
-
-**Who to call:**
-- Find your Senators: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- **Senate Switchboard:** 202-224-3121
-
-**Key members of the Senate Judiciary Committee:**
-
-| Member | Role | Phone |
-|--------|------|-------|
-| Sen. Chuck Grassley (R-IA) | Chair | 202-224-3744 |
-| Sen. Dick Durbin (D-IL) | Ranking Member | 202-224-2152 |
-| Sen. Sheldon Whitehouse (D-RI) | Ethics Act Sponsor | 202-224-2921 |
-| Sen. Lindsey Graham (R-SC) | Member | 202-224-5972 |
-
-[source: Senate Judiciary Committee](https://www.judiciary.senate.gov/about/members)
-
-### Email the Judiciary Committee
-
-**Subject:** Support Enforceable Supreme Court Ethics Rules
-
-```
-Dear Senator [NAME],
-
-I am writing as your constituent from [CITY, STATE, ZIP] to urge you to
-support enforceable ethics rules for the Supreme Court.
-
-ProPublica's investigations documented over $4 million in undisclosed gifts
-to Justice Thomas from billionaire Harlan Crow, including luxury travel,
-real estate transactions, and private school tuition payments. Justice
-Alito accepted an undisclosed fishing trip from a hedge fund manager who
-later had a case before the Court -- and Alito voted in his favor without
-recusing.
-
-The Supreme Court's November 2023 ethics code contains no enforcement
-mechanism, no complaint process, and no consequences for violations. It is
-the only branch of the federal government without binding ethics rules.
+The Supreme Court's November 2023 ethics code contains no enforcement mechanism, no complaint process, and no consequences for violations. It is the only branch of the federal government without binding ethics rules.
 
 I urge you to:
 
 1. Co-sponsor the Supreme Court Ethics, Recusal, and Transparency Act
-2. Support creating an independent body to investigate ethics complaints
-   against justices
+2. Support creating an independent body to investigate ethics complaints against justices
 3. Require public justification for recusal decisions
 4. Strengthen financial disclosure requirements and enforcement
 
-66% of Americans support a binding ethics code for Supreme Court justices
-(Marquette Law School Poll, 2023). This is not a partisan issue -- it is
-about restoring public trust in our judicial system.
+66% of Americans support a binding ethics code for Supreme Court justices (Marquette Law School Poll, 2023). This is not a partisan issue -- it is about restoring public trust in our judicial system.
 
 Thank you for your attention to this matter.
 
 Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone]
-```
+{firstName} {lastName}
+{zipCode}`}
+/>
 
-**How to send:**
-- Find your Senators' contact forms: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- Use [Resistbot](https://resist.bot/) -- text RESIST to **50409** to send to all representatives at once
+### Call Your Representatives
 
-### Contact Your Representative About Term Limits
+<CallRepButton
+  repType="senator"
+  script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-**Why this matters:** Supreme Court term limits (typically 18 years proposed) have broad bipartisan support -- 60-70% in polls. The Supreme Court Term Limits and Regular Appointments Act has been introduced in the House.
+I'm calling to urge Senator {repName} to support enforceable ethics rules for the Supreme Court.
 
-**Call Script:**
+Justice Thomas accepted over $4 million in undisclosed gifts from a billionaire donor. Justice Alito accepted a luxury trip from a hedge fund manager who later had a case before the Court. The Supreme Court's current ethics code has no enforcement mechanism and no consequences for violations.
 
-> "Hello, my name is [NAME] and I'm calling from [CITY/ZIP]. I'm calling to urge Representative [NAME] to support the Supreme Court Term Limits and Regular Appointments Act.
+I urge Senator {repName} to co-sponsor and support the Supreme Court Ethics, Recusal, and Transparency Act, which would create binding ethics rules with an independent enforcement mechanism.
 
-> Life tenure on the Supreme Court was designed for an era when justices served an average of 15 years. Today, justices serve 25-35 years or more, concentrating immense power in unelected officials with no accountability.
+Every other federal judge in America is bound by enforceable ethics rules. Supreme Court justices should be held to the same standard. Thank you.`}
+/>
 
-> 18-year term limits with staggered appointments would give every president equal influence over the Court, reduce the stakes of each appointment, and ensure regular democratic input into judicial selection.
+<CallRepButton
+  repType="representative"
+  script={`Hello, my name is {firstName} {lastName} and I'm calling from {zipCode}.
 
-> I urge Representative [NAME] to co-sponsor this legislation. Thank you."
+I'm calling to urge Representative {repName} to support the Supreme Court Term Limits and Regular Appointments Act.
 
-**Who to call:**
-- Find your Representative: [House.gov](https://www.house.gov/representatives/find-your-representative)
-- **House Switchboard:** 202-225-3121
+Life tenure on the Supreme Court was designed for an era when justices served an average of 15 years. Today, justices serve 25-35 years or more, concentrating immense power in unelected officials with no accountability.
+
+18-year term limits with staggered appointments would give every president equal influence over the Court, reduce the stakes of each appointment, and ensure regular democratic input into judicial selection.
+
+I urge Representative {repName} to co-sponsor this legislation. Thank you.`}
+/>
 
 ### Share the Facts
 

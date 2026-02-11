@@ -25,11 +25,8 @@ description: "Actions to defend NATO, support Ukraine, oppose Greenland annexati
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">QUICK ACTIONS</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-about-nato-and-alliance-commitments" className="text-orange hover:underline">NATO & Alliances</a></li>
-            <li><a href="#call-about-ukraine-support" className="text-orange hover:underline">Ukraine Support</a></li>
-            <li><a href="#call-about-territorial-threats" className="text-orange hover:underline">Territorial Threats</a></li>
-            <li><a href="#call-about-venezuela-and-cuba" className="text-orange hover:underline">Venezuela & Cuba</a></li>
-            <li><a href="#email-the-foreign-affairs-committees" className="text-orange hover:underline">Email Committees</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Representatives</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Representatives</a></li>
           </ul>
         </li>
         <li className="font-semibold"><a href="#sustained-actions" className="text-orange hover:underline">SUSTAINED ACTIONS</a>
@@ -50,79 +47,14 @@ description: "Actions to defend NATO, support Ukraine, oppose Greenland annexati
 
 ## Quick Actions
 
-### Call About NATO and Alliance Commitments
+### Email Your Representatives
 
-**Why it matters:** Article 5 of the North Atlantic Treaty is a binding U.S. obligation ratified by the Senate. Congressional pressure can prevent the administration from unilaterally abandoning alliance commitments.
+<EmailTemplate repType="all">
+  <EmailMessage topic="NATO & Ukraine Support" subject="Uphold U.S. Treaty Obligations to NATO and Ukraine" body={`Dear {repName},
 
-**Call Script:**
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to defend U.S. commitments to NATO and our treaty allies. Article 5 is a binding obligation ratified by the Senate, not a suggestion. Threatening to abandon allies who have fought alongside us -- including after 9/11 -- undermines our national security. I urge [NAME] to publicly affirm Article 5 and oppose any reduction in U.S. commitment to NATO. Thank you."
+I am writing as your constituent from {zipCode} to urge you to take action to defend U.S. alliance commitments.
 
-**Who to call:**
-- **Senate Foreign Relations Committee members** are the most critical targets
-- Find your Senators: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- Find your Representative: [House.gov](https://www.house.gov/representatives/find-your-representative)
-- **Senate switchboard:** 202-224-3121
-- **House switchboard:** 202-225-3121
-
-### Call About Ukraine Support
-
-**Why it matters:** Ukraine is fighting to defend its sovereignty against Russian invasion. Pausing military aid and demanding mineral rights as payment undermines both Ukraine and the principle that borders cannot be changed by force.
-
-**Call Script:**
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling about U.S. support for Ukraine. I urge [Senator/Representative NAME] to support continued military and humanitarian aid to Ukraine without exploitative conditions like the minerals deal. Abandoning Ukraine rewards Russian aggression and tells every U.S. ally that our commitments can be bought and sold. Please support legislation to maintain Ukraine aid and oppose any deal that extracts resources from a nation we should be helping. Thank you."
-
-**Key targets:**
-- Members of the **Senate Foreign Relations Committee**
-- Members of the **House Foreign Affairs Committee**
-- Members of the **Senate and House Armed Services Committees**
-- Members of the **Senate and House Appropriations Committees** (they control aid funding)
-
-### Call About Territorial Threats
-
-**Why it matters:** Threatening to annex Greenland, seize the Panama Canal, or absorb Canada violates the UN Charter and destroys U.S. credibility as a defender of international law -- the very law we invoke when condemning Russia's invasion of Ukraine.
-
-**Call Script:**
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling because I'm deeply concerned about the President's threats to annex Greenland, seize the Panama Canal, and absorb Canada. These threats violate the UN Charter, undermine our treaty obligations, and make the U.S. look like the kind of aggressive power we claim to oppose. I urge [Senator/Representative NAME] to publicly condemn territorial threats against sovereign allies and reaffirm that the U.S. respects international law. Thank you."
-
-### Call About Venezuela and Cuba
-
-**Why it matters:** Invoking a wartime statute from 1798 against Venezuelans, revoking TPS protections, and threatening to blockade Cuba have humanitarian consequences and questionable legal authority.
-
-**Call Script:**
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling about U.S. policy toward Venezuela and Cuba. I urge [Senator/Representative NAME] to oppose the use of the Alien Enemies Act against Venezuelans -- the U.S. is not at war with Venezuela, and this law was designed for wartime. I also oppose the threatened naval blockade of Cuba, which constitutes an act of war under international law. Please support humanitarian approaches rather than military escalation in Latin America. Thank you."
-
-### Email the Foreign Affairs Committees
-
-These are the congressional committees with primary jurisdiction over foreign policy. Contacting committee members -- even if they are not your representatives -- signals public attention.
-
-**Senate Foreign Relations Committee:**
-- **Chair:** Contact via [Senate Foreign Relations Committee](https://www.foreign.senate.gov/)
-- **Key Members to Contact:**
-  - Your own Senators (most impactful)
-  - Committee Chair and Ranking Member
-  - Any Senator from your state on the committee
-
-**House Foreign Affairs Committee:**
-- **Chair:** Contact via [House Foreign Affairs Committee](https://foreignaffairs.house.gov/)
-- **Key Members to Contact:**
-  - Your own Representative (most impactful)
-  - Committee Chair and Ranking Member
-
-**Email Template - NATO and Ukraine:**
-
-```
-Subject: Uphold U.S. Treaty Obligations to NATO and Ukraine
-
-Dear [Senator/Representative] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] to urge you to
-take action to defend U.S. alliance commitments.
-
-Article 5 of the North Atlantic Treaty is a binding obligation ratified
-by the U.S. Senate. NATO allies invoked it for the first and only time
-after 9/11, sending troops to fight alongside Americans in Afghanistan.
-Conditioning this commitment on spending targets has no basis in the
-treaty and destroys the credibility that deters aggression.
+Article 5 of the North Atlantic Treaty is a binding obligation ratified by the U.S. Senate. NATO allies invoked it for the first and only time after 9/11, sending troops to fight alongside Americans in Afghanistan. Conditioning this commitment on spending targets has no basis in the treaty and destroys the credibility that deters aggression.
 
 I urge you to:
 1. Publicly affirm U.S. commitment to Article 5
@@ -130,36 +62,20 @@ I urge you to:
 3. Oppose any reduction in U.S. force presence in Europe
 4. Hold hearings on the administration's foreign policy toward allies
 
-Our alliances are not protection rackets. They are the foundation of
-American security and global stability.
+Our alliances are not protection rackets. They are the foundation of American security and global stability.
 
 Thank you for your attention to this critical matter.
 
 Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone]
-```
+{firstName} {lastName}
+{zipCode}`} />
+  <EmailMessage topic="Territorial Sovereignty" subject="Oppose Threats Against Sovereign Allies" body={`Dear {repName},
 
-**Email Template - Territorial Threats:**
+I am writing as your constituent from {zipCode} regarding the President's threats to annex Greenland, seize the Panama Canal, and absorb Canada.
 
-```
-Subject: Oppose Threats Against Sovereign Allies - Greenland, Panama, Canada
+These statements violate the UN Charter (Article 2, Section 4), which prohibits "the threat or use of force against the territorial integrity or political independence of any state." They also undermine the Torrijos-Carter Treaties ratified by the U.S. Senate in 1978.
 
-Dear [Senator/Representative] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] regarding the
-President's threats to annex Greenland, seize the Panama Canal, and
-absorb Canada.
-
-These statements violate the UN Charter (Article 2, Section 4), which
-prohibits "the threat or use of force against the territorial integrity
-or political independence of any state." They also undermine the
-Torrijos-Carter Treaties ratified by the U.S. Senate in 1978.
-
-The United States built the rules-based international order. When we
-threaten to violate it, we lose the moral authority to condemn others
-who do the same -- including Russia's invasion of Ukraine.
+The United States built the rules-based international order. When we threaten to violate it, we lose the moral authority to condemn others who do the same -- including Russia's invasion of Ukraine.
 
 I urge you to:
 1. Publicly condemn territorial threats against sovereign nations
@@ -170,28 +86,15 @@ I urge you to:
 Thank you.
 
 Sincerely,
-[Your Name]
-[Your Address]
-```
+{firstName} {lastName}
+{zipCode}`} />
+  <EmailMessage topic="Latin America Policy" subject="Oppose Military Escalation in Latin America" body={`Dear {repName},
 
-**Email Template - Venezuela and Cuba:**
+I am writing as your constituent from {zipCode} regarding U.S. policy toward Venezuela and Cuba.
 
-```
-Subject: Oppose Military Escalation in Latin America
+The invocation of the Alien Enemies Act of 1798 against Venezuelans raises serious constitutional concerns. This wartime statute was last used for Japanese internment -- the U.S. is not at war with Venezuela. Federal courts have already blocked implementation.
 
-Dear [Senator/Representative] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] regarding U.S.
-policy toward Venezuela and Cuba.
-
-The invocation of the Alien Enemies Act of 1798 against Venezuelans
-raises serious constitutional concerns. This wartime statute was last
-used for Japanese internment -- the U.S. is not at war with Venezuela.
-Federal courts have already blocked implementation.
-
-Additionally, threatening a naval blockade of Cuba constitutes an act of
-war under international law. The humanitarian crisis in Cuba is being
-worsened, not helped, by tightened sanctions and blockade threats.
+Additionally, threatening a naval blockade of Cuba constitutes an act of war under international law. The humanitarian crisis in Cuba is being worsened, not helped, by tightened sanctions and blockade threats.
 
 I urge you to:
 1. Oppose the use of the Alien Enemies Act outside of wartime
@@ -202,9 +105,36 @@ I urge you to:
 Thank you.
 
 Sincerely,
-[Your Name]
-[Your Address]
-```
+{firstName} {lastName}
+{zipCode}`} />
+</EmailTemplate>
+
+### Call Your Representatives
+
+Article 5 of the North Atlantic Treaty is a binding U.S. obligation ratified by the Senate. Congressional pressure can prevent the administration from unilaterally abandoning alliance commitments.
+
+<CallRepButton repType="all">
+  <CallScript topic="NATO Commitments" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge {repName} to defend U.S. commitments to NATO and our treaty allies. Article 5 is a binding obligation ratified by the Senate, not a suggestion. Threatening to abandon allies who have fought alongside us -- including after 9/11 -- undermines our national security.
+
+I urge {repName} to publicly affirm Article 5 and oppose any reduction in U.S. commitment to NATO. Thank you.`} />
+  <CallScript topic="Ukraine Aid" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling about U.S. support for Ukraine. I urge {repName} to support continued military and humanitarian aid to Ukraine without exploitative conditions like the minerals deal. Abandoning Ukraine rewards Russian aggression and tells every U.S. ally that our commitments can be bought and sold.
+
+Please support legislation to maintain Ukraine aid and oppose any deal that extracts resources from a nation we should be helping. Thank you.`} />
+  <CallScript topic="Territorial Threats" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling because I'm deeply concerned about the President's threats to annex Greenland, seize the Panama Canal, and absorb Canada. These threats violate the UN Charter, undermine our treaty obligations, and make the U.S. look like the kind of aggressive power we claim to oppose.
+
+I urge {repName} to publicly condemn territorial threats against sovereign allies and reaffirm that the U.S. respects international law. Thank you.`} />
+  <CallScript topic="Latin America Policy" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling about U.S. policy toward Venezuela and Cuba. I urge {repName} to oppose the use of the Alien Enemies Act against Venezuelans -- the U.S. is not at war with Venezuela, and this law was designed for wartime.
+
+I also oppose the threatened naval blockade of Cuba, which constitutes an act of war under international law. Please support humanitarian approaches rather than military escalation in Latin America. Thank you.`} />
+</CallRepButton>
 
 ---
 
@@ -350,9 +280,9 @@ Foreign policy issues get less constituent attention than domestic issues. This 
 
 ---
 
-## Resources
+## [+] Resources
 
-### Congressional Contact Tools
+### [+] Congressional Contact Tools
 
 | Tool | Best For | Link |
 |------|----------|------|
@@ -361,7 +291,7 @@ Foreign policy issues get less constituent attention than domestic issues. This 
 | **Call Shifter** | Call campaigns | [callshifter.com](https://callshifter.com/) |
 | **Town Hall Project** | Find town halls | [townhallproject.com](https://townhallproject.com/) |
 
-### Key Treaty Texts
+### [+] Key Treaty Texts
 
 Understanding the legal framework helps make arguments more persuasive:
 
@@ -370,7 +300,7 @@ Understanding the legal framework helps make arguments more persuasive:
 - [UN Charter](https://www.un.org/en/about-us/un-charter) - Foundation of international law
 - [Vienna Convention on the Law of Treaties](https://legal.un.org/ilc/texts/instruments/english/conventions/1_1_1969.pdf) - How treaties work
 
-### Talking Points Summary
+### [+] Talking Points Summary
 
 **For NATO/Alliance calls:**
 - Article 5 is a binding treaty, not a suggestion

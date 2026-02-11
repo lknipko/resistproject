@@ -13,7 +13,7 @@ import { SourceLink } from './content/SourceLink'
 import { ContentLayout } from './content/ContentLayout'
 import { MainContentLayout } from './content/MainContentLayout'
 import { ContentSidebar } from './content/ContentSidebar'
-import { CallScript } from './content/CallScript'
+import { CallScript as CallScriptDisplay } from './content/CallScript'
 import { DefinitionList } from './content/DefinitionList'
 import { DefRow } from './content/DefRow'
 import { StatsGrid } from './content/StatsGrid'
@@ -29,6 +29,9 @@ import { RelatedActions } from './content/RelatedActions'
 import { RelatedLinks } from './content/RelatedLinks'
 import { Collapsible } from './mdx/Collapsible'
 import TrackableLink from './analytics/TrackableLink'
+import EmailTemplate, { EmailMessage } from './content/EmailTemplate'
+import CallRepButton, { CallScript } from './content/CallRepButton'
+import RepresentativeCard from './content/RepresentativeCard'
 
 export const mdxComponents: MDXComponents = {
   PageHeader,
@@ -45,7 +48,7 @@ export const mdxComponents: MDXComponents = {
   ContentLayout,
   MainContentLayout,
   ContentSidebar,
-  CallScript,
+  CallScriptDisplay,
   DefinitionList,
   DefRow,
   StatsGrid,
@@ -61,6 +64,11 @@ export const mdxComponents: MDXComponents = {
   RelatedLinks,
   Collapsible,
   TrackableLink,
+  EmailTemplate,
+  EmailMessage,
+  CallRepButton,
+  CallScript,
+  RepresentativeCard,
   // Default HTML elements with custom styling
   h1: ({ children, ...props }) => (
     <h1

@@ -32,8 +32,8 @@ description: "Concrete actions to fight anti-LGBTQ+ policies, support affected c
         <li className="font-semibold text-red-600"><a href="#crisis-resources" className="text-red-600 hover:underline">CRISIS RESOURCES</a></li>
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">QUICK ACTIONS</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Reps</a></li>
-            <li><a href="#send-an-email" className="text-orange hover:underline">Send an Email</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Representatives</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Representatives</a></li>
             <li><a href="#support-lgbtq-organizations" className="text-orange hover:underline">Support Orgs</a></li>
             <li><a href="#share-on-social-media" className="text-orange hover:underline">Social Media</a></li>
           </ul>
@@ -77,33 +77,14 @@ description: "Concrete actions to fight anti-LGBTQ+ policies, support affected c
 
 ## Quick Actions
 
-### Call Your Representatives
+### Email Your Representatives
 
-**Why it works:** Congressional offices track call volume by issue. High volume on LGBTQ+ rights signals constituent priority and influences votes on the Equality Act and anti-discrimination appropriations riders.
+<EmailTemplate
+  subject="Oppose Anti-LGBTQ+ Executive Orders and Support the Equality Act"
+  repType="all"
+  body={`Dear {repName},
 
-**Call Script -- Opposing Anti-LGBTQ+ Executive Orders:**
-
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to oppose the administration's anti-LGBTQ+ executive orders, including EO 14168 which redefines sex to erase transgender recognition, EO 14175 which bans transgender military service, and EO 14187 which strips funding from schools with transgender athletes. These orders harm millions of Americans and violate the equal protection principles of our Constitution. I urge [NAME] to co-sponsor the Equality Act and oppose any legislation that codifies discrimination against LGBTQ+ people. Thank you."
-
-**Call Script -- Supporting the Equality Act:**
-
-> "Hello, my name is [NAME] from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to co-sponsor and vote for the Equality Act, which would add sexual orientation and gender identity to federal civil rights protections. After the Supreme Court's Skrmetti decision, federal statutory protection is essential. Thank you."
-
-**Who to call:**
-- Find your Representative: [House.gov](https://www.house.gov/representatives/find-your-representative)
-- Find your Senators: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- **House Switchboard:** 202-225-3121
-- **Senate Switchboard:** 202-224-3121
-- Text your zip code to [Resistbot](https://resist.bot/) at **50409** for the fastest method
-
-### Send an Email
-
-**Subject:** Oppose Anti-LGBTQ+ Executive Orders and Support the Equality Act
-
-```
-Dear [Representative/Senator] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] to express my strong opposition to the administration's anti-LGBTQ+ executive orders and to urge you to support the Equality Act.
+I am writing as your constituent from {zipCode} to express my strong opposition to the administration's anti-LGBTQ+ executive orders and to urge you to support the Equality Act.
 
 Executive Orders 14168, 14173, 14175, and 14187 collectively redefine sex to erase transgender identity from federal recognition, ban transgender military service, dismantle workplace protections, and threaten schools with funding cuts for including transgender students. These orders harm an estimated 1.6 million transgender Americans, 15,000 transgender service members, and millions of LGBTQ+ students and federal employees.
 
@@ -118,10 +99,26 @@ I urge you to:
 Thank you for your attention to this matter.
 
 Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone]
-```
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+Congressional offices track call volume by issue. High volume on LGBTQ+ rights signals constituent priority and influences votes on the Equality Act and anti-discrimination appropriations riders.
+
+<CallRepButton repType="all">
+  <CallScript topic="Oppose Executive Orders" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge {repName} to oppose the administration's anti-LGBTQ+ executive orders, including EO 14168 which redefines sex to erase transgender recognition, EO 14175 which bans transgender military service, and EO 14187 which strips funding from schools with transgender athletes.
+
+These orders harm millions of Americans and violate the equal protection principles of our Constitution. I urge {repName} to co-sponsor the Equality Act and oppose any legislation that codifies discrimination against LGBTQ+ people. Thank you.`} />
+  <CallScript topic="Support Equality Act" script={`Hello, my name is {firstName} {lastName} from {zipCode}.
+
+I'm calling to urge {repName} to co-sponsor and vote for the Equality Act, which would add sexual orientation and gender identity to federal civil rights protections.
+
+After the Supreme Court's Skrmetti decision, federal statutory protection is essential. Thank you.`} />
+</CallRepButton>
 
 ### Support LGBTQ+ Organizations
 
@@ -315,9 +312,9 @@ These organizations are leading the legal fight against anti-LGBTQ+ policies and
 
 ---
 
-## Resources
+## [+] Resources
 
-### Legal Help
+### [+] Legal Help
 
 | Resource | What They Provide | Contact |
 |----------|-------------------|---------|
@@ -327,7 +324,7 @@ These organizations are leading the legal fight against anti-LGBTQ+ policies and
 | [NCLR Legal Help](https://www.nclrights.org/get-help/) | Legal info for LGBTQ+ people | Website intake form |
 | [ACLU](https://www.aclu.org/contact-us) | Civil liberties legal help | Find your state affiliate |
 
-### Healthcare Navigation
+### [+] Healthcare Navigation
 
 - [GLMA Provider Directory](https://www.glma.org/find-a-provider) - Find LGBTQ+ affirming providers
 - [Trans in the South](https://southernequality.org/transinthesouth/) - Healthcare access guide for southern states
@@ -337,7 +334,7 @@ These organizations are leading the legal fight against anti-LGBTQ+ policies and
 - [Plume](https://www.getplume.co/) - Telehealth gender-affirming care
 - [QueerDoc](https://queerdoc.com/) - Telehealth for LGBTQ+ patients
 
-### Youth-Specific Resources
+### [+] Youth-Specific Resources
 
 | Resource | Ages | Services | Contact |
 |----------|------|----------|---------|
@@ -349,7 +346,7 @@ These organizations are leading the legal fight against anti-LGBTQ+ policies and
 | [It Gets Better](https://itgetsbetter.org/) | Youth | Stories and resources | Website |
 | [Born This Way Foundation](https://bornthisway.foundation/) | Youth | Mental health resources | Website |
 
-### Tools for Advocacy
+### [+] Tools for Advocacy
 
 | Tool | Best For | Link |
 |------|----------|------|
@@ -359,7 +356,7 @@ These organizations are leading the legal fight against anti-LGBTQ+ policies and
 | **Town Hall Project** | Find upcoming town halls | [townhallproject.com](https://townhallproject.com/) |
 | **Vote.org** | Voter registration and info | [vote.org](https://www.vote.org/) |
 
-### Educational Resources
+### [+] Educational Resources
 
 - [Movement Advancement Project - Equality Maps](https://www.lgbtmap.org/equality-maps) - State-by-state LGBTQ+ law tracker
 - [Williams Institute](https://williamsinstitute.law.ucla.edu/) - LGBTQ+ policy research (UCLA)

@@ -1,6 +1,16 @@
 import { visit, SKIP } from 'unist-util-visit'
 import type { Root, Heading, Paragraph, Link, Text, PhrasingContent, ListItem } from 'mdast'
 
+/**
+ * Generate a slug from text (similar to rehype-slug)
+ */
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
 interface SectionDefinition {
   name: string
   component: string
@@ -200,13 +210,14 @@ function processListItems(listNode: any, section: 'learn' | 'act'): any {
       // Recursively process content for nested collapsibles and lists
       const processedContent = processCollapsibles(contentChildren, section)
 
-      // Create Collapsible wrapper with level='li'
+      // Create Collapsible wrapper with level='li' and id for anchor links
       const collapsible = createMDXElement(
         'Collapsible',
         {
           title: collapsibleInfo.cleanTitle,
           level: 'li',
-          section
+          section,
+          id: slugify(collapsibleInfo.cleanTitle)
         },
         processedContent
       )
@@ -263,13 +274,14 @@ function processCollapsibles(children: any[], section: 'learn' | 'act' = 'learn'
         // Recursively process content for nested collapsibles
         const processedContent = processCollapsibles(content, section)
 
-        // Create Collapsible wrapper
+        // Create Collapsible wrapper with id for anchor links
         const collapsible = createMDXElement(
           'Collapsible',
           {
             title: collapsibleInfo.cleanTitle,
             level: collapsibleInfo.level,
-            section
+            section,
+            id: slugify(collapsibleInfo.cleanTitle)
           },
           processedContent
         )
@@ -531,7 +543,7 @@ function wrapSection(section: {
   heading: Heading
   content: any[]
 }): any {
-  const { definition, content } = section
+  const { definition, heading, content } = section
 
   // For sections with auto-intro, insert intro text at start of content
   let finalContent: any[] = content
@@ -540,9 +552,171 @@ function wrapSection(section: {
     finalContent = [intro, ...content]
   }
 
-  // Create wrapper component
-  // Note: The heading is NOT included in the wrapper - the component provides its own heading
+  // For 'div' component (simple wrapper), preserve the heading
+  if (definition.component === 'div') {
+    return createMDXElement(definition.component, {}, [heading, ...finalContent])
+  }
+
+  // For special components, exclude the heading (component provides its own)
   return createMDXElement(definition.component, {}, finalContent)
+}
+
+/**
+ * Transform personalized action blocks to components
+ * [[email]] ... [[/email]] → <EmailTemplate />
+ * [[call]] ... [[/call]] → <CallRepButton />
+ * [[reps]] → <RepresentativeCard />
+ */
+function transformPersonalizedActions(tree: Root): void {
+  visit(tree, 'paragraph', (node: any, index, parent: any) => {
+    if (!parent || index === undefined || !node.children) return
+
+    // Check if paragraph contains the [[email]], [[call]], or [[reps]] marker
+    const text = extractText(node)
+
+    // Handle [[reps]] variants - single line components
+    const repsMatch = text.trim().match(/^\[\[reps(?::(\w+))?\]\]$/)
+    if (repsMatch) {
+      const filter = repsMatch[1] // undefined, 'senators', or 'representative'
+      const props: Record<string, string> = {}
+
+      if (filter === 'senators') {
+        props.repType = 'senator'
+      } else if (filter === 'representative') {
+        props.repType = 'representative'
+      }
+      // If no filter, show all (default behavior)
+
+      const repCard = createMDXElement('RepresentativeCard', props, [])
+      parent.children[index] = repCard
+      return [SKIP, index]
+    }
+
+    // Handle [[email]] and [[call]] - multi-line blocks
+    // These will be in multiple consecutive paragraphs, so we need to collect them
+    const emailMatch = text.match(/^\[\[email\]\]/)
+    const callMatch = text.match(/^\[\[call\]\]/)
+
+    if (emailMatch || callMatch) {
+      const componentType = emailMatch ? 'EmailTemplate' : 'CallRepButton'
+      const endMarker = emailMatch ? '[[/email]]' : '[[/call]]'
+
+      // Collect all content until we find the end marker
+      const blockContent: string[] = []
+      let endIndex = index
+
+      // Start collecting from current node
+      for (let i = index; i < parent.children.length; i++) {
+        const currentNode = parent.children[i]
+        const currentText = extractText(currentNode)
+
+        blockContent.push(currentText)
+
+        if (currentText.includes(endMarker)) {
+          endIndex = i
+          break
+        }
+      }
+
+      // Join all content and parse it
+      const fullContent = blockContent.join('\n')
+      const parsed = parsePersonalizedActionBlock(fullContent, componentType)
+
+      if (parsed) {
+        // Create the component
+        const component = createMDXElement(componentType, parsed.props, [])
+
+        // Replace the start node with the component
+        parent.children[index] = component
+
+        // Remove all nodes that were part of this block (except the first)
+        if (endIndex > index) {
+          parent.children.splice(index + 1, endIndex - index)
+        }
+
+        return [SKIP, index]
+      }
+    }
+  })
+}
+
+/**
+ * Parse [[email]] or [[call]] block content
+ * Format:
+ * [[email]]
+ * subject: Subject text here
+ * repType: senator
+ * ---
+ * Body text here
+ * [[/email]]
+ */
+function parsePersonalizedActionBlock(
+  content: string,
+  componentType: 'EmailTemplate' | 'CallRepButton'
+): { props: Record<string, string> } | null {
+  // Remove the markers
+  const markerPattern = componentType === 'EmailTemplate'
+    ? /^\[\[email\]\](.*)\[\[\/email\]\]$/s
+    : /^\[\[call\]\](.*)\[\[\/call\]\]$/s
+
+  const match = content.match(markerPattern)
+  if (!match) return null
+
+  const innerContent = match[1].trim()
+
+  // Split by --- separator (frontmatter separator)
+  const parts = innerContent.split(/^---$/m)
+
+  if (parts.length < 2) {
+    // No separator found - treat entire content as body/script
+    if (componentType === 'EmailTemplate') {
+      return {
+        props: {
+          subject: 'Contact your representative',
+          body: innerContent,
+          repType: 'all'
+        }
+      }
+    } else {
+      return {
+        props: {
+          script: innerContent,
+          repType: 'all'
+        }
+      }
+    }
+  }
+
+  // Parse frontmatter (YAML-like key: value pairs)
+  const frontmatter = parts[0].trim()
+  const body = parts.slice(1).join('---').trim()
+
+  const props: Record<string, string> = {}
+
+  // Parse frontmatter lines
+  const lines = frontmatter.split('\n')
+  for (const line of lines) {
+    const colonIndex = line.indexOf(':')
+    if (colonIndex === -1) continue
+
+    const key = line.substring(0, colonIndex).trim()
+    const value = line.substring(colonIndex + 1).trim()
+
+    props[key] = value
+  }
+
+  // Add body/script
+  if (componentType === 'EmailTemplate') {
+    props.body = body
+    // Ensure required props have defaults
+    if (!props.subject) props.subject = 'Contact your representative'
+    if (!props.repType) props.repType = 'all'
+  } else {
+    props.script = body
+    if (!props.repType) props.repType = 'all'
+  }
+
+  return { props }
 }
 
 /**
@@ -568,11 +742,12 @@ export default function remarkSectionWrapper() {
     // Detect section type from frontmatter if available
     const section = detectSection(tree)
 
-    // Phase 1: Transform links (must happen before section wrapping)
+    // Phase 1: Transform links and personalized action blocks (must happen before section wrapping)
     transformCTALinks(tree)
     transformSourceLinks(tree)
+    transformPersonalizedActions(tree)
 
-    // Phase 2: Process collapsibles (NEW - run before section wrapping)
+    // Phase 2: Process collapsibles (run before section wrapping)
     tree.children = processCollapsibles(tree.children, section) as any
 
     // Phase 3: Wrap sections

@@ -25,7 +25,8 @@ description: "Actions to support journalists under attack, defend press freedom,
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">QUICK ACTIONS</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-your-representatives-about-press-freedom" className="text-orange hover:underline">Call Your Reps</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Reps</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Reps</a></li>
             <li><a href="#subscribe-to-independent-journalism" className="text-orange hover:underline">Subscribe to News</a></li>
             <li><a href="#share-and-amplify" className="text-orange hover:underline">Share & Amplify</a></li>
             <li><a href="#sign-press-freedom-petitions" className="text-orange hover:underline">Sign Petitions</a></li>
@@ -57,27 +58,77 @@ description: "Actions to support journalists under attack, defend press freedom,
 
 ## Quick Actions
 
-### Call Your Representatives About Press Freedom
+### Email Your Representatives
 
-**Why it works:** Congressional action is essential for structural press freedom protections. The PRESS Act would create a federal reporter's privilege. A federal anti-SLAPP law would protect journalists from retaliatory lawsuits. Calls from constituents signal that voters are paying attention.
+<EmailTemplate
+  subject="Support the PRESS Act to protect press freedom"
+  repType="senator"
+  body={`Dear Senator {repName},
 
-**Script: Support the PRESS Act**
+I am writing as your constituent from {zipCode} to urge you to co-sponsor and vote for the PRESS Act.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to co-sponsor and vote for the PRESS Act, which would protect journalists from being forced to reveal their confidential sources. A free press is essential to democracy, and reporters need legal protection to do their jobs. Thank you."
+This legislation would create a federal reporter's privilege, protecting journalists from being forced to reveal confidential sources. A free press is essential to democracy, and reporters need legal protection to do their jobs without fear of government retaliation.
 
-**Script: Oppose Government Attacks on Press Freedom**
+Recent attacks on press freedom—including revoking credentials from the Associated Press, filing multi-billion-dollar lawsuits against news organizations, and threatening broadcast licenses—demonstrate the urgent need for legislative protections.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling because I'm deeply concerned about attacks on press freedom, including revoking credentials from the Associated Press, filing multi-billion-dollar lawsuits against news organizations, and threatening broadcast licenses. I urge [Senator/Representative NAME] to publicly defend press freedom and oppose any government action that punishes media for their coverage. Thank you."
+I urge you to:
+- Co-sponsor the PRESS Act
+- Support federal anti-SLAPP legislation
+- Publicly defend press freedom against government attacks
 
-**Script: Support Federal Anti-SLAPP Legislation**
+Thank you for protecting the First Amendment.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to support federal anti-SLAPP legislation that would protect journalists, publishers, and citizens from strategic lawsuits designed to silence speech. The current wave of multi-billion-dollar lawsuits against news organizations threatens the ability of the press to hold government accountable. Thank you."
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
 
-**Who to call:**
-- Find your Representative: [House.gov](https://www.house.gov/representatives/find-your-representative)
-- Find your Senators: [Senate.gov](https://www.senate.gov/senators/senators-contact.htm)
-- **House Switchboard:** 202-225-3121
-- **Senate Switchboard:** 202-224-3121
+<EmailTemplate
+  subject="Defend press freedom and oppose government censorship"
+  repType="representative"
+  body={`Dear Representative {repName},
+
+I am writing from {zipCode} to urge you to defend press freedom against escalating government attacks.
+
+The administration has revoked credentials from the Associated Press, filed multi-billion-dollar lawsuits against news organizations, and threatened broadcast licenses. These actions threaten the ability of the press to hold government accountable.
+
+I urge you to:
+- Support the PRESS Act
+- Support federal anti-SLAPP legislation
+- Publicly oppose government retaliation against media
+- Protect the First Amendment
+
+A free press is the foundation of democratic accountability.
+
+Thank you,
+{firstName} {lastName}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, my name is {firstName} {lastName} and I'm calling from {zipCode}.
+
+I'm urging Senator {repName} to co-sponsor and vote for the PRESS Act, which would protect journalists from being forced to reveal confidential sources.
+
+A free press is essential to democracy, and reporters need legal protection. Recent government attacks on the press make this legislation urgent.
+
+Thank you for your time.`}
+/>
+
+<CallRepButton
+  repType="representative"
+  script={`Hi, I'm {firstName} {lastName} from {zipCode}.
+
+I'm calling to urge Representative {repName} to defend press freedom and oppose government retaliation against media organizations.
+
+The administration is revoking credentials, filing billion-dollar lawsuits, and threatening licenses. This threatens democratic accountability.
+
+I ask the Representative to support the PRESS Act and federal anti-SLAPP legislation.
+
+Thank you.`}
+/>
 
 ---
 

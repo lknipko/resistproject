@@ -25,9 +25,9 @@ description: "Concrete actions to oppose Trump's unilateral tariffs, support aff
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">Quick Actions</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-your-senators-and-representative" className="text-orange hover:underline">Call Congress</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Representatives</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Representatives</a></li>
             <li><a href="#key-committees-to-target" className="text-orange hover:underline">Key Committees</a></li>
-            <li><a href="#send-an-email" className="text-orange hover:underline">Send an Email</a></li>
             <li><a href="#share-your-tariff-story" className="text-orange hover:underline">Share Your Story</a></li>
           </ul>
         </li>
@@ -63,24 +63,47 @@ description: "Concrete actions to oppose Trump's unilateral tariffs, support aff
 
 ## Quick Actions
 
-### Call Your Senators and Representative
+### Email Your Representatives
 
-**Why calling works:** Congressional offices tally constituent calls daily. High call volume on tariffs signals this is a voting issue. Staff report call topics directly to members.
+<EmailTemplate
+  subject="Constituent Request: Reclaim Congressional Tariff Authority"
+  repType="all"
+  body={`Dear {repName},
 
-**Call Script -- Tariff Authority:**
+I am writing as your constituent from {zipCode} to urge you to support legislation reclaiming Congress's constitutional authority over tariffs.
 
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling to urge [Senator/Representative NAME] to support legislation reclaiming Congress's constitutional authority over tariffs. The current tariffs imposed through IEEPA emergency powers are costing my family hundreds of dollars a month in higher prices on groceries, gas, and everyday goods. The Constitution gives Congress -- not the president -- the power to set tariffs. I urge [NAME] to co-sponsor the Trade Review Act or similar legislation requiring congressional approval for tariffs. Thank you."
+The tariffs imposed since February 2025 through IEEPA emergency declarations are costing American families thousands of dollars annually in higher prices. The Congressional Budget Office estimates $2,100-$3,800 per household per year.
 
-**Call Script -- Personal Impact:**
+Article I, Section 8 of the Constitution gives Congress the exclusive power to "lay and collect... Duties." The use of IEEPA emergency powers for tariffs bypasses this authority. The U.S. Court of International Trade ruled this use unconstitutional in April 2025.
 
-> "Hi, I'm [NAME] from [CITY/ZIP]. I'm calling because tariffs are directly hurting my family. [PICK ONE: Gas prices are up because of tariffs on Canadian energy / My grocery bill has gone up 10-15% on produce from Mexico / I'm a small business owner paying 25% more for imported materials / I'm a farmer who lost export customers because of retaliatory tariffs]. I urge [NAME] to take action to reverse these tariffs or require congressional approval for future tariffs. This is a kitchen-table issue for my family. Thank you."
+I urge you to:
+1. Co-sponsor the Trade Review Act or similar legislation requiring congressional approval for IEEPA tariffs
+2. Support Senate Finance / House Ways and Means Committee oversight hearings on tariff impacts
+3. Vote to terminate the tariff-related national emergency declarations
 
-**Who to call:**
-- **Senate Switchboard:** 202-224-3121
-- **House Switchboard:** 202-225-3121
-- [Find your Representative](https://www.house.gov/representatives/find-your-representative)
-- [Find your Senators](https://www.senate.gov/senators/senators-contact.htm)
-- **Resistbot:** Text RESIST to **50409** to send letters to all your reps at once
+This is not a partisan issue -- it is a constitutional one. Congress must reclaim its authority.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+Congressional offices tally constituent calls daily. High call volume on tariffs signals this is a voting issue. Staff report call topics directly to members.
+
+<CallRepButton repType="all">
+  <CallScript topic="Constitutional Authority" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge {repName} to support legislation reclaiming Congress's constitutional authority over tariffs. The current tariffs imposed through IEEPA emergency powers are costing my family hundreds of dollars a month in higher prices on groceries, gas, and everyday goods.
+
+The Constitution gives Congress -- not the president -- the power to set tariffs. I urge {repName} to co-sponsor the Trade Review Act or similar legislation requiring congressional approval for tariffs. Thank you.`} />
+  <CallScript topic="Family Budget Impact" script={`Hi, I'm {firstName} {lastName} from {zipCode}.
+
+I'm calling because tariffs are directly hurting my family. My grocery bill has gone up significantly on produce and everyday goods.
+
+I urge {repName} to take action to reverse these tariffs or require congressional approval for future tariffs. This is a kitchen-table issue for my family. Thank you.`} />
+</CallRepButton>
 
 ### Key Committees to Target
 
@@ -95,32 +118,6 @@ These committees have jurisdiction over trade policy. Calls to members on these 
 - Committee Phone: 202-225-3625
 
 **If your Senator or Representative sits on either committee, your call is especially impactful.** Mention that you know they serve on the trade committee and that you expect them to exercise oversight.
-
-### Send an Email
-
-**Subject:** Constituent Request: Reclaim Congressional Tariff Authority
-
-```
-Dear [Senator/Representative] [Last Name],
-
-I am writing as your constituent from [City, State, ZIP] to urge you to support legislation reclaiming Congress's constitutional authority over tariffs.
-
-The tariffs imposed since February 2025 through IEEPA emergency declarations are costing American families thousands of dollars annually in higher prices. The Congressional Budget Office estimates $2,100-$3,800 per household per year. [ADD PERSONAL IMPACT: e.g., "As a small business owner, I am paying 25% more for imported materials with no domestic alternative." / "As a parent, I've seen my grocery bill increase significantly on produce, meat, and household goods."]
-
-Article I, Section 8 of the Constitution gives Congress the exclusive power to "lay and collect... Duties." The use of IEEPA emergency powers for tariffs bypasses this authority. The U.S. Court of International Trade ruled this use unconstitutional in April 2025.
-
-I urge you to:
-1. Co-sponsor the Trade Review Act or similar legislation requiring congressional approval for IEEPA tariffs
-2. Support Senate Finance / House Ways and Means Committee oversight hearings on tariff impacts
-3. Vote to terminate the tariff-related national emergency declarations
-
-This is not a partisan issue -- it is a constitutional one. Congress must reclaim its authority.
-
-Sincerely,
-[Your Name]
-[Your Address]
-[Your Phone]
-```
 
 ### Share Your Tariff Story
 
@@ -259,9 +256,9 @@ declarations. Our family budgets -- and our Constitution -- depend on it.
 
 ---
 
-## Resources
+## [+] Resources
 
-### Tools and Data
+### [+] Tools and Data
 
 | Resource | What It Provides | Link |
 |----------|------------------|------|
@@ -274,7 +271,7 @@ declarations. Our family budgets -- and our Constitution -- depend on it.
 | **Congress.gov** | Track trade legislation and committee hearings | [congress.gov](https://www.congress.gov/) |
 | **GovTrack.us** | Vote records on trade bills | [govtrack.us](https://www.govtrack.us/) |
 
-### Key Facts for Advocacy
+### [+] Key Facts for Advocacy
 
 Use these in calls, emails, letters, and conversations:
 
@@ -287,7 +284,7 @@ Use these in calls, emails, letters, and conversations:
 - The U.S. Court of International Trade **ruled IEEPA tariffs unconstitutional** in April 2025
 - IEEPA was **never used for tariffs before 2025** -- it was designed for sanctioning hostile nations
 
-### Talking Points by Audience
+### [+] Talking Points by Audience
 
 **For Republican representatives:**
 - This is a constitutional separation of powers issue

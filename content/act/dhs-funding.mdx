@@ -31,7 +31,8 @@ H.R. 7147 provides billions for ICE enforcement while rejecting all accountabili
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">Quick Actions</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-your-senators-now" className="text-orange hover:underline">Call Senators</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Reps</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Reps</a></li>
             <li><a href="#key-senators-to-target" className="text-orange hover:underline">Key Targets</a></li>
           </ul>
         </li>
@@ -67,20 +68,44 @@ H.R. 7147 provides billions for ICE enforcement while rejecting all accountabili
 
 ## Quick Actions
 
-### Call Your Senators NOW
+### Email Your Representatives
 
-<CallScript>
-"Hello, I'm [NAME] from [CITY/ZIP]. I'm calling about H.R. 7147, the DHS Appropriations Act. Two U.S. citizens have been killed by federal agents in Minneapolis this month, and the House rejected all oversight amendments. I urge Senator [NAME] to demand accountability measures—body cameras, use-of-force reporting, and independent investigations—before voting for this funding. Thank you."
-</CallScript>
+<EmailTemplate
+  subject="Demand accountability measures in DHS funding bill"
+  repType="senator"
+  body={`Dear Senator {repName},
 
-<div className="my-6">
-  <Button href="tel:202-224-3121" variant="primary">
-    Call Senate Switchboard: 202-224-3121
-  </Button>
-</div>
+I am writing as your constituent from {zipCode} regarding H.R. 7147, the DHS Appropriations Act.
 
-**Find your Senators:**
-- [Senate.gov Contact Directory](https://www.senate.gov/senators/senators-contact.htm)
+Two U.S. citizens have been killed by federal agents in Minneapolis this month. The House rejected all oversight amendments to this $64.4 billion funding bill.
+
+Before voting on DHS funding, I urge you to demand:
+- Mandatory body cameras for all federal law enforcement
+- Public use-of-force reporting requirements
+- Independent investigations of deaths in custody
+- Restoration of protections for schools, churches, and hospitals
+
+Federal law enforcement must have accountability measures. The Senate is the last chance to add these critical protections.
+
+Thank you for your leadership.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, I'm {firstName} {lastName} from {zipCode}.
+
+I'm calling about H.R. 7147, the DHS Appropriations Act. Two U.S. citizens have been killed by federal agents in Minneapolis this month, and the House rejected all oversight amendments.
+
+I urge Senator {repName} to demand accountability measures—body cameras, use-of-force reporting, and independent investigations—before voting for this funding.
+
+Thank you.`}
+/>
 
 ### Key Senators to Target
 

@@ -302,11 +302,69 @@ Our pages use simple MDX syntax:
 - Automatic component insertion
 - Collapsible sections with `[+]` markers
 
+### Personalized Action Components
+
+When creating or editing **Act pages**, you can add personalized email and call components that automatically identify users' representatives and pre-fill contact information.
+
+**Available Components:**
+- `<RepresentativeCard />` - Shows user's 2 senators + 1 house rep
+- `<EmailTemplate>` - Pre-filled email templates with mailto: links
+- `<CallRepButton>` - Click-to-call buttons with optional scripts
+- `<EmailMessage>` and `<CallScript>` - For multiple topics per page
+
+**Single Message Example:**
+```jsx
+<EmailTemplate
+  subject="Subject line with {repName} variable"
+  repType="senator"
+  body={`Dear Senator {repName},
+
+I am writing from {zipCode} to urge you to...
+
+Sincerely,
+{firstName} {lastName}`}
+/>
+```
+
+**Multiple Topics Example:**
+```jsx
+<EmailTemplate repType="all">
+  <EmailMessage
+    topic="Budget Concerns"
+    subject="Oppose budget cuts"
+    body={`Dear {repName},...`}
+  />
+  <EmailMessage
+    topic="Constitutional Issues"
+    subject="Protect constitutional rights"
+    body={`Dear {repName},...`}
+  />
+</EmailTemplate>
+```
+
+**Available Variables:**
+- `{firstName}` - User's first name
+- `{lastName}` - User's last name
+- `{zipCode}` - User's zip code
+- `{repName}` - Representative's name (auto-filled per rep)
+
+**repType Options:**
+- `"senator"` - Show only senators (2 people)
+- `"representative"` - Show only house rep (1 person)
+- `"all"` - Show all reps (default)
+
+**When to use multiple topics:**
+- If you have 2+ related messages on the same issue
+- A topic selector appears, letting users switch between messages
+- Keep topic labels short (under 20 characters)
+
+See `templates/personalized-action.md` for detailed documentation and examples.
+
 ### Getting Help
 
 **Have questions?**
 - Review this guide thoroughly
-- Check existing pages for examples
+- Check existing pages for examples (e.g., `/act/public-health`, `/act/foreign-policy`)
 - Ask in proposal comments
 - Contact moderators for guidance
 

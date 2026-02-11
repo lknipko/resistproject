@@ -1,0 +1,242 @@
+---
+title: "Action Page Title"
+subtitle: "Brief description of the action"
+type: "act"
+tags: ["Tag1", "Tag2", "Tag3"]
+lastUpdated: "2026-02-10"
+description: "SEO description of the action page"
+---
+
+<PageHeader type="act" />
+
+<PageContent>
+
+# Action Page Title
+
+## Quick Summary
+
+Brief 2-3 sentence summary of what this action is about and why it matters.
+
+[← Learn More: Link to related learn page](/learn/related-topic)
+
+## Your Representatives
+
+Sign in and complete your civic profile to see personalized contact information.
+
+<RepresentativeCard />
+
+---
+
+## Personalized Email Templates
+
+### Email Your Senators - Topic
+
+<EmailTemplate
+  subject="Subject line with {repName}"
+  repType="senator"
+  body={`Dear Senator {repName},
+
+I am writing as your constituent from {zipCode} to urge you to [specific action].
+
+[Key facts and arguments - 2-3 paragraphs]
+
+I urge you to:
+- [Specific ask 1]
+- [Specific ask 2]
+- [Specific ask 3]
+
+Thank you for your attention to this matter.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Email Your Representative - Topic
+
+<EmailTemplate
+  subject="Subject line"
+  repType="representative"
+  body={`Dear Representative {repName},
+
+I am writing from {zipCode} to [specific request].
+
+[Key facts]
+
+Thank you,
+{firstName} {lastName}`}
+/>
+
+---
+
+## Personalized Call Scripts
+
+### Call Your Senators - Topic
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, my name is {firstName} {lastName} and I'm calling from {zipCode}.
+
+I'm calling to urge Senator {repName} to [specific action].
+
+[One key fact or argument]
+
+Thank you for your time.`}
+/>
+
+### Call Your Representative - Topic
+
+<CallRepButton
+  repType="representative"
+  script={`Hi, I'm {firstName} {lastName} from {zipCode}.
+
+I'm calling Representative {repName} about [issue/bill].
+
+[Brief argument]
+
+Thank you.`}
+/>
+
+---
+
+## Multiple Topics (Alternative Pattern)
+
+If you have multiple related messages on the same topic, use the compound component pattern with a topic selector:
+
+### Call Your Representatives - Multiple Topics
+
+<CallRepButton repType="all">
+  <CallScript
+    topic="Topic 1 Name"
+    script={`Hello, I'm {firstName} {lastName} from {zipCode}.
+
+I'm calling to urge {repName} to [specific ask for topic 1].
+
+Thank you.`}
+  />
+  <CallScript
+    topic="Topic 2 Name"
+    script={`Hi, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling about [topic 2 issue]...
+
+Thank you.`}
+  />
+</CallRepButton>
+
+### Email Your Representatives - Multiple Topics
+
+<EmailTemplate repType="all">
+  <EmailMessage
+    topic="Topic 1 Name"
+    subject="Subject for topic 1"
+    body={`Dear {repName},
+
+I am writing from {zipCode} regarding [topic 1]...
+
+Sincerely,
+{firstName} {lastName}`}
+  />
+  <EmailMessage
+    topic="Topic 2 Name"
+    subject="Subject for topic 2"
+    body={`Dear {repName},
+
+I am writing as your constituent from {zipCode} about [topic 2]...
+
+Sincerely,
+{firstName} {lastName}`}
+  />
+</EmailTemplate>
+
+---
+
+## Quick Actions
+
+These can be completed in under 5 minutes.
+
+### Action 1
+
+Description and link.
+
+### Action 2
+
+Description and link.
+
+---
+
+## Sustained Actions
+
+These require ongoing time commitment.
+
+### Join [Organization]
+
+Description and how to get involved.
+
+### Attend Town Halls
+
+How to find and participate in town halls.
+
+---
+
+## Resources
+
+### Downloadable Resources
+
+- [Resource 1 (PDF)](#)
+- [Resource 2 (PDF)](#)
+
+### Additional Reading
+
+- [Article 1](#)
+- [Article 2](#)
+
+</PageContent>
+
+<!--
+
+SYNTAX GUIDE:
+
+## Components
+
+### RepresentativeCard
+<RepresentativeCard />  # Shows user's 2 senators + 1 house rep
+
+### EmailTemplate (Single Message)
+<EmailTemplate subject="..." repType="all" body={`...`} />
+
+### EmailTemplate (Multiple Messages)
+<EmailTemplate repType="all">
+  <EmailMessage topic="..." subject="..." body={`...`} />
+  <EmailMessage topic="..." subject="..." body={`...`} />
+</EmailTemplate>
+
+### CallRepButton (Single Script)
+<CallRepButton repType="all" script={`...`} />
+
+### CallRepButton (Multiple Scripts)
+<CallRepButton repType="all">
+  <CallScript topic="..." script={`...`} />
+  <CallScript topic="..." script={`...`} />
+</CallRepButton>
+
+## Variables Available
+
+{firstName}   - User's first name
+{lastName}    - User's last name
+{zipCode}     - User's zip code
+{repName}     - Representative's name (auto-filled per rep)
+
+## Props
+
+repType options:
+- "senator" - Show only senators (2 people)
+- "representative" - Show only house rep (1 person)
+- "all" - Show all reps (default)
+
+topic prop:
+- Short label for topic selector dropdown
+- Only used with EmailMessage/CallScript children
+- Required when using compound pattern
+
+-->

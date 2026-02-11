@@ -25,8 +25,8 @@ Project 2025 is being implemented across every federal agency simultaneously, wh
       <ul className="space-y-3">
         <li className="font-semibold"><a href="#quick-actions" className="text-orange hover:underline">QUICK ACTIONS</a>
           <ul className="ml-6 mt-2 space-y-1.5 font-normal">
-            <li><a href="#call-congress-about-project-2025" className="text-orange hover:underline">Call Congress</a></li>
-            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Representatives</a></li>
+            <li><a href="#email-your-representatives" className="text-orange hover:underline">Email Your Representatives</a></li>
+            <li><a href="#call-your-representatives" className="text-orange hover:underline">Call Your Representatives</a></li>
             <li><a href="#share-the-document" className="text-orange hover:underline">Share the Document</a></li>
             <li><a href="#submit-public-comments" className="text-orange hover:underline">Public Comments</a></li>
           </ul>
@@ -58,71 +58,56 @@ Project 2025 is being implemented across every federal agency simultaneously, wh
 
 ## Quick Actions
 
-### Call Congress About Project 2025
+### Call Your Representatives
 
 The proposals that require Congressional action can still be stopped. Call your representatives about specific P2025 proposals currently before Congress.
 
-**General Project 2025 Script:**
-> "Hello, my name is [NAME] and I'm a constituent from [CITY/ZIP]. I'm calling because the administration is systematically implementing the Heritage Foundation's Project 2025 blueprint. Despite the president's claims of not knowing about this plan, at least 66 of its authors now hold government positions. I urge [Senator/Representative NAME] to oppose all legislation advancing Project 2025 proposals, including the elimination of the Department of Education, further Medicaid cuts, and any expansion of Schedule F. Thank you."
+<CallRepButton repType="all">
+  <CallScript topic="General Project 2025" script={`Hello, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
 
-**Schedule F / Civil Service Script:**
-> "I'm calling about the implementation of Schedule F under Executive Order 14171. This Project 2025 proposal would strip civil service protections from over 50,000 career federal employees. I urge [NAME] to support the Saving the Civil Service Act and oppose any appropriations that fund Schedule F reclassifications."
+I'm calling because the administration is systematically implementing the Heritage Foundation's Project 2025 blueprint. Despite the president's claims of not knowing about this plan, at least 66 of its authors now hold government positions.
 
-**Department of Education Script:**
-> "I'm calling about the Project 2025 proposal to eliminate the Department of Education. Legislation has been introduced, and I urge [NAME] to vote against any bill that abolishes, defunds, or restructures the department. Title I funding, student loan programs, and civil rights enforcement must be maintained."
+I urge {repName} to oppose all legislation advancing Project 2025 proposals, including the elimination of the Department of Education, further Medicaid cuts, and any expansion of Schedule F. Thank you.`} />
+  <CallScript topic="Schedule F / Civil Service" script={`Hello, I'm {firstName} {lastName} from {zipCode}.
 
-**Environmental Protection Script:**
-> "I'm calling about the gutting of the EPA under Project 2025. The administration has eliminated the Office of Environmental Justice, withdrawn from the Paris Agreement, and repealed methane regulations -- all proposals from the Heritage Foundation blueprint. I urge [NAME] to oppose any budget that cuts EPA funding and to support legislation restoring environmental protections."
+I'm calling about the implementation of Schedule F under Executive Order 14171. This Project 2025 proposal would strip civil service protections from over 50,000 career federal employees.
 
-**How to call:**
-- **House Switchboard:** 202-225-3121
-- **Senate Switchboard:** 202-224-3121
-- [Find Your Representative](https://www.house.gov/representatives/find-your-representative)
-- [Find Your Senators](https://www.senate.gov/senators/senators-contact.htm)
-- Text your zip code to [Resistbot](https://resist.bot/) at **50409**
+I urge {repName} to support the Saving the Civil Service Act and oppose any appropriations that fund Schedule F reclassifications. Thank you.`} />
+  <CallScript topic="Department of Education" script={`Hi, I'm {firstName} {lastName} from {zipCode}.
 
-[See: [Contact Congress](/act/contact-congress) for more calling tips and scripts]
+I'm calling about the Project 2025 proposal to eliminate the Department of Education. Legislation has been introduced, and I urge {repName} to vote against any bill that abolishes, defunds, or restructures the department.
+
+Title I funding, student loan programs, and civil rights enforcement must be maintained. Thank you.`} />
+  <CallScript topic="Environmental Protection" script={`Hello, my name is {firstName} {lastName} from {zipCode}.
+
+I'm calling about the gutting of the EPA under Project 2025. The administration has eliminated the Office of Environmental Justice, withdrawn from the Paris Agreement, and repealed methane regulations -- all proposals from the Heritage Foundation blueprint.
+
+I urge {repName} to oppose any budget that cuts EPA funding and to support legislation restoring environmental protections. Thank you.`} />
+</CallRepButton>
 
 ### Email Your Representatives
 
-**Subject:** Oppose Project 2025 Implementation
+<EmailTemplate
+  subject="Oppose Project 2025 Implementation"
+  repType="all"
+  body={`Dear {repName},
 
-**Template:**
-```
-Dear [Representative/Senator NAME],
+I am writing as your constituent from {zipCode} about the systematic implementation of the Heritage Foundation's Project 2025 blueprint across the federal government.
 
-I am writing as your constituent from [CITY, ZIP] about the
-systematic implementation of the Heritage Foundation's Project 2025
-blueprint across the federal government.
-
-Despite the president's campaign claims of having "nothing to do
-with" Project 2025, at least 66 of its authors now hold government
-positions, and the administration has enacted the majority of the
-document's key proposals -- from Schedule F (EO 14171) to the
-elimination of environmental justice offices to the gutting of
-Medicaid through the One Big Beautiful Bill Act.
+Despite the president's campaign claims of having "nothing to do with" Project 2025, at least 66 of its authors now hold government positions, and the administration has enacted the majority of the document's key proposals -- from Schedule F (EO 14171) to the elimination of environmental justice offices to the gutting of Medicaid through the One Big Beautiful Bill Act.
 
 I urge you to:
 - Vote against any legislation that advances Project 2025 proposals
-- Support the Saving the Civil Service Act to protect career
-  federal employees from political purges
-- Demand oversight hearings on the Heritage Foundation's role in
-  staffing and directing federal agencies
-- Oppose any budget that eliminates the Department of Education,
-  cuts EPA funding, or defunds climate research
+- Support the Saving the Civil Service Act to protect career federal employees from political purges
+- Demand oversight hearings on the Heritage Foundation's role in staffing and directing federal agencies
+- Oppose any budget that eliminates the Department of Education, cuts EPA funding, or defunds climate research
 
-The American public rejected Project 2025 during the campaign. It
-should not be implemented through the back door.
+The American public rejected Project 2025 during the campaign. It should not be implemented through the back door.
 
 Sincerely,
-[Your Name]
-[Your Address]
-```
-
-**Send via:**
-- [Resistbot](https://resist.bot/) -- Text RESIST to 50409 to send to all your representatives
-- [5 Calls](https://5calls.org) -- Issue-specific calling and emailing
-- Direct email through [House.gov](https://www.house.gov/) and [Senate.gov](https://www.senate.gov/) member pages
+{firstName} {lastName}
+{zipCode}`}
+/>
 
 ### Share the Document
 
