@@ -654,10 +654,10 @@ function parsePersonalizedActionBlock(
   content: string,
   componentType: 'EmailTemplate' | 'CallRepButton'
 ): { props: Record<string, string> } | null {
-  // Remove the markers
+  // Remove the markers (using [\s\S] instead of . with /s flag for ES5 compatibility)
   const markerPattern = componentType === 'EmailTemplate'
-    ? /^\[\[email\]\](.*)\[\[\/email\]\]$/s
-    : /^\[\[call\]\](.*)\[\[\/call\]\]$/s
+    ? /^\[\[email\]\]([\s\S]*)\[\[\/email\]\]$/
+    : /^\[\[call\]\]([\s\S]*)\[\[\/call\]\]$/
 
   const match = content.match(markerPattern)
   if (!match) return null
