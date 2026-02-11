@@ -58,6 +58,7 @@ export default function CallRepButton({
       // Check if child has CallScript props (topic, script)
       if (isValidElement(child) &&
           typeof child.props === 'object' &&
+          child.props !== null &&
           'topic' in child.props &&
           'script' in child.props) {
         const props = child.props as CallScriptProps

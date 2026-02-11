@@ -63,6 +63,7 @@ export default function EmailTemplate({
       // Check if child has EmailMessage props (topic, subject, body)
       if (isValidElement(child) &&
           typeof child.props === 'object' &&
+          child.props !== null &&
           'topic' in child.props &&
           'subject' in child.props &&
           'body' in child.props) {
