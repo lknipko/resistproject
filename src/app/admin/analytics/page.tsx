@@ -90,10 +90,10 @@ async function getAnalytics() {
 
   // Daily civic actions for last 30 days
   const dailyCivicActions = await prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
-    SELECT DATE("actionDate") as date, COUNT(*)::int as count
-    FROM "CivicAction"
-    WHERE "actionDate" >= ${last30Days}
-    GROUP BY DATE("actionDate")
+    SELECT DATE(action_date) as date, COUNT(*)::int as count
+    FROM civic_actions
+    WHERE action_date >= ${last30Days}
+    GROUP BY DATE(action_date)
     ORDER BY date ASC
   `
 
