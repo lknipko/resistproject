@@ -41,7 +41,7 @@ const SECTION_COLORS: Record<string, string> = {
   act: 'bg-orange-100 text-orange-800',
 }
 
-export default function SearchBar() {
+export default function SearchBar({ fullWidth = false }: { fullWidth?: boolean }) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -129,7 +129,7 @@ export default function SearchBar() {
   const showDropdown = open && query.trim().length >= 2
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className={`relative${fullWidth ? ' w-full' : ''}`}>
       {/* Search input */}
       <div className="flex items-center gap-2 bg-white/10 hover:bg-white/20 transition-colors rounded-lg px-3 py-1.5 border border-white/20">
         <svg
@@ -154,7 +154,7 @@ export default function SearchBar() {
           onChange={handleChange}
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
-          className="bg-transparent text-white placeholder-white/50 text-sm outline-none w-40 md:w-52"
+          className={`bg-transparent text-white placeholder-white/50 text-sm outline-none${fullWidth ? ' w-full' : ' w-40 md:w-52'}`}
           aria-label="Search pages"
           aria-expanded={showDropdown}
           aria-autocomplete="list"
@@ -175,7 +175,7 @@ export default function SearchBar() {
 
       {/* Results dropdown */}
       {showDropdown && (
-        <div className="absolute top-full mt-2 right-0 w-80 md:w-96 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50">
+        <div className={`absolute top-full mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50${fullWidth ? ' left-0 right-0' : ' right-0 w-80 md:w-96'}`}>
           {results.length === 0 ? (
             <div className="px-4 py-6 text-center text-sm text-gray-500">
               No results for &ldquo;{query}&rdquo;

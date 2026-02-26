@@ -84,6 +84,9 @@ export default function Header({ session, userTier = 1 }: HeaderProps) {
                 About
               </Link>
               <div className="pt-2 border-t border-teal-medium">
+                <SearchBar fullWidth />
+              </div>
+              <div className="pt-2 border-t border-teal-medium">
                 <AuthButtonClient session={session} userTier={userTier} />
               </div>
             </div>
