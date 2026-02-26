@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import AuthButtonClient from './AuthButtonClient'
 import Logo from './Logo'
+import SearchBar from './SearchBar'
 
 interface HeaderProps {
   session: {
@@ -25,7 +26,7 @@ export default function Header({ session, userTier = 1 }: HeaderProps) {
         <div className="flex items-center justify-between">
           <Logo variant="wordmark" theme="white" />
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             <Link href="/learn" className="hover:text-teal-light transition-colors font-medium">
               LEARN
             </Link>
@@ -35,6 +36,7 @@ export default function Header({ session, userTier = 1 }: HeaderProps) {
             <Link href="/about" className="hover:text-teal-light transition-colors">
               About
             </Link>
+            <SearchBar />
             <AuthButtonClient session={session} userTier={userTier} />
           </nav>
 

@@ -4,6 +4,7 @@ import { getPageBySlug, generateStaticParams as getStaticParams } from '@/lib/co
 import { compilePage } from '@/lib/mdx'
 import { EditPageButton } from '@/components/content/EditPageButton'
 import { getCachedResolvedContent } from '@/lib/content-resolver'
+import { RelatedContent } from '@/components/content/RelatedContent'
 
 export async function generateStaticParams() {
   return getStaticParams('learn')
@@ -64,6 +65,11 @@ export default async function LearnPage({
           </p>
         </div>
       )}
+      <RelatedContent
+        currentSlug={slug}
+        currentSection="learn"
+        currentTags={page.metadata.tags ?? []}
+      />
       <EditPageButton
         section="learn"
         slug={slug}

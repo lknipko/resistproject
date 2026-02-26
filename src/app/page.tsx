@@ -3,13 +3,103 @@ import { Hero } from '@/components/home/Hero'
 import { FeaturedIssue } from '@/components/home/FeaturedIssue'
 import { HowItWorks } from '@/components/home/HowItWorks'
 
+const BROWSE_CATEGORIES = [
+  {
+    tag: 'Immigration',
+    label: 'ICE & Immigration',
+    description: 'Mass deportations, detention camps, Minneapolis killings, birthright citizenship.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    ),
+    accent: 'red',
+  },
+  {
+    tag: 'Corruption',
+    label: 'Corruption & Epstein',
+    description: 'Epstein files, Trump financial conflicts, emoluments violations, self-enrichment.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+    accent: 'red',
+  },
+  {
+    tag: 'Government Reform',
+    label: 'DOGE & Power Grabs',
+    description: 'Federal workforce dismantlement, Schedule F, impoundment, Project 2025.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    ),
+    accent: 'teal',
+  },
+  {
+    tag: 'Healthcare',
+    label: 'Healthcare & Medicaid',
+    description: 'Medicaid cuts, abortion restrictions, vaccine access, 7.8M losing coverage.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      </svg>
+    ),
+    accent: 'teal',
+  },
+  {
+    tag: 'Judiciary',
+    label: 'Courts & Justice',
+    description: 'Supreme Court ethics crisis, DOJ politicization, universal injunctions ended.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+      </svg>
+    ),
+    accent: 'teal',
+  },
+  {
+    tag: 'Economy',
+    label: 'Tariffs & Economy',
+    description: '145% China tariffs, $2,100–$3,800 cost per household, trade war fallout.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    accent: 'teal',
+  },
+  {
+    tag: 'Civil Rights',
+    label: 'Civil Rights',
+    description: 'LGBTQ+ rollbacks, voting rights, due process, equal protection under attack.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+      </svg>
+    ),
+    accent: 'teal',
+  },
+  {
+    tag: 'Press Freedom',
+    label: 'Press Freedom',
+    description: 'Journalists arrested, FCC threats, outlet bans, source subpoenas.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+      </svg>
+    ),
+    accent: 'teal',
+  },
+]
+
 export default function HomePage() {
   return (
     <div>
-      {/* Hero Section */}
       <Hero />
 
-      {/* Featured Issues */}
+      {/* Most Urgent Issues */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -23,49 +113,50 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <FeaturedIssue
-              title="DOGE & Federal Workforce"
-              description="260K+ federal employees fired. Treasury access granted to unelected officials. CFPB and USAID dismantled while Musk holds $15B+ in government contracts."
-              learnSlug="doge"
-              actSlug="protect-federal-services"
-              badge="Urgent"
-              icon="government"
-            />
-            <FeaturedIssue
-              title="ICE Detention Crisis"
-              description="Detention population doubled. Military bases converted to camps. Sensitive locations policy revoked. U.S. citizens wrongfully detained."
+              title="ICE Detention & Deportation"
+              description="Detention population doubled. Two U.S. citizens killed by federal agents in Minneapolis. Military bases converted to camps. Citizens and legal residents wrongfully detained."
               learnSlug="ice-detention-deportation"
               actSlug="ice-detention-defense"
               badge="Urgent"
               icon="rights"
             />
             <FeaturedIssue
-              title="January 6th Pardons"
-              description="~1,500 pardoned including seditious conspiracy convictions. Career prosecutors purged. DOJ weaponized against political opponents."
-              learnSlug="pardons-justice-system"
-              actSlug="defend-justice"
+              title="DOGE & Government Dismantlement"
+              description="260K+ federal employees fired. Treasury and payment systems accessed by unelected officials. CFPB and USAID dismantled while Musk holds $15B+ in government contracts."
+              learnSlug="doge"
+              actSlug="protect-federal-services"
+              badge="Urgent"
+              icon="government"
+            />
+            <FeaturedIssue
+              title="Tariffs & the Trade War"
+              description="145% tariffs on China, 25% on Canada/Mexico. Projected cost: $2,100–$3,800 per household per year. Court ruled key tariffs exceeded presidential authority."
+              learnSlug="tariffs"
+              actSlug="tariff-impact"
               badge="Urgent"
               icon="justice"
             />
             <FeaturedIssue
-              title="Press Freedom Under Attack"
-              description="Journalists arrested, outlets banned, DOJ subpoenas for sources, and FCC license threats. The free press faces direct assault."
-              learnSlug="press-freedom"
-              actSlug="press-freedom-defense"
-              icon="press"
+              title="Medicaid & Safety Net Cuts"
+              description="The One Big Beautiful Bill Act restructured Medicaid and SNAP. 7.8 million Americans projected to lose health coverage by 2034. Work requirements begin soon."
+              learnSlug="obbba-medicaid"
+              actSlug="medicaid-enrollment"
+              badge="Urgent"
+              icon="health"
             />
             <FeaturedIssue
               title="Public Health Dismantled"
-              description="WHO withdrawal, NIH 40% budget cuts, CDC interference, vaccine schedule changes. Decades of public health infrastructure destroyed."
+              description="WHO withdrawal, RFK Jr. at HHS, NIH 40% budget cuts, CDC interference, vaccine schedule changes. Decades of public health infrastructure destroyed."
               learnSlug="public-health"
               actSlug="public-health"
               icon="health"
             />
             <FeaturedIssue
-              title="Impoundment Crisis"
-              description="Illegally withholding congressionally appropriated funds, violating the Impoundment Control Act and defying court orders."
-              learnSlug="impoundment"
-              actSlug="congressional-power"
-              icon="government"
+              title="Press Freedom Under Attack"
+              description="Journalists arrested, outlets banned from briefings, DOJ subpoenas for sources, and FCC license threats against critical coverage."
+              learnSlug="press-freedom"
+              actSlug="press-freedom-defense"
+              icon="press"
             />
           </div>
 
@@ -83,7 +174,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How It Works */}
       <HowItWorks />
 
       {/* Quick Actions Bar */}
@@ -146,6 +236,44 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Browse by Category */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
+            Browse Issues by Category
+          </h2>
+          <p className="text-center text-gray-600 mb-12">
+            Find the issues that matter most to you.
+          </p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {BROWSE_CATEGORIES.map(({ tag, label, description, icon, accent }) => (
+              <Link
+                key={tag}
+                href={`/learn?tag=${encodeURIComponent(tag)}`}
+                className="bg-white border-2 border-gray-200 hover:border-teal-500 rounded-lg p-5 transition-all hover:shadow-lg group flex flex-col gap-3"
+              >
+                <div className={[
+                  'inline-flex items-center justify-center w-12 h-12 rounded-full transition-colors shrink-0',
+                  accent === 'red'
+                    ? 'bg-red-100 text-red-600 group-hover:bg-red-600 group-hover:text-white'
+                    : 'bg-teal-100 text-teal-600 group-hover:bg-teal-600 group-hover:text-white',
+                ].join(' ')}>
+                  {icon}
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-gray-900 mb-1">{label}</h3>
+                  <p className="text-gray-500 text-xs leading-relaxed">{description}</p>
+                </div>
+                <span className="mt-auto text-xs font-semibold text-teal-600 group-hover:text-teal-700">
+                  Browse pages →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Join the Community */}
       <section className="py-16 bg-gradient-to-r from-teal-600 to-teal-700 text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -193,69 +321,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Browse by Category */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
-            Browse Issues by Category
-          </h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Link
-              href="/learn"
-              className="bg-white border-2 border-gray-200 hover:border-teal-500 rounded-lg p-6 text-center transition-all hover:shadow-lg group"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 text-teal-600 rounded-full mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Government & Power</h3>
-              <p className="text-gray-600 text-sm">DOGE, Project 2025, Impoundment, Schedule F</p>
-            </Link>
-
-            <Link
-              href="/learn"
-              className="bg-white border-2 border-gray-200 hover:border-teal-500 rounded-lg p-6 text-center transition-all hover:shadow-lg group"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 text-teal-600 rounded-full mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Rights & Immigration</h3>
-              <p className="text-gray-600 text-sm">ICE Detention, Birthright Citizenship, LGBTQ+, Voting Rights</p>
-            </Link>
-
-            <Link
-              href="/learn"
-              className="bg-white border-2 border-gray-200 hover:border-teal-500 rounded-lg p-6 text-center transition-all hover:shadow-lg group"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 text-teal-600 rounded-full mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Justice & Courts</h3>
-              <p className="text-gray-600 text-sm">Jan 6 Pardons, Supreme Court, Epstein Files, DOJ Politicization</p>
-            </Link>
-
-            <Link
-              href="/learn"
-              className="bg-white border-2 border-gray-200 hover:border-teal-500 rounded-lg p-6 text-center transition-all hover:shadow-lg group"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 text-teal-600 rounded-full mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Health & Environment</h3>
-              <p className="text-gray-600 text-sm">Public Health, WHO Withdrawal, Climate Rollback, EPA Gutting</p>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Guiding Principles */}
       <section className="py-16 bg-white border-t-2 border-gray-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -266,57 +331,38 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="flex gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-xl">
-                  1
-                </div>
+                <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-xl">1</div>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Primary Sources Only</h3>
-                <p className="text-gray-600">
-                  Federal Register, Congress.gov, court filings, .gov domains. No news media as primary sources.
-                </p>
+                <p className="text-gray-600">Federal Register, Congress.gov, court filings, .gov domains. No news media as primary sources.</p>
               </div>
             </div>
-
             <div className="flex gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-xl">
-                  2
-                </div>
+                <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-xl">2</div>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Facts & Analysis Separated</h3>
-                <p className="text-gray-600">
-                  Readers always know what's verified vs. interpreted. Credibility through transparency.
-                </p>
+                <p className="text-gray-600">Readers always know what's verified vs. interpreted. Credibility through transparency.</p>
               </div>
             </div>
-
             <div className="flex gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl">
-                  3
-                </div>
+                <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl">3</div>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Action Over Awareness</h3>
-                <p className="text-gray-600">
-                  Information without action is insufficient. Every issue has concrete next steps.
-                </p>
+                <p className="text-gray-600">Information without action is insufficient. Every issue has concrete next steps.</p>
               </div>
             </div>
-
             <div className="flex gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl">
-                  4
-                </div>
+                <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl">4</div>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Non-Partisan Framing</h3>
-                <p className="text-gray-600">
-                  Focus on rights and principles, not party politics. One bad source undermines everything.
-                </p>
+                <p className="text-gray-600">Focus on rights and principles, not party politics. One bad source undermines everything.</p>
               </div>
             </div>
           </div>
@@ -326,9 +372,7 @@ export default function HomePage() {
       {/* Footer CTA */}
       <section className="py-12 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Ready to Make a Difference?
-          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Make a Difference?</h2>
           <p className="text-xl text-gray-300 mb-8">
             Join thousands of informed citizens taking meaningful action.
           </p>
