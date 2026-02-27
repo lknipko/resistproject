@@ -51,10 +51,9 @@ export function Collapsible({
   const hoverColor = section === 'learn' ? 'hover:text-teal-700' : 'hover:text-orange-700'
 
   // Font sizes and styling based on level (matches regular headings/list items)
-  // Include 'outdent' class to match the negative left margin of regular headings
   const headingStyles = {
-    h2: 'text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 outdent',
-    h3: 'text-xl font-bold text-gray-900 mt-8 mb-4 pt-4 border-t-2 border-gray-300 outdent',
+    h2: 'text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6',
+    h3: `text-xl font-bold text-gray-900 mt-8 mb-4 pt-4 border-t-2 ${borderColor}`,
     h4: 'text-base font-semibold text-gray-800 mt-6 mb-2',
     li: 'text-base text-gray-800 mb-2'
   }
@@ -127,10 +126,8 @@ export function Collapsible({
         )}
       >
         <div className={cn(
-          'pt-2 pb-4 pl-6 border-l-2',
-          borderColor,
-          contentIndent[level],
-          '[&_.outdent]:ml-0 [&_h2.outdent]:ml-0 [&_h3.outdent]:ml-0'
+          'pt-2 pb-4 pl-4',
+          contentIndent[level]
         )}>
           {children}
         </div>

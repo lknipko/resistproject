@@ -16,6 +16,7 @@ export function FactsSection({ children }: FactsSectionProps) {
         [&_h3]:ml-0 [&_h3]:border-teal [&_h3]:pt-6 [&_h3]:mt-6
         [&_h3:first-child]:mt-0 [&_h3:first-child]:pt-0 [&_h3:first-child]:border-t-0
         [&_h4]:ml-0
+        [&_hr]:hidden
         [&_p]:ml-4 [&_p]:sm:ml-6 [&_p]:md:ml-8
         [&_ul]:ml-4 [&_ul]:sm:ml-6 [&_ul]:md:ml-8
         [&_ol]:ml-4 [&_ol]:sm:ml-6 [&_ol]:md:ml-8

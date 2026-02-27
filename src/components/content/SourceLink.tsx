@@ -32,7 +32,7 @@ export function SourceLink({ href, label, children }: SourceLinkProps) {
   const displayText = children || label || getLabelFromUrl(href)
 
   return (
-    <p className="text-right text-sm italic text-gray-600 mt-2 !mb-4">
+    <div className="text-right text-sm italic text-gray-600 mt-2 mb-4">
       <em>Source:</em>{' '}
       <a
         href={href}
@@ -42,6 +42,6 @@ export function SourceLink({ href, label, children }: SourceLinkProps) {
       >
         {displayText}
       </a>
-    </p>
+    </div>
   )
 }
