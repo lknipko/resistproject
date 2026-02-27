@@ -2,26 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import UserMenu from './UserMenu'
 
-interface AuthButtonClientProps {
-  session: {
-    user?: {
-      name?: string | null
-      email?: string | null
-      image?: string | null
-    }
-  } | null
-  userTier?: number
-}
-
-export default function AuthButtonClient({ session, userTier = 1 }: AuthButtonClientProps) {
+export default function SignInLink() {
   const pathname = usePathname()
   const callbackUrl = pathname.startsWith('/auth/') ? '/' : pathname
-
-  if (session?.user) {
-    return <UserMenu user={session.user} userTier={userTier} />
-  }
 
   return (
     <Link

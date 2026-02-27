@@ -5,12 +5,12 @@ import { redirect } from 'next/navigation'
 
 export async function emailSignIn(formData: FormData) {
   const email = formData.get('email') as string
-  const callbackUrl = formData.get('callbackUrl') as string
+  const callbackUrl = (formData.get('callbackUrl') as string) || '/'
 
   try {
     await signIn('resend', {
       email,
-      redirectTo: '/auth/verify-request',
+      redirectTo: callbackUrl,
     })
   } catch (error) {
     // signIn throws NEXT_REDIRECT which we should allow

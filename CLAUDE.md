@@ -57,15 +57,18 @@ resistproject/                    # ← Working directory (git repo root)
 │   │   ├── profile/            # User profile
 │   │   │   ├── page.tsx        # Profile dashboard
 │   │   │   └── settings/       # Account settings
+│   │   ├── api/
+│   │   │   └── search-index/   # Full-text search index endpoint
 │   │   ├── learn/              # Learn pages
 │   │   └── act/                # Action pages
 │   ├── components/
-│   │   ├── layout/             # Header, Footer, AuthButton, UserMenu
-│   │   └── content/            # Content display components
+│   │   ├── layout/             # Header, Footer, AuthButton, UserMenu, SearchBar
+│   │   └── content/            # Content display components (TagFilterBar, RelatedContent, ...)
 │   ├── lib/
 │   │   ├── auth.ts             # NextAuth configuration
 │   │   ├── db.ts               # Prisma client
 │   │   ├── mdx.ts              # MDX processing
+│   │   ├── tags.ts             # Canonical tag taxonomy (shared server+client)
 │   │   └── remark-section-wrapper.ts  # MDX simple syntax plugin
 │   └── types/
 │       └── next-auth.d.ts      # NextAuth type extensions
@@ -296,6 +299,41 @@ This is NOT collapsible (no [+] marker).
 - Works inside Facts/Analysis sections
 - Supports nested collapsibles (multiple levels)
 - Mobile responsive with appropriate indentation
+
+### ✅ Search & Tag System (2026-02-26)
+
+**Overview:**
+Full-text Fuse.js search in the header, interactive tag filtering on index pages, and automatic related content on detail pages.
+
+**Canonical Tag Taxonomy (`src/lib/tags.ts`):**
+- **Topic tags (14):** Healthcare, Immigration, Civil Rights, LGBTQ+ Rights, Education, Environment, Press Freedom, Voting Rights, Economy, Foreign Policy, Public Health, Judiciary, Corruption, Government Reform
+- **Status tags (3):** Ongoing, Under Litigation, Urgent
+- Shared module importable by both server and client components — do NOT export tag constants from `'use client'` files (causes runtime errors on the server)
+
+**Search (`src/components/layout/SearchBar.tsx` + `src/app/api/search-index/route.ts`):**
+- Fuse.js fuzzy search, loaded once per session with module-level cache
+- `/api/search-index` returns all pages with title, description, tags, excerpt (full body text stripped of JSX/markdown)
+- Key config: `ignoreLocation: true` (required for body text matches in long pages), `threshold: 0.35`
+- Weights: title ×3, description ×2, tags ×2, excerpt ×1
+- Use `type="text"` not `type="search"` — the latter adds a duplicate browser clear button
+- Renders in desktop nav and in mobile hamburger menu (`fullWidth` prop)
+- JSX tag stripping: use `<[^>]+>/g → ' '` (keep content inside tags), NOT `<[A-Z]...>[\s\S]*?</[A-Z]...>` (that erases all body text)
+
+**Tag Filtering (`src/components/content/TagFilterBar.tsx`):**
+- `'use client'` pill bar on `/learn` and `/act` index pages
+- URL-based filtering: `?tag=X` query param, read via `searchParams` in server page components
+- Clicking a tag on any `PageMeta` card also navigates to `/{section}?tag={tag}`
+
+**Related Content (`src/components/content/RelatedContent.tsx`):**
+- Server component — shows up to 3 related pages below each article
+- Cross-section pages (learn↔act) preferred over same-section
+- Same slug in the other section gets +100 score bonus (guarantees mirror page always appears)
+- Requires `max-w-[1200px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16` on its outer div (rendered outside MDX `<PageContent>` wrapper)
+- Returns `null` if current page has no topic tags
+
+**Content updates:**
+- All 51 MDX frontmatter `tags:` fields migrated to canonical tags
+- Hardcoded `## Related Actions` / `## Related Learn Pages` sections removed from MDX files (replaced by RelatedContent component)
 
 ---
 

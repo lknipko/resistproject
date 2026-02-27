@@ -360,7 +360,7 @@ function RepCallCard({
           <a
             href={telLink}
             onClick={handleCallClick}
-            className="px-6 py-2 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition-colors whitespace-nowrap flex-shrink-0"
+            className="px-3 py-2 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition-colors text-center w-20 sm:w-auto"
           >
             📞 Call Now
           </a>
