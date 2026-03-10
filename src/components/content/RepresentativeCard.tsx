@@ -60,7 +60,7 @@ export default function RepresentativeCard({ repType = 'all' }: RepresentativeCa
               href="https://www.senate.gov/senators/senators-contact.htm"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-teal-700 hover:text-teal-800 underline text-sm"
+              className="text-steel-700 hover:text-steel-700 underline text-sm"
             >
               Senate.gov Contact Directory
             </a>
@@ -72,7 +72,7 @@ export default function RepresentativeCard({ repType = 'all' }: RepresentativeCa
               href="https://www.house.gov/representatives/find-your-representative"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-teal-700 hover:text-teal-800 underline text-sm"
+              className="text-steel-700 hover:text-steel-700 underline text-sm"
             >
               House.gov Representative Finder
             </a>
@@ -82,15 +82,15 @@ export default function RepresentativeCard({ repType = 'all' }: RepresentativeCa
             <p className="text-sm font-medium text-teal-900 mb-1">Capitol Switchboard:</p>
             <a
               href="tel:+12022243121"
-              className="text-teal-700 hover:text-teal-800 underline text-sm font-mono"
+              className="text-steel-700 hover:text-steel-700 underline text-sm font-mono"
             >
               📞 (202) 224-3121
             </a>
-            <p className="text-xs text-teal-700 mt-0.5">Ask to be connected to your representative's office</p>
+            <p className="text-xs text-steel-700 mt-0.5">Ask to be connected to your representative's office</p>
           </div>
         </div>
 
-        <p className="text-xs text-teal-700 border-t border-teal-300 pt-3">
+        <p className="text-xs text-steel-700 border-t border-steel-200 pt-3">
           <Link href="/auth/signin" className="text-teal-800 hover:text-teal-900 underline font-medium">
             Sign in
           </Link>
@@ -194,7 +194,7 @@ export default function RepresentativeCard({ repType = 'all' }: RepresentativeCa
                 {rep.phones && rep.phones.length > 0 && (
                   <a
                     href={`tel:${rep.phones[0].replace(/\D/g, '')}`}
-                    className="text-teal-600 hover:text-teal-700 font-medium"
+                    className="text-steel-600 hover:text-steel-700 font-medium"
                   >
                     📞 {rep.phones[0]}
                   </a>
@@ -204,7 +204,7 @@ export default function RepresentativeCard({ repType = 'all' }: RepresentativeCa
                     href={rep.urls[0]}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-teal-600 hover:text-teal-700 font-medium"
+                    className="text-steel-600 hover:text-steel-700 font-medium"
                   >
                     🌐 Website
                   </a>
@@ -215,7 +215,7 @@ export default function RepresentativeCard({ repType = 'all' }: RepresentativeCa
         ))}
       </div>
 
-      <p className="text-xs text-teal-700 mt-4">
+      <p className="text-xs text-steel-700 mt-4">
         Not your representatives?{' '}
         <Link href="/profile/settings" className="underline font-medium">
           Update your zip code

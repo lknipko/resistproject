@@ -145,7 +145,7 @@ export function ProposeNewPageButton({ section }: ProposeNewPageButtonProps) {
     return (
       <button
         onClick={() => window.location.href = '/auth/signin?callbackUrl=' + window.location.pathname}
-        className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg shadow-md transition-colors"
+        className="inline-flex items-center gap-2 px-6 py-3 bg-steel-600 hover:bg-steel-700 text-white font-semibold rounded-lg shadow-md transition-colors"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -159,7 +159,7 @@ export function ProposeNewPageButton({ section }: ProposeNewPageButtonProps) {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg shadow-md transition-colors"
+        className="inline-flex items-center gap-2 px-6 py-3 bg-steel-600 hover:bg-steel-700 text-white font-semibold rounded-lg shadow-md transition-colors"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

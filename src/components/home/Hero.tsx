@@ -41,7 +41,7 @@ export function Hero() {
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <Link
             href="/learn"
-            className="bg-teal-600 hover:bg-teal-700 text-white p-8 rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105 block"
+            className="bg-steel-600 hover:bg-steel-700 text-white p-8 rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105 block"
           >
             <div className="flex items-center gap-3 mb-4">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -49,7 +49,7 @@ export function Hero() {
               </svg>
               <h3 className="text-2xl font-bold">LEARN</h3>
             </div>
-            <p className="text-teal-50">
+            <p className="text-steel-100">
               Every claim backed by primary sources: Federal Register, court filings, and official government documents.
             </p>
           </Link>

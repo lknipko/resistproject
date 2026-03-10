@@ -153,7 +153,7 @@ export function ProposeNewPageCard({ section }: ProposeNewPageCardProps) {
     <>
       <button
         onClick={handleClick}
-        className="block p-6 bg-teal-600 hover:bg-teal-700 border border-teal-700 rounded-lg shadow-sm hover:shadow-md transition-all text-left group"
+        className="block p-6 bg-steel-600 hover:bg-steel-700 border border-steel-700 rounded-lg shadow-sm hover:shadow-md transition-all text-left group"
       >
         <div className="flex items-center gap-3 mb-2">
           <svg
@@ -168,7 +168,7 @@ export function ProposeNewPageCard({ section }: ProposeNewPageCardProps) {
             {session ? 'Propose New Page' : 'Sign In to Propose New Page'}
           </h2>
         </div>
-        <p className="text-teal-50 text-sm">
+        <p className="text-steel-100 text-sm">
           {session
             ? 'Have information to share? Create a new page for the community to review.'
             : 'Sign in to contribute by proposing new pages with verified information.'}

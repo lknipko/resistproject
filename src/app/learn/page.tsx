@@ -55,7 +55,7 @@ export default async function LearnPage({
             <Link
               key={page.slug}
               href={`/learn/${page.slug}`}
-              className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-teal-500 transition-all"
+              className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-steel-600 transition-all"
             >
               <div className="flex items-start justify-between gap-2 mb-2">
                 <h2 className="text-xl font-semibold text-gray-900">{page.title}</h2>
@@ -73,7 +73,7 @@ export default async function LearnPage({
                   {topicTags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs font-medium bg-teal-50 text-teal-800 border border-teal-200 rounded-full"
+                      className="px-2 py-0.5 text-xs font-medium bg-steel-50 text-steel-700 border border-steel-200 rounded-full"
                     >
                       {tag}
                     </span>

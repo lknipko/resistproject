@@ -67,7 +67,7 @@ export function FeaturedIssue({ title, description, learnSlug, actSlug, badge, i
       <div className="flex gap-3">
         <Link
           href={`/learn/${learnSlug}`}
-          className="flex-1 text-center px-4 py-2 bg-teal-50 hover:bg-teal-100 text-teal-700 font-semibold rounded-lg transition-colors text-sm border border-teal-200"
+          className="flex-1 text-center px-4 py-2 bg-steel-50 hover:bg-steel-100 text-steel-600 font-semibold rounded-lg transition-colors text-sm border border-steel-200"
         >
           Learn More
         </Link>

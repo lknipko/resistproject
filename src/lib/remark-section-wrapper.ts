@@ -423,6 +423,50 @@ function transformSourceLinks(tree: Root): void {
 }
 
 /**
+ * Transform photo links
+ * [photo: Caption | Credit](url) → <ContentPhoto src="url" caption="Caption" credit="Credit" />
+ */
+function transformPhotoLinks(tree: Root): void {
+  visit(tree, (node: any) => {
+    return true
+  }, (node: any, index, parent: any) => {
+    if (node.type !== 'paragraph' || !parent || index === undefined) return
+
+    if (node.children.length === 1 && node.children[0].type === 'link') {
+      const link = node.children[0] as Link
+
+      let text = ''
+      link.children.forEach((child: PhrasingContent) => {
+        if (child.type === 'text') text += child.value
+      })
+      text = text.trim()
+
+      const photoMatch = text.match(/^photo:\s*(.+)$/i)
+      if (!photoMatch) return
+
+      const payload = photoMatch[1].trim()
+      const pipeIndex = payload.indexOf(' | ')
+      let caption: string
+      let credit: string | undefined
+
+      if (pipeIndex !== -1) {
+        caption = payload.substring(0, pipeIndex).trim()
+        credit = payload.substring(pipeIndex + 3).trim() || undefined
+      } else {
+        caption = payload
+      }
+
+      const props: Record<string, string> = { src: link.url, caption }
+      if (credit) props.credit = credit
+
+      const photoElement = createMDXElement('ContentPhoto', props, [])
+      parent.children[index] = photoElement
+      return [SKIP, index]
+    }
+  })
+}
+
+/**
  * Process children array (works recursively on nested JSX)
  */
 function processChildren(children: any[]): any[] {
@@ -745,6 +789,7 @@ export default function remarkSectionWrapper() {
     // Phase 1: Transform links and personalized action blocks (must happen before section wrapping)
     transformCTALinks(tree)
     transformSourceLinks(tree)
+    transformPhotoLinks(tree)
     transformPersonalizedActions(tree)
 
     // Phase 2: Process collapsibles (run before section wrapping)

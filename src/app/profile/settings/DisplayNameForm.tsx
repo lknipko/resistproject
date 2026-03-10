@@ -52,7 +52,7 @@ export default function DisplayNameForm({ initialDisplayName }: DisplayNameFormP
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}
-            className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+            className="px-4 py-2 bg-steel-600 text-white rounded-md hover:bg-steel-700 transition-colors"
           >
             Edit
           </button>
@@ -61,7 +61,7 @@ export default function DisplayNameForm({ initialDisplayName }: DisplayNameFormP
             <button
               onClick={handleSave}
               disabled={isSaving || displayName.trim() === initialDisplayName}
-              className="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 bg-steel-600 text-white rounded-md hover:bg-steel-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving...' : 'Save'}
             </button>

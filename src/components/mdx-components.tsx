@@ -28,6 +28,7 @@ import { SectionIntro } from './content/SectionIntro'
 import { RelatedActions } from './content/RelatedActions'
 import { RelatedLinks } from './content/RelatedLinks'
 import { Collapsible } from './mdx/Collapsible'
+import { ContentPhoto } from './mdx/ContentPhoto'
 import TrackableLink from './analytics/TrackableLink'
 import EmailTemplate, { EmailMessage } from './content/EmailTemplate'
 import CallRepButton, { CallScript } from './content/CallRepButton'
@@ -63,6 +64,7 @@ export const mdxComponents: MDXComponents = {
   RelatedActions,
   RelatedLinks,
   Collapsible,
+  ContentPhoto,
   TrackableLink,
   EmailTemplate,
   EmailMessage,
@@ -150,7 +152,7 @@ export const mdxComponents: MDXComponents = {
   ),
   blockquote: ({ children, ...props }) => (
     <blockquote
-      className="relative bg-teal text-white italic py-6 px-12 my-6 before:content-['\201c'] before:absolute before:top-2 before:left-3 before:text-5xl before:text-white/40 before:font-serif after:content-['\201d'] after:absolute after:bottom-0 after:right-3 after:text-5xl after:text-white/40 after:font-serif"
+      className="relative bg-steel-600 text-white italic py-6 px-12 my-6 before:content-['\201c'] before:absolute before:top-2 before:left-3 before:text-5xl before:text-white/40 before:font-serif after:content-['\201d'] after:absolute after:bottom-0 after:right-3 after:text-5xl after:text-white/40 after:font-serif"
       {...props}
     >
       <div className="relative z-10 text-white [&_*]:!text-white">{children}</div>

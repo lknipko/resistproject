@@ -263,7 +263,7 @@ export default async function AnalyticsPage() {
 
         <div className="rounded-lg border bg-white p-6 shadow-sm">
           <div className="text-sm font-medium text-gray-600">Last 7 Days</div>
-          <div className="mt-2 text-3xl font-bold text-teal-600">
+          <div className="mt-2 text-3xl font-bold text-steel-600">
             {analytics.clicksLast7Days.toLocaleString()}
           </div>
           <div className="mt-1 text-xs text-gray-500">
@@ -326,7 +326,7 @@ export default async function AnalyticsPage() {
 
         <div className="rounded-lg border bg-white p-6 shadow-sm">
           <div className="text-sm font-medium text-gray-600">Last 7 Days</div>
-          <div className="mt-2 text-3xl font-bold text-teal-600">
+          <div className="mt-2 text-3xl font-bold text-steel-600">
             {analytics.civicActionsLast7Days.toLocaleString()}
           </div>
           <div className="mt-1 text-xs text-gray-500">
@@ -414,7 +414,7 @@ export default async function AnalyticsPage() {
             {analytics.topSourcePages.map((page) => (
               <div key={page.sourcePage} className="flex items-center justify-between">
                 <div className="truncate font-medium text-sm">{page.sourcePage}</div>
-                <div className="ml-4 text-lg font-bold text-teal-600">
+                <div className="ml-4 text-lg font-bold text-steel-600">
                   {page._count.id.toLocaleString()}
                 </div>
               </div>

@@ -128,7 +128,7 @@ export default async function ModeratorDashboard({ searchParams }: ModeratorDash
                 href="/admin/review-edits?status=all"
                 className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
                   status === 'all'
-                    ? 'bg-teal-600 text-white'
+                    ? 'bg-steel-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -174,7 +174,7 @@ export default async function ModeratorDashboard({ searchParams }: ModeratorDash
                 name="search"
                 defaultValue={searchTerm}
                 placeholder="Search by page path, summary, or proposer..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-steel-500 focus:border-transparent"
               />
             </form>
           </div>

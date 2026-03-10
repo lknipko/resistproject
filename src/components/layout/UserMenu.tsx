@@ -59,11 +59,11 @@ export default function UserMenu({ user, userTier = 1 }: UserMenuProps) {
       {/* User avatar button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-full bg-teal-600 hover:bg-teal-500 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 focus:ring-offset-teal-dark"
+        className="flex items-center gap-2 rounded-full bg-steel-600 hover:bg-steel-700 transition-colors focus:outline-none focus:ring-2 focus:ring-steel-400 focus:ring-offset-2 focus:ring-offset-teal-dark"
         aria-label="User menu"
         aria-expanded={isOpen}
       >
-        <div className="w-9 h-9 rounded-full bg-teal-500 flex items-center justify-center text-white font-semibold text-sm">
+        <div className="w-9 h-9 rounded-full bg-steel-600 flex items-center justify-center text-white font-semibold text-sm">
           {getInitials()}
         </div>
       </button>
@@ -102,7 +102,7 @@ export default function UserMenu({ user, userTier = 1 }: UserMenuProps) {
             {userTier >= 3 && (
               <Link
                 href="/admin/review-edits"
-                className="block px-4 py-2 text-sm text-teal-700 font-medium hover:bg-teal-50 transition-colors"
+                className="block px-4 py-2 text-sm text-steel-600 font-medium hover:bg-steel-50 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 🛡️ Moderator Dashboard

@@ -11,7 +11,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group relative flex w-full justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="group relative flex w-full justify-center rounded-md border border-transparent bg-steel-600 px-4 py-2 text-sm font-medium text-white hover:bg-steel-700 focus:outline-none focus:ring-2 focus:ring-steel-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {pending ? 'Sending...' : 'Send sign-in link'}
     </button>
@@ -36,7 +36,7 @@ export default function SignInForm() {
       {/* Google Sign-In Button */}
       <button
         onClick={() => googleSignIn(callbackUrl)}
-        className="group relative flex w-full justify-center items-center gap-3 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+        className="group relative flex w-full justify-center items-center gap-3 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-steel-500 focus:ring-offset-2"
       >
         <svg className="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -71,7 +71,7 @@ export default function SignInForm() {
             type="email"
             autoComplete="email"
             required
-            className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm"
+            className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-steel-600 focus:outline-none focus:ring-steel-500 sm:text-sm"
             placeholder="Email address"
           />
         </div>

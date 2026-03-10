@@ -46,9 +46,9 @@ export function Collapsible({
   }, [id])
 
   // Section-based accent colors
-  const accentColor = section === 'learn' ? 'text-teal-600' : 'text-orange-600'
-  const borderColor = section === 'learn' ? 'border-teal-500' : 'border-orange-500'
-  const hoverColor = section === 'learn' ? 'hover:text-teal-700' : 'hover:text-orange-700'
+  const accentColor = section === 'learn' ? 'text-steel-600' : 'text-orange-600'
+  const borderColor = section === 'learn' ? 'border-steel-600' : 'border-orange-500'
+  const hoverColor = section === 'learn' ? 'hover:text-steel-700' : 'hover:text-orange-700'
 
   // Font sizes and styling based on level (matches regular headings/list items)
   const headingStyles = {

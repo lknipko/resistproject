@@ -62,7 +62,7 @@ const BROWSE_CATEGORIES = [
   {
     tag: 'Economy',
     label: 'Tariffs & Economy',
-    description: '145% China tariffs, $2,100–$3,800 cost per household, trade war fallout.',
+    description: 'SCOTUS struck IEEPA tariffs; new 15% global tariff issued same day. $1,500/year per household.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -80,6 +80,17 @@ const BROWSE_CATEGORIES = [
       </svg>
     ),
     accent: 'teal',
+  },
+  {
+    tag: 'Foreign Policy',
+    label: 'Foreign Policy & War',
+    description: 'US-Iran military conflict, USAID dismantled, NATO destabilization, Greenland threats.',
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    accent: 'red',
   },
   {
     tag: 'Press Freedom',
@@ -114,7 +125,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <FeaturedIssue
               title="ICE Detention & Deportation"
-              description="Detention population doubled. Two U.S. citizens killed by federal agents in Minneapolis. Military bases converted to camps. Citizens and legal residents wrongfully detained."
+              description="73,000+ detained by early 2026 — a 92% increase in one year. Operation Metro Surge ended Feb 12 with 23,000 arrests; only 14% violent offenders. U.S. citizens wrongfully detained."
               learnSlug="ice-detention-deportation"
               actSlug="ice-detention-defense"
               badge="Urgent"
@@ -122,7 +133,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="DOGE & Government Dismantlement"
-              description="260K+ federal employees fired. Treasury and payment systems accessed by unelected officials. CFPB and USAID dismantled while Musk holds $15B+ in government contracts."
+              description="260K+ federal employees fired. Treasury payment systems accessed by unelected officials. CFPB and USAID dismantled. Courts issued 20+ injunctions — but SCOTUS shielded DOGE from disclosure."
               learnSlug="doge"
               actSlug="protect-federal-services"
               badge="Urgent"
@@ -130,40 +141,42 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="Tariffs & the Trade War"
-              description="145% tariffs on China, 25% on Canada/Mexico. Projected cost: $2,100–$3,800 per household per year. Court ruled key tariffs exceeded presidential authority."
+              description="SCOTUS ruled 6-3 that IEEPA tariffs exceeded presidential authority (Feb 21, 2026) — the administration issued a new 15% global tariff the same day. Projected cost: $1,500/year per household."
               learnSlug="tariffs"
               actSlug="tariff-impact"
               badge="Urgent"
               icon="justice"
             />
             <FeaturedIssue
-              title="Medicaid & Safety Net Cuts"
-              description="The One Big Beautiful Bill Act restructured Medicaid and SNAP. 7.8 million Americans projected to lose health coverage by 2034. Work requirements begin soon."
+              title="EPA Endangerment Finding Repealed"
+              description="EPA rescinded the 2009 Endangerment Finding (Feb 12, 2026), eliminating the legal basis for ALL federal greenhouse gas regulation. The biggest environmental rollback since the Clean Air Act."
+              learnSlug="climate-environment"
+              actSlug="environment"
+              badge="Urgent"
+              icon="health"
+            />
+            <FeaturedIssue
+              title="Medicaid & ACA Safety Net Cuts"
+              description="7.8 million projected to lose Medicaid coverage. ACA subsidies expired: 22 million face doubled premiums, 3.2 million dropped coverage. Community engagement requirements begin Dec 2026."
               learnSlug="obbba-medicaid"
               actSlug="medicaid-enrollment"
               badge="Urgent"
               icon="health"
             />
             <FeaturedIssue
-              title="Public Health Dismantled"
-              description="WHO withdrawal, RFK Jr. at HHS, NIH 40% budget cuts, CDC interference, vaccine schedule changes. Decades of public health infrastructure destroyed."
-              learnSlug="public-health"
-              actSlug="public-health"
-              icon="health"
-            />
-            <FeaturedIssue
-              title="Press Freedom Under Attack"
-              description="Journalists arrested, outlets banned from briefings, DOJ subpoenas for sources, and FCC license threats against critical coverage."
-              learnSlug="press-freedom"
-              actSlug="press-freedom-defense"
-              icon="press"
+              title="US-Iran Military Conflict"
+              description="US military strikes on Iran raise constitutional questions about war powers and congressional authorization. Regional escalation risk with major humanitarian consequences."
+              learnSlug="iran-war"
+              actSlug="iran-war"
+              badge="Urgent"
+              icon="government"
             />
           </div>
 
           <div className="text-center">
             <Link
               href="/learn"
-              className="inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 font-semibold text-lg"
+              className="inline-flex items-center gap-2 text-steel-600 hover:text-steel-700 font-semibold text-lg"
             >
               Browse all issues
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -251,13 +264,13 @@ export default function HomePage() {
               <Link
                 key={tag}
                 href={`/learn?tag=${encodeURIComponent(tag)}`}
-                className="bg-white border-2 border-gray-200 hover:border-teal-500 rounded-lg p-5 transition-all hover:shadow-lg group flex flex-col gap-3"
+                className="bg-white border-2 border-gray-200 hover:border-steel-600 rounded-lg p-5 transition-all hover:shadow-lg group flex flex-col gap-3"
               >
                 <div className={[
                   'inline-flex items-center justify-center w-12 h-12 rounded-full transition-colors shrink-0',
                   accent === 'red'
                     ? 'bg-red-100 text-red-600 group-hover:bg-red-600 group-hover:text-white'
-                    : 'bg-teal-100 text-teal-600 group-hover:bg-teal-600 group-hover:text-white',
+                    : 'bg-teal-100 text-steel-600 group-hover:bg-steel-600 group-hover:text-white',
                 ].join(' ')}>
                   {icon}
                 </div>
@@ -265,7 +278,7 @@ export default function HomePage() {
                   <h3 className="text-base font-bold text-gray-900 mb-1">{label}</h3>
                   <p className="text-gray-500 text-xs leading-relaxed">{description}</p>
                 </div>
-                <span className="mt-auto text-xs font-semibold text-teal-600 group-hover:text-teal-700">
+                <span className="mt-auto text-xs font-semibold text-steel-600 group-hover:text-steel-700">
                   Browse pages →
                 </span>
               </Link>
@@ -275,7 +288,7 @@ export default function HomePage() {
       </section>
 
       {/* Join the Community */}
-      <section className="py-16 bg-gradient-to-r from-teal-600 to-teal-700 text-white">
+      <section className="py-16 bg-gradient-to-r from-steel-600 to-steel-700 text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-6">
             <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -291,7 +304,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/act/contribute"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-teal-700 hover:bg-teal-50 font-bold rounded-lg shadow-lg transition-all hover:scale-105 text-lg"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-steel-700 hover:bg-steel-50 font-bold rounded-lg shadow-lg transition-all hover:scale-105 text-lg"
           >
             Learn How to Contribute
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -331,7 +344,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="flex gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-xl">1</div>
+                <div className="w-12 h-12 bg-teal-100 text-steel-600 rounded-full flex items-center justify-center font-bold text-xl">1</div>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Primary Sources Only</h3>
@@ -340,7 +353,7 @@ export default function HomePage() {
             </div>
             <div className="flex gap-4">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center font-bold text-xl">2</div>
+                <div className="w-12 h-12 bg-teal-100 text-steel-600 rounded-full flex items-center justify-center font-bold text-xl">2</div>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Facts & Analysis Separated</h3>
@@ -379,7 +392,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/learn"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition-all text-lg"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-steel-600 hover:bg-steel-700 text-white font-semibold rounded-lg transition-all text-lg"
             >
               Start Learning
             </Link>

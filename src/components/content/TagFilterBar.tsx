@@ -17,12 +17,12 @@ export function TagFilterBar({ section, activeTag, availableTags }: TagFilterBar
 
   const isLearn = section === 'learn'
   const activeClasses = isLearn
-    ? 'bg-teal-600 border-teal-600 text-white'
+    ? 'bg-steel-600 border-steel-600 text-white'
     : 'bg-orange-500 border-orange-500 text-white'
   const hoverClasses = isLearn
-    ? 'hover:border-teal-400 hover:text-teal-700'
+    ? 'hover:border-teal-400 hover:text-steel-700'
     : 'hover:border-orange-400 hover:text-orange-700'
-  const clearClasses = isLearn ? 'text-teal-600' : 'text-orange-600'
+  const clearClasses = isLearn ? 'text-steel-600' : 'text-orange-600'
 
   const visibleTags = TOPIC_TAGS.filter((t) => availableTags.includes(t))
 

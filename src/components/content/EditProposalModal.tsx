@@ -164,7 +164,7 @@ export function EditProposalModal({
               onClick={() => setMobileTab('edit')}
               className={`flex-1 py-3 px-6 font-semibold transition-colors ${
                 mobileTab === 'edit'
-                  ? 'text-teal-600 border-b-2 border-teal-600 bg-white'
+                  ? 'text-steel-600 border-b-2 border-steel-600 bg-white'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -174,7 +174,7 @@ export function EditProposalModal({
               onClick={() => setMobileTab('preview')}
               className={`flex-1 py-3 px-6 font-semibold transition-colors ${
                 mobileTab === 'preview'
-                  ? 'text-teal-600 border-b-2 border-teal-600 bg-white'
+                  ? 'text-steel-600 border-b-2 border-steel-600 bg-white'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -212,7 +212,7 @@ export function EditProposalModal({
                     <span>
                       {proposedContent.length} characters
                       {hasChanges && (
-                        <span className="ml-2 text-teal-600 font-medium">
+                        <span className="ml-2 text-steel-600 font-medium">
                           ({charactersChanged > 0 ? '+' : ''}{proposedContent.length - currentContent.length})
                         </span>
                       )}
@@ -220,7 +220,7 @@ export function EditProposalModal({
                     <button
                       type="button"
                       onClick={() => setShowHelp(!showHelp)}
-                      className="text-teal-600 hover:text-teal-700 font-medium text-xs"
+                      className="text-steel-600 hover:text-steel-700 font-medium text-xs"
                     >
                       {showHelp ? 'Hide' : 'Help'}
                     </button>
@@ -252,7 +252,7 @@ export function EditProposalModal({
                   <span>
                     {proposedContent.length} characters
                     {hasChanges && (
-                      <span className="ml-2 text-teal-600 font-medium">
+                      <span className="ml-2 text-steel-600 font-medium">
                         ({charactersChanged > 0 ? '+' : ''}{proposedContent.length - currentContent.length})
                       </span>
                     )}
@@ -260,7 +260,7 @@ export function EditProposalModal({
                   <button
                     type="button"
                     onClick={() => setShowHelp(!showHelp)}
-                    className="text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1"
+                    className="text-steel-600 hover:text-steel-700 font-medium flex items-center gap-1"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -329,7 +329,7 @@ export function EditProposalModal({
                   id="editType"
                   value={editType}
                   onChange={(e) => setEditType(e.target.value as typeof editType)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-steel-500 focus:border-transparent"
                   disabled={isSubmitting || success}
                 >
                   <option value="content">Content update</option>
@@ -350,7 +350,7 @@ export function EditProposalModal({
                   placeholder="Briefly describe your changes (required, 10-500 characters)"
                   maxLength={500}
                   required
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-steel-500 focus:border-transparent resize-none"
                   rows={3}
                   disabled={isSubmitting || success}
                 />
@@ -396,7 +396,7 @@ export function EditProposalModal({
             <button
               type="submit"
               disabled={isSubmitting || !hasChanges || editSummary.length < 10 || success}
-              className="px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-3 bg-steel-600 text-white font-semibold rounded-lg hover:bg-steel-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {isSubmitting ? (
                 <>

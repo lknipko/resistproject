@@ -48,7 +48,7 @@ export default function EmailPreferencesForm({
               type="checkbox"
               checked={emailNotifications}
               onChange={(e) => setEmailNotifications(e.target.checked)}
-              className="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
+              className="w-4 h-4 text-steel-600 border-gray-300 rounded focus:ring-steel-500"
             />
           </div>
           <div className="ml-3">
@@ -68,7 +68,7 @@ export default function EmailPreferencesForm({
               type="checkbox"
               checked={weeklyDigest}
               onChange={(e) => setWeeklyDigest(e.target.checked)}
-              className="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
+              className="w-4 h-4 text-steel-600 border-gray-300 rounded focus:ring-steel-500"
             />
           </div>
           <div className="ml-3">
@@ -86,7 +86,7 @@ export default function EmailPreferencesForm({
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="px-6 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-6 py-2 bg-steel-600 text-white rounded-md hover:bg-steel-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSaving ? 'Saving...' : 'Save Preferences'}
         </button>

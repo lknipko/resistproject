@@ -121,7 +121,7 @@ export default async function ProfilePage() {
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
                 <div
-                  className="bg-teal-600 h-3 rounded-full transition-all"
+                  className="bg-steel-600 h-3 rounded-full transition-all"
                   style={{ width: `${Math.min((tierProgress.current / tierProgress.max) * 100, 100)}%` }}
                 />
               </div>
@@ -134,7 +134,7 @@ export default async function ProfilePage() {
           {/* Reputation */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Reputation</h2>
-            <div className="text-4xl font-bold text-teal-600">
+            <div className="text-4xl font-bold text-steel-600">
               {extended.reputationScore}
             </div>
             <p className="text-sm text-gray-600 mt-2">
@@ -191,7 +191,7 @@ export default async function ProfilePage() {
             <h2 className="text-xl font-semibold text-gray-900 mb-6">Moderation Activity</h2>
             <div className="grid grid-cols-2 gap-6">
               <div>
-                <div className="text-2xl font-bold text-teal-600">{extended.reviewsCompleted}</div>
+                <div className="text-2xl font-bold text-steel-600">{extended.reviewsCompleted}</div>
                 <div className="text-sm text-gray-600">Reviews Completed</div>
               </div>
             </div>

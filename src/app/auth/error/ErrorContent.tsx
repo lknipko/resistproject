@@ -28,14 +28,14 @@ export default function ErrorContent() {
       <div className="mt-6">
         <Link
           href="/auth/signin"
-          className="flex w-full justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+          className="flex w-full justify-center rounded-md border border-transparent bg-steel-600 px-4 py-2 text-sm font-medium text-white hover:bg-steel-700 focus:outline-none focus:ring-2 focus:ring-steel-500 focus:ring-offset-2"
         >
           Try again
         </Link>
       </div>
 
       <div className="mt-4 text-center">
-        <Link href="/" className="text-sm text-teal-600 hover:text-teal-500">
+        <Link href="/" className="text-sm text-steel-600 hover:text-steel-700">
           Return to homepage
         </Link>
       </div>

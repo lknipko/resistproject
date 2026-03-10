@@ -23,7 +23,7 @@ export function PageMeta({ tags, lastUpdated, section }: PageMetaProps) {
                 key={tag}
                 href={`/${section}?tag=${encodeURIComponent(tag)}`}
                 className="px-2.5 py-0.5 text-xs font-medium rounded-full border transition-colors
-                  border-gray-300 text-gray-600 hover:border-teal-400 hover:text-teal-700 hover:bg-teal-50"
+                  border-gray-300 text-gray-600 hover:border-teal-400 hover:text-steel-700 hover:bg-teal-50"
               >
                 {tag}
               </Link>

@@ -156,7 +156,7 @@ export function ModeratorProposalCard({ proposal }: ModeratorProposalCardProps) 
 
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-teal-600 hover:text-teal-700 font-medium text-sm flex items-center gap-1"
+            className="text-steel-600 hover:text-steel-700 font-medium text-sm flex items-center gap-1"
           >
             {isExpanded ? 'Hide Details' : 'View Details'}
             <svg

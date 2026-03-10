@@ -61,7 +61,7 @@ export function EditPageButton({ section, slug, currentContent }: EditPageButton
         </p>
         <a
           href="/auth/signin"
-          className="inline-block px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors"
+          className="inline-block px-6 py-3 bg-steel-600 text-white font-semibold rounded-lg hover:bg-steel-700 transition-colors"
         >
           Sign in to suggest edits
         </a>
@@ -72,10 +72,10 @@ export function EditPageButton({ section, slug, currentContent }: EditPageButton
   // Authenticated
   return (
     <>
-      <div className="mt-12 p-6 bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg border-2 border-teal-200 text-center">
+      <div className="mt-12 p-6 bg-gradient-to-r from-steel-50 to-steel-50 rounded-lg border-2 border-steel-200 text-center">
         <div className="mb-4">
           <svg
-            className="w-12 h-12 text-teal-600 mx-auto mb-2"
+            className="w-12 h-12 text-steel-600 mx-auto mb-2"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -97,7 +97,7 @@ export function EditPageButton({ section, slug, currentContent }: EditPageButton
         </p>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="inline-block px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors shadow-md"
+          className="inline-block px-6 py-3 bg-steel-600 text-white font-semibold rounded-lg hover:bg-steel-700 transition-colors shadow-md"
         >
           <span className="flex items-center justify-center gap-2">
             <svg

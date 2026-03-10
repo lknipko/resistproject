@@ -85,6 +85,21 @@ const CONTENT_UPDATES: Array<{
     slug: 'foreign-policy',
     editSummary: 'Add Greenland "no force" pledge update with caveats, Panama false "reclaimed" claim correction',
   },
+  {
+    section: 'learn',
+    slug: 'climate-environment',
+    editSummary: 'Add ContentPhoto: coal-fired power plant image after EPA Endangerment Finding rescission bullet (Mar 9, 2026)',
+  },
+  {
+    section: 'learn',
+    slug: 'press-freedom',
+    editSummary: 'Add ContentPhoto: White House Briefing Room image after press freedom rankings bullet (Mar 9, 2026)',
+  },
+  {
+    section: 'learn',
+    slug: 'lgbtq-rights',
+    editSummary: 'Add ContentPhoto: Rainbow Pride flag after Key Points section (Mar 9, 2026)',
+  },
 ]
 
 // New pages created in this batch — these just need founding proposals
@@ -107,6 +122,16 @@ const NEW_PAGES: Array<{
     section: 'learn',
     slug: 'election-security',
     editSummary: 'New page: Election Security — EI-ISAC defunding, CISA elimination, FBI FITF disbanding, 2026 midterm risk (Feb 26, 2026)',
+  },
+  {
+    section: 'learn',
+    slug: 'iran-war',
+    editSummary: 'New page: US-Iran Military Conflict — Operation Epic Fury (Feb 28, 2026), Khamenei killed, no AUMF, War Powers clock running, congressional votes, humanitarian impact (Mar 9, 2026)',
+  },
+  {
+    section: 'act',
+    slug: 'iran-war',
+    editSummary: 'New page: Iran War Response — War Powers contact-Congress actions, ACLU/CODEPINK petitions, congressional funding lever, April 29 deadline (Mar 9, 2026)',
   },
 ]
 

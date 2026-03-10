@@ -18,6 +18,16 @@ const config: Config = {
           'teal-dark': '#0E7490', // Darker teal (cyan-700)
           'teal-light': '#22D3EE', // Lighter teal (cyan-400)
         },
+        // Interactive steel blue palette (#1A6FA6 primary)
+        steel: {
+          50:  '#EAF3FA',  // light background tint
+          100: '#D5E7F5',  // hover background
+          200: '#A8CEEA',  // light border
+          400: '#4A93BF',  // focus ring (light)
+          500: '#2E7FB3',  // focus ring (medium)
+          600: '#1A6FA6',  // primary interactive color
+          700: '#155E8D',  // hover/dark state
+        },
         // Legacy colors (keep for now, transition gradually)
         teal: {
           DEFAULT: '#2d5a6b',

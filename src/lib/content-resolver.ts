@@ -36,10 +36,16 @@ export async function getResolvedContent(
   const baseContent = page.content
   const pagePath = page.metadata.path
 
-  // 2. Get PageMetadata
-  const pageMetadata = await prisma.pageMetadata.findFirst({
-    where: { pagePath }
-  })
+  // 2. Get PageMetadata (fall back gracefully if DB is unreachable)
+  let pageMetadata = null
+  try {
+    pageMetadata = await prisma.pageMetadata.findFirst({
+      where: { pagePath }
+    })
+  } catch {
+    // DB unreachable (e.g. local dev without DB connection) — serve MDX file directly
+    return { content: baseContent, version: 0, appliedEdits: [], baseContent }
+  }
 
   if (!pageMetadata) {
     // No metadata = no edits yet, return base content
@@ -52,20 +58,25 @@ export async function getResolvedContent(
   }
 
   // 3. Fetch all approved edits in chronological order
-  const approvedEdits = await prisma.editProposal.findMany({
-    where: {
-      pageId: pageMetadata.pageId,
-      status: 'approved',
-    },
-    orderBy: {
-      resolvedAt: 'asc', // Apply in order they were approved
-    },
-    select: {
-      id: true,
-      proposedContent: true,
-      resolvedAt: true,
-    }
-  })
+  let approvedEdits: { id: number; proposedContent: string; resolvedAt: Date | null }[] = []
+  try {
+    approvedEdits = await prisma.editProposal.findMany({
+      where: {
+        pageId: pageMetadata.pageId,
+        status: 'approved',
+      },
+      orderBy: {
+        resolvedAt: 'asc', // Apply in order they were approved
+      },
+      select: {
+        id: true,
+        proposedContent: true,
+        resolvedAt: true,
+      }
+    })
+  } catch {
+    return { content: baseContent, version: 0, appliedEdits: [], baseContent }
+  }
 
   if (approvedEdits.length === 0) {
     // No approved edits, return base content
@@ -108,20 +119,30 @@ export async function hasApprovedEdits(
 ): Promise<boolean> {
   const pagePath = `/${section}/${slug}`
 
-  const pageMetadata = await prisma.pageMetadata.findFirst({
-    where: { pagePath }
-  })
+  let pageMetadata = null
+  try {
+    pageMetadata = await prisma.pageMetadata.findFirst({
+      where: { pagePath }
+    })
+  } catch {
+    return false
+  }
 
   if (!pageMetadata) {
     return false
   }
 
-  const count = await prisma.editProposal.count({
-    where: {
-      pageId: pageMetadata.pageId,
-      status: 'approved',
-    }
-  })
+  let count = 0
+  try {
+    count = await prisma.editProposal.count({
+      where: {
+        pageId: pageMetadata.pageId,
+        status: 'approved',
+      }
+    })
+  } catch {
+    return false
+  }
 
   return count > 0
 }

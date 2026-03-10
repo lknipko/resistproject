@@ -77,13 +77,13 @@ export default async function ReviewPage({ searchParams }: ReviewPageProps) {
             href="/review?status=pending"
             className={`px-4 py-2 font-semibold transition-colors ${
               status === 'pending'
-                ? 'text-teal-600 border-b-2 border-teal-600'
+                ? 'text-steel-600 border-b-2 border-steel-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
             Pending
             {status === 'pending' && (
-              <span className="ml-2 px-2 py-0.5 text-xs bg-teal-100 text-teal-700 rounded-full">
+              <span className="ml-2 px-2 py-0.5 text-xs bg-steel-50 text-steel-700 rounded-full">
                 {totalCount}
               </span>
             )}
@@ -92,7 +92,7 @@ export default async function ReviewPage({ searchParams }: ReviewPageProps) {
             href="/review?status=approved"
             className={`px-4 py-2 font-semibold transition-colors ${
               status === 'approved'
-                ? 'text-teal-600 border-b-2 border-teal-600'
+                ? 'text-steel-600 border-b-2 border-steel-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -102,7 +102,7 @@ export default async function ReviewPage({ searchParams }: ReviewPageProps) {
             href="/review?status=rejected"
             className={`px-4 py-2 font-semibold transition-colors ${
               status === 'rejected'
-                ? 'text-teal-600 border-b-2 border-teal-600'
+                ? 'text-steel-600 border-b-2 border-steel-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >

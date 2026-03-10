@@ -125,7 +125,7 @@ export default function AboutPage() {
           </h2>
           <p className="text-gray-700">
             Questions or feedback? Email us at{' '}
-            <a href="mailto:contact@resistproject.com" className="text-teal-600 hover:text-teal-700">
+            <a href="mailto:contact@resistproject.com" className="text-steel-600 hover:text-steel-700">
               contact@resistproject.com
             </a>
           </p>
