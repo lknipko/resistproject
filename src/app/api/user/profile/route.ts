@@ -64,8 +64,8 @@ export async function GET() {
     return NextResponse.json(profile, {
       status: 200,
       headers: {
-        // Short cache since profile can be edited
-        'Cache-Control': 'private, max-age=60',
+        // No cache - must always reflect the current login state and profile edits
+        'Cache-Control': 'no-store',
       },
     })
   } catch (error) {

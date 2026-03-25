@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { validateZipCode, validatePhoneNumber, validateName, formatPhoneNumber } from '@/lib/validation'
@@ -138,7 +139,8 @@ export async function updateCivicProfile(data: {
         lastName: data.lastName.trim(),
         zipCode: data.zipCode.trim(),
         phoneNumber: formattedPhone,
-        civicProfileCompleted: true, // Set to true when all fields are filled
+        civicProfileCompleted: true,
+        onboardingDismissed: true, // Completing the profile also clears the onboarding gate
       },
     })
 
@@ -157,6 +159,10 @@ export async function updateCivicProfile(data: {
         civicProfileCompleted: updated.civicProfileCompleted,
       },
     })
+
+    // Clear the onboarding cookie now that the profile is complete
+    const cookieStore = await cookies()
+    cookieStore.delete('onboarding-needed')
 
     revalidatePath('/profile')
     revalidatePath('/profile/settings')

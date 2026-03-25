@@ -131,6 +131,7 @@ model UserExtended {
   zipCode                String?  @map("zip_code") @db.VarChar(10)
   phoneNumber            String?  @map("phone_number") @db.VarChar(20)
   civicProfileCompleted  Boolean  @default(false) @map("civic_profile_completed")
+  onboardingDismissed    Boolean  @default(false) @map("onboarding_dismissed")
 
   // Security tracking
   lastLogin             DateTime? @map("last_login")
