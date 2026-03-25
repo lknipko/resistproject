@@ -191,6 +191,7 @@ Explanation and interpretation of the facts above.
 - `[→ Take Action: Text](url)` → ActNowBox component (orange CTA)
 - `[← Learn More: Text](url)` → LearnMoreBox component (teal CTA)
 - `[source: Label](url)` → SourceLink component (right-aligned citation)
+- `[source: A](url1) | [source: B](url2)` → SourceGroup component (comma-separated citations on one line, "Sources:" prefix)
 
 **How It Works:**
 1. Content is written in plain markdown with special headings

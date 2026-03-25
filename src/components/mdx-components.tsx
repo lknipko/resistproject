@@ -10,6 +10,7 @@ import { LearnMoreBottom } from './content/LearnMoreBottom'
 import { FactsSection } from './content/FactsSection'
 import { AnalysisSection } from './content/AnalysisSection'
 import { SourceLink } from './content/SourceLink'
+import { SourceGroup } from './content/SourceGroup'
 import { ContentLayout } from './content/ContentLayout'
 import { MainContentLayout } from './content/MainContentLayout'
 import { ContentSidebar } from './content/ContentSidebar'
@@ -46,6 +47,7 @@ export const mdxComponents: MDXComponents = {
   FactsSection,
   AnalysisSection,
   SourceLink,
+  SourceGroup,
   ContentLayout,
   MainContentLayout,
   ContentSidebar,

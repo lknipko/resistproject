@@ -387,8 +387,22 @@ function transformCTALinks(tree: Root): void {
 }
 
 /**
+ * Extract source label from a link node if it matches [source: Label](url)
+ * Returns { href, label } or null
+ */
+function extractSourceFromLink(link: any): { href: string; label: string } | null {
+  const text = extractText(link).trim()
+  const match = text.match(/^source:\s*(.+)$/i)
+  if (match) {
+    return { href: link.url, label: match[1].trim() }
+  }
+  return null
+}
+
+/**
  * Transform source links
  * [source: Label](url) → <SourceLink href="url" label="Label" />
+ * [source: A](url1) | [source: B](url2) → <SourceGroup sources='[...]' />
  */
 function transformSourceLinks(tree: Root): void {
   visit(tree, (node: any) => {
@@ -397,26 +411,95 @@ function transformSourceLinks(tree: Root): void {
   }, (node: any, index, parent: any) => {
     if (node.type !== 'paragraph' || !parent || index === undefined) return
 
-    // Check if paragraph contains only a single link
-    if (node.children.length === 1 && node.children[0].type === 'link') {
-      const link = node.children[0] as Link
+    const children = node.children
 
-      // Get link text
-      let text = ''
-      link.children.forEach((child: PhrasingContent) => {
-        if (child.type === 'text') {
-          text += child.value
-        }
-      })
-      text = text.trim()
-
-      // Check for source: prefix (case-insensitive)
-      const sourceMatch = text.match(/^source:\s*(.+)$/i)
-      if (sourceMatch) {
-        const label = sourceMatch[1].trim()
-        const sourceLink = createMDXElement('SourceLink', { href: link.url, label }, [])
+    // Case 1: Single source link (paragraph with exactly one child)
+    if (children.length === 1 && children[0].type === 'link') {
+      const source = extractSourceFromLink(children[0])
+      if (source) {
+        const sourceLink = createMDXElement('SourceLink', { href: source.href, label: source.label }, [])
         parent.children[index] = sourceLink
         return [SKIP, index]
+      }
+    }
+
+    // Case 2: Multiple source links separated by pipes or newlines
+    // e.g. [source: A](url1) | [source: B](url2)
+    // or consecutive lines:
+    // [source: A](url1)
+    // [source: B](url2)
+    if (children.length >= 2) {
+      const sources: Array<{ href: string; label: string }> = []
+      let allSourcesAndSeparators = true
+
+      for (const child of children) {
+        if (child.type === 'link') {
+          const source = extractSourceFromLink(child)
+          if (source) {
+            sources.push(source)
+          } else {
+            allSourcesAndSeparators = false
+            break
+          }
+        } else if (child.type === 'text') {
+          // Allow pipe separators, whitespace, or newlines between sources
+          if (!/^[\s|]*$/.test(child.value)) {
+            allSourcesAndSeparators = false
+            break
+          }
+        } else {
+          allSourcesAndSeparators = false
+          break
+        }
+      }
+
+      if (allSourcesAndSeparators && sources.length >= 2) {
+        const sourceGroup = createMDXElement('SourceGroup', { sources: JSON.stringify(sources) }, [])
+        parent.children[index] = sourceGroup
+        return [SKIP, index]
+      }
+    }
+
+    // Case 3: Trailing source links at end of mixed content paragraph
+    // e.g. "Some text [source: A](url1) | [source: B](url2)"
+    if (children.length >= 2) {
+      let trailingStart = children.length
+      for (let i = children.length - 1; i >= 0; i--) {
+        const child = children[i]
+        if (child.type === 'link' && extractSourceFromLink(child)) {
+          trailingStart = i
+        } else if (child.type === 'text' && /^[\s|]*$/.test(child.value)) {
+          trailingStart = i
+        } else {
+          break
+        }
+      }
+
+      if (trailingStart < children.length && trailingStart > 0) {
+        const trailingSources: Array<{ href: string; label: string }> = []
+        for (const child of children.slice(trailingStart)) {
+          if (child.type === 'link') {
+            const source = extractSourceFromLink(child)
+            if (source) trailingSources.push(source)
+          }
+        }
+
+        if (trailingSources.length >= 1) {
+          // Trim trailing whitespace/pipe from last content node
+          const contentChildren = children.slice(0, trailingStart)
+          const lastContent = contentChildren[contentChildren.length - 1]
+          if (lastContent?.type === 'text') {
+            lastContent.value = lastContent.value.replace(/\s*\|?\s*$/, '')
+          }
+          node.children = contentChildren
+
+          // Insert source element after the paragraph
+          const sourceElement = trailingSources.length === 1
+            ? createMDXElement('SourceLink', { href: trailingSources[0].href, label: trailingSources[0].label }, [])
+            : createMDXElement('SourceGroup', { sources: JSON.stringify(trailingSources) }, [])
+          parent.children.splice(index + 1, 0, sourceElement)
+          return [SKIP, index]
+        }
       }
     }
   })
