@@ -548,59 +548,71 @@ export default async function AnalyticsPage() {
         {/* Recent Link Clicks */}
         <div className="rounded-lg border bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-xl font-bold">Recent Link Clicks</h2>
-          <div className="space-y-2 max-h-96 overflow-y-auto">
-            {analytics.recentClicks.map((click, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between border-b py-2 last:border-b-0"
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="text-sm font-medium truncate">
-                    {formatCategory(click.category)}
-                  </div>
-                  <div className="text-xs text-gray-500 truncate">{click.sourcePage}</div>
-                </div>
-                <div className="ml-3 shrink-0 text-xs text-gray-400">
-                  {new Date(click.clickedAt).toLocaleString()}
-                </div>
-              </div>
-            ))}
-            {analytics.recentClicks.length === 0 && (
-              <p className="text-gray-500">No activity yet</p>
-            )}
+          <div className="overflow-x-auto max-h-96 overflow-y-auto">
+            <table className="w-full">
+              <thead className="sticky top-0 bg-white">
+                <tr className="border-b">
+                  <th className="pb-2 text-left text-sm font-semibold">Category</th>
+                  <th className="pb-2 text-left text-sm font-semibold">Page</th>
+                  <th className="pb-2 text-right text-sm font-semibold">When</th>
+                </tr>
+              </thead>
+              <tbody>
+                {analytics.recentClicks.map((click, index) => (
+                  <tr key={index} className="border-b last:border-b-0">
+                    <td className="py-2 text-sm">{formatCategory(click.category)}</td>
+                    <td className="py-2 text-sm text-gray-600 max-w-[150px] truncate">{click.sourcePage}</td>
+                    <td className="py-2 text-right text-xs text-gray-400 whitespace-nowrap">
+                      {new Date(click.clickedAt).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+                {analytics.recentClicks.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="py-4 text-center text-gray-500">No activity yet</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
 
         {/* Recent Contact Actions */}
         <div className="rounded-lg border bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-xl font-bold">Recent Contacts</h2>
-          <div className="space-y-2 max-h-96 overflow-y-auto">
-            {analytics.recentCivicActions.map((action, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between border-b py-2 last:border-b-0"
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">
-                      {action.actionType === 'email_clicked' ? '📧' : '📞'}
-                    </span>
-                    <span className="text-sm font-medium truncate">
-                      {action.repName || 'Unknown'}
-                    </span>
-                  </div>
-                  <div className="text-xs text-gray-500 truncate">
-                    {action.repOffice || action.sourcePage || '—'}
-                  </div>
-                </div>
-                <div className="ml-3 shrink-0 text-xs text-gray-400">
-                  {new Date(action.actionDate).toLocaleString()}
-                </div>
-              </div>
-            ))}
-            {analytics.recentCivicActions.length === 0 && (
-              <p className="text-gray-500">No contacts yet</p>
-            )}
+          <div className="overflow-x-auto max-h-96 overflow-y-auto">
+            <table className="w-full">
+              <thead className="sticky top-0 bg-white">
+                <tr className="border-b">
+                  <th className="pb-2 text-left text-sm font-semibold">Type</th>
+                  <th className="pb-2 text-left text-sm font-semibold">Representative</th>
+                  <th className="pb-2 text-left text-sm font-semibold">Page</th>
+                  <th className="pb-2 text-right text-sm font-semibold">When</th>
+                </tr>
+              </thead>
+              <tbody>
+                {analytics.recentCivicActions.map((action, index) => (
+                  <tr key={index} className="border-b last:border-b-0">
+                    <td className="py-2 text-sm">
+                      {action.actionType === 'email_clicked' ? '📧 Email' : '📞 Call'}
+                    </td>
+                    <td className="py-2 text-sm font-medium">
+                      <div>{action.repName || '—'}</div>
+                      <div className="text-xs text-gray-500">{action.repOffice || ''}</div>
+                    </td>
+                    <td className="py-2 text-sm text-gray-600 max-w-[120px] truncate">{action.sourcePage || '—'}</td>
+                    <td className="py-2 text-right text-xs text-gray-400 whitespace-nowrap">
+                      {new Date(action.actionDate).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+                {analytics.recentCivicActions.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="py-4 text-center text-gray-500">No contacts yet</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
