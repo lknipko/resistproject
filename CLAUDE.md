@@ -301,6 +301,41 @@ This is NOT collapsible (no [+] marker).
 - Supports nested collapsibles (multiple levels)
 - Mobile responsive with appropriate indentation
 
+### ✅ Email Broadcast System (2026-03-26)
+
+**Overview:**
+Admin-triggered email broadcasts to all opted-in users about new/urgent content. Uses the existing Resend integration.
+
+**How to use:**
+1. Navigate to `/admin/broadcasts` (Tier 5 admin only)
+2. Write subject line and message body (supports `**bold**` markdown)
+3. Select and reorder featured pages (urgent pages shown first)
+4. Preview the email, then "Send Test" to your own email, then "Send Broadcast" to all users
+
+**Key files:**
+- `src/lib/email.ts` — Resend client singleton, batch send (chunks of 100), HMAC-signed unsubscribe token utils
+- `src/lib/email-templates.ts` — HTML email template renderer (inline CSS, logo via hosted URL, teal/orange page cards)
+- `src/app/api/unsubscribe/route.ts` — One-click unsubscribe (no login required, CAN-SPAM compliant)
+- `src/app/admin/broadcasts/page.tsx` — Admin page with composer + broadcast history
+- `src/app/admin/broadcasts/actions.ts` — Server actions: `sendBroadcast()`, `sendTestEmail()`, `previewBroadcast()`, `getRecipientCount()`
+- `src/components/admin/BroadcastComposer.tsx` — Client form with subject, message, page selector, reorder, preview, test send, broadcast send
+
+**Database:**
+- `EmailBroadcast` model tracks subject, intro text, featured pages, delivery stats (recipient/success/failure counts), status, sender
+- Migration: `20260326164620_add_email_broadcasts`
+
+**Email details:**
+- Sender: `noreply@resistproject.com` (via `EMAIL_FROM` env var)
+- Recipients: all `UserExtended` records with `emailNotifications = true`
+- Logo: hosted at `https://resistproject.com/logo-icon-white.svg` (must be remote URL — Gmail strips inline SVGs and base64 data URIs)
+- Unsubscribe: HMAC-signed token using `AUTH_SECRET`, no expiration
+- Rate limits: Resend free tier = 100 emails/day; UI warns if recipients exceed limit
+- Batch sending: 100 per Resend batch API call, 1s delay between batches
+- Test emails: prefixed with `[TEST]` in subject, sent only to admin's email, no DB record created
+- Audit log entry created for each broadcast send
+
+---
+
 ### ✅ Search & Tag System (2026-02-26)
 
 **Overview:**

@@ -29,7 +29,7 @@ const BROWSE_CATEGORIES = [
   {
     tag: 'Government Reform',
     label: 'DOGE & Power Grabs',
-    description: 'Federal workforce dismantlement, Schedule F, impoundment, Project 2025.',
+    description: 'DOGE & SSA collapse, Schedule F finalized, DHS shutdown, impoundment, Project 2025.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -40,7 +40,7 @@ const BROWSE_CATEGORIES = [
   {
     tag: 'Healthcare',
     label: 'Healthcare & Medicaid',
-    description: 'Medicaid cuts, abortion restrictions, vaccine access, 7.8M losing coverage.',
+    description: 'Medicaid cuts (10.5M losing coverage), abortion restrictions, vaccine access.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -62,7 +62,7 @@ const BROWSE_CATEGORIES = [
   {
     tag: 'Economy',
     label: 'Tariffs & Economy',
-    description: 'SCOTUS struck IEEPA tariffs; new 15% global tariff issued same day. $1,500/year per household.',
+    description: 'SCOTUS struck IEEPA tariffs; new Section 301 investigations launched. $1,500/year per household.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -95,7 +95,7 @@ const BROWSE_CATEGORIES = [
   {
     tag: 'Press Freedom',
     label: 'Press Freedom',
-    description: 'Journalists arrested, FCC threats, outlet bans, source subpoenas.',
+    description: 'Don Lemon federally prosecuted, SCOTUS declined Villarreal, FCC threats, outlet bans.',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -124,8 +124,24 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <FeaturedIssue
+              title="US-Iran Military Conflict"
+              description="Over 1,750 killed in 4 weeks. 82nd Airborne deploying; ground invasion under consideration. No congressional authorization. Trump: 'I don't care about reaching a deal.' War Powers clock expires April 29."
+              learnSlug="iran-war"
+              actSlug="iran-war"
+              badge="Urgent"
+              icon="government"
+            />
+            <FeaturedIssue
+              title="DHS Shutdown: 6+ Weeks"
+              description="DHS unfunded since Feb 14. Senate has failed 7 times to advance funding. TSA wait times hit 4.5+ hours. Officers working without pay. Border security, FEMA, and cybersecurity all degraded."
+              learnSlug="dhs-shutdown"
+              actSlug="dhs-funding"
+              badge="Urgent"
+              icon="government"
+            />
+            <FeaturedIssue
               title="ICE Detention & Deportation"
-              description="73,000+ detained by early 2026 — a 92% increase in one year. Operation Metro Surge ended Feb 12 with 23,000 arrests; only 14% violent offenders. U.S. citizens wrongfully detained."
+              description="72,000+ detained, arrests exceeding 1,000/day. DOJ admitted ICE gave courts false info about courthouse arrest authority (March 25) — and said the policy won't change. 65% say ICE has gone too far."
               learnSlug="ice-detention-deportation"
               actSlug="ice-detention-defense"
               badge="Urgent"
@@ -133,43 +149,27 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="DOGE & Government Dismantlement"
-              description="260K+ federal employees fired. Treasury payment systems accessed by unelected officials. CFPB and USAID dismantled. Courts issued 20+ injunctions — but SCOTUS shielded DOGE from disclosure."
+              description="260K+ federal employees fired. SSA in crisis: 24% call answer rate, website crashing. SSA IG now investigating alleged DOGE data breach — NUMIDENT database with SSNs for nearly every American."
               learnSlug="doge"
               actSlug="protect-federal-services"
               badge="Urgent"
               icon="government"
             />
             <FeaturedIssue
-              title="Tariffs & the Trade War"
-              description="SCOTUS ruled 6-3 that IEEPA tariffs exceeded presidential authority (Feb 21, 2026) — the administration issued a new 15% global tariff the same day. Projected cost: $1,500/year per household."
-              learnSlug="tariffs"
-              actSlug="tariff-impact"
+              title="Election Security Dismantled"
+              description="With 2026 midterms approaching: EI-ISAC defunded, 130 CISA election workers eliminated, FBI Foreign Influence Task Force disbanded. 78% of state election officials report zero federal communication."
+              learnSlug="election-security"
+              actSlug="protect-your-vote"
               badge="Urgent"
               icon="justice"
             />
             <FeaturedIssue
-              title="EPA Endangerment Finding Repealed"
-              description="EPA rescinded the 2009 Endangerment Finding (Feb 12, 2026), eliminating the legal basis for ALL federal greenhouse gas regulation. The biggest environmental rollback since the Clean Air Act."
-              learnSlug="climate-environment"
-              actSlug="environment"
-              badge="Urgent"
-              icon="health"
-            />
-            <FeaturedIssue
               title="Medicaid & ACA Safety Net Cuts"
-              description="7.8 million projected to lose Medicaid coverage. ACA subsidies expired: 22 million face doubled premiums, 3.2 million dropped coverage. Community engagement requirements begin Dec 2026."
+              description="10.5 million projected to lose coverage. Nebraska enforcing work requirements May 1 — first state. 80 hours/month requirement. ACA subsidies expired: 22 million face doubled premiums."
               learnSlug="obbba-medicaid"
               actSlug="medicaid-enrollment"
               badge="Urgent"
               icon="health"
-            />
-            <FeaturedIssue
-              title="US-Iran Military Conflict"
-              description="US military strikes on Iran raise constitutional questions about war powers and congressional authorization. Regional escalation risk with major humanitarian consequences."
-              learnSlug="iran-war"
-              actSlug="iran-war"
-              badge="Urgent"
-              icon="government"
             />
           </div>
 

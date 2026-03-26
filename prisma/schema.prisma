@@ -31,6 +31,7 @@ model User {
   votes         Vote[]
   auditLogs     AuditLog[]
   pinnedPages   PinnedPage[]
+  broadcasts    EmailBroadcast[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -481,4 +482,28 @@ model CivicAction {
   @@index([actionType, actionDate])
   @@index([sourcePage, actionDate])
   @@map("civic_actions")
+}
+
+// ============================================================================
+// Email Broadcast System
+// ============================================================================
+
+model EmailBroadcast {
+  id              Int       @id @default(autoincrement())
+  subject         String    @db.VarChar(200)
+  introText       String    @map("intro_text") @db.Text
+  featuredPages   Json      @default("[]") @map("featured_pages") @db.JsonB
+  recipientCount  Int       @default(0) @map("recipient_count")
+  successCount    Int       @default(0) @map("success_count")
+  failureCount    Int       @default(0) @map("failure_count")
+  sentById        String    @map("sent_by")
+  sentBy          User      @relation(fields: [sentById], references: [id])
+  status          String    @default("draft") @db.VarChar(20)
+  sentAt          DateTime? @map("sent_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@index([sentAt(sort: Desc)])
+  @@map("email_broadcasts")
 }

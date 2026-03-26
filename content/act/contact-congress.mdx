@@ -3,7 +3,7 @@ title: "Contact Congress"
 subtitle: "Your representatives need to hear from constituents"
 type: "act"
 tags: ["Government Reform"]
-lastUpdated: "2026-02-10"
+lastUpdated: "2026-03-26"
 description: "Tools, scripts, and strategies for effectively contacting your representatives in Congress on every major issue."
 ---
 
@@ -67,6 +67,29 @@ Sincerely,
 {zipCode}`}
 />
 
+### Email Your Senators - Oppose Iran War Funding
+
+<EmailTemplate
+  subject="Oppose war funding for unauthorized Iran conflict"
+  repType="senator"
+  body={`Dear Senator {repName},
+
+I am writing as your constituent from {zipCode} to urge you to oppose any supplemental funding for the war in Iran until Congress has voted to authorize the conflict.
+
+The US-Iran war, now in its 4th week, has killed over 1,750 people. The administration is deploying 82nd Airborne paratroopers and reportedly considering a ground invasion — all without a declaration of war or Authorization to Use Military Force. The 60-day War Powers clock expires approximately April 29, 2026.
+
+The Constitution gives Congress alone the power to declare war. I urge you to:
+- Demand a War Powers vote before April 29
+- Oppose all supplemental war funding until Congress authorizes the conflict
+- Hold hearings on the scope and legal basis for military operations
+
+The precedent of allowing a president to launch and escalate a war without congressional authorization threatens our constitutional system regardless of party.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
 ### Email Your Representative - ICE Accountability
 
 <EmailTemplate
@@ -120,6 +143,58 @@ Thank you for your time.`}
 I'm calling about H.R. 7147, the DHS Appropriations Act. Two U.S. citizens have been killed by federal agents in Minneapolis this month.
 
 I urge Representative {repName} to demand oversight and accountability measures before voting for increased enforcement funding.
+
+Thank you.`}
+/>
+
+### Call Your Senators - End the DHS Shutdown
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, I'm {firstName} {lastName} calling from {zipCode}.
+
+I'm calling to urge Senator {repName} to pass a DHS funding bill immediately. The DHS shutdown has been going on for over 6 weeks — the Senate has failed 7 times to advance funding. TSA wait times have hit 4.5 hours. Officers are working without pay, hundreds have quit, and airport security is compromised.
+
+Please pass a funding bill with basic accountability measures — body cameras, use-of-force reporting, and independent investigations. We need both funding AND oversight.
+
+Thank you.`}
+/>
+
+### Call Your Senators - Oppose Iran Ground Invasion
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, I'm {firstName} {lastName} calling from {zipCode}.
+
+I'm calling to urge Senator {repName} to oppose any ground invasion of Iran and demand a vote on war authorization. The Iran war has now killed over 1,750 people. The administration is deploying 82nd Airborne paratroopers and considering a ground invasion — all without congressional authorization.
+
+The War Powers clock expires around April 29. The Senate must vote to either authorize or end this war before then. I urge the Senator to demand a War Powers vote and oppose all supplemental war funding until Congress has authorized the conflict.
+
+Thank you.`}
+/>
+
+### Call Your Senators - Schedule F Final Rule
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, I'm {firstName} {lastName} calling from {zipCode}.
+
+I'm calling to urge Senator {repName} to oppose the Schedule F final rule that took effect March 8-9. This regulation allows political purging of up to 50,000 career federal employees — stripping their civil service protections, due process rights, and appeal rights.
+
+Please support legislation to block Schedule F implementation and protect the merit-based civil service.
+
+Thank you.`}
+/>
+
+### Call Your Senators - SSA Service Collapse
+
+<CallRepButton
+  repType="senator"
+  script={`Hello, I'm {firstName} {lastName} calling from {zipCode}.
+
+I'm calling about the Social Security Administration crisis. Over 7,000 SSA employees have been laid off, only 24% of phone calls are being answered, and the SSA website keeps crashing. Rural field offices are closing.
+
+This directly threatens benefits for 70 million Americans. I urge Senator {repName} to demand SSA staffing restoration and hold hearings on the service collapse.
 
 Thank you.`}
 />
