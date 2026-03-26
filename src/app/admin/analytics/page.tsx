@@ -563,7 +563,7 @@ export default async function AnalyticsPage() {
                     <td className="py-2 text-sm">{formatCategory(click.category)}</td>
                     <td className="py-2 text-sm text-gray-600 max-w-[150px] truncate">{click.sourcePage}</td>
                     <td className="py-2 text-right text-xs text-gray-400 whitespace-nowrap">
-                      {new Date(click.clickedAt).toLocaleString()}
+                      {new Date(click.clickedAt).toLocaleString('en-US', { timeZone: 'America/Denver' })}
                     </td>
                   </tr>
                 ))}
@@ -602,7 +602,7 @@ export default async function AnalyticsPage() {
                     </td>
                     <td className="py-2 text-sm text-gray-600 max-w-[120px] truncate">{action.sourcePage || '—'}</td>
                     <td className="py-2 text-right text-xs text-gray-400 whitespace-nowrap">
-                      {new Date(action.createdAt).toLocaleString()}
+                      {new Date(action.createdAt).toLocaleString('en-US', { timeZone: 'America/Denver' })}
                     </td>
                   </tr>
                 ))}
