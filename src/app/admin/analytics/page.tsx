@@ -153,6 +153,21 @@ async function getAnalytics() {
     },
   })
 
+  // Recent civic actions / contacts (last 50)
+  const recentCivicActions = await prisma.civicAction.findMany({
+    orderBy: {
+      actionDate: 'desc',
+    },
+    take: 50,
+    select: {
+      actionType: true,
+      repName: true,
+      repOffice: true,
+      sourcePage: true,
+      actionDate: true,
+    },
+  })
+
   // Daily clicks for last 30 days
   const dailyClicks = await prisma.externalLinkClick.groupBy({
     by: ['clickDate'],
@@ -186,6 +201,7 @@ async function getAnalytics() {
     topRepresentatives,
     topCivicActionPages,
     dailyCivicActions,
+    recentCivicActions,
   }
 }
 
@@ -529,28 +545,61 @@ export default async function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <div className="lg:col-span-2 rounded-lg border bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-bold">Recent Activity</h2>
-          <div className="space-y-2">
+        {/* Recent Link Clicks */}
+        <div className="rounded-lg border bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-bold">Recent Link Clicks</h2>
+          <div className="space-y-2 max-h-96 overflow-y-auto">
             {analytics.recentClicks.map((click, index) => (
               <div
                 key={index}
                 className="flex items-center justify-between border-b py-2 last:border-b-0"
               >
-                <div className="flex items-center gap-3">
-                  <div className="text-sm font-medium">
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-medium truncate">
                     {formatCategory(click.category)}
                   </div>
-                  <div className="text-sm text-gray-600">{click.label}</div>
+                  <div className="text-xs text-gray-500 truncate">{click.sourcePage}</div>
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="ml-3 shrink-0 text-xs text-gray-400">
                   {new Date(click.clickedAt).toLocaleString()}
                 </div>
               </div>
             ))}
             {analytics.recentClicks.length === 0 && (
               <p className="text-gray-500">No activity yet</p>
+            )}
+          </div>
+        </div>
+
+        {/* Recent Contact Actions */}
+        <div className="rounded-lg border bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-bold">Recent Contacts</h2>
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {analytics.recentCivicActions.map((action, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between border-b py-2 last:border-b-0"
+              >
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">
+                      {action.actionType === 'email_clicked' ? '📧' : '📞'}
+                    </span>
+                    <span className="text-sm font-medium truncate">
+                      {action.repName || 'Unknown'}
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 truncate">
+                    {action.repOffice || action.sourcePage || '—'}
+                  </div>
+                </div>
+                <div className="ml-3 shrink-0 text-xs text-gray-400">
+                  {new Date(action.actionDate).toLocaleString()}
+                </div>
+              </div>
+            ))}
+            {analytics.recentCivicActions.length === 0 && (
+              <p className="text-gray-500">No contacts yet</p>
             )}
           </div>
         </div>
