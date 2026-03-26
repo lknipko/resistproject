@@ -156,7 +156,7 @@ async function getAnalytics() {
   // Recent civic actions / contacts (last 50)
   const recentCivicActions = await prisma.civicAction.findMany({
     orderBy: {
-      actionDate: 'desc',
+      createdAt: 'desc',
     },
     take: 50,
     select: {
@@ -164,7 +164,7 @@ async function getAnalytics() {
       repName: true,
       repOffice: true,
       sourcePage: true,
-      actionDate: true,
+      createdAt: true,
     },
   })
 
@@ -602,7 +602,7 @@ export default async function AnalyticsPage() {
                     </td>
                     <td className="py-2 text-sm text-gray-600 max-w-[120px] truncate">{action.sourcePage || '—'}</td>
                     <td className="py-2 text-right text-xs text-gray-400 whitespace-nowrap">
-                      {new Date(action.actionDate).toLocaleString()}
+                      {new Date(action.createdAt).toLocaleString()}
                     </td>
                   </tr>
                 ))}
