@@ -5,9 +5,12 @@ const globalForResend = globalThis as unknown as {
   resend: Resend | undefined
 }
 
-export const resend = globalForResend.resend ?? new Resend(process.env.RESEND_API_KEY)
-
-if (process.env.NODE_ENV !== 'production') globalForResend.resend = resend
+export function getResend(): Resend {
+  if (!globalForResend.resend) {
+    globalForResend.resend = new Resend(process.env.RESEND_API_KEY)
+  }
+  return globalForResend.resend
+}
 
 const FROM = process.env.EMAIL_FROM || 'noreply@resistproject.com'
 const BASE_URL = process.env.NEXTAUTH_URL || 'https://resistproject.com'
@@ -47,7 +50,7 @@ export async function sendBatchEmails(
   for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
     const chunk = recipients.slice(i, i + BATCH_SIZE)
     try {
-      await resend.batch.send(
+      await getResend().batch.send(
         chunk.map((r) => ({
           from: FROM,
           to: r.email,
