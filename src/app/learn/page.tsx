@@ -4,8 +4,7 @@ import { ProposeNewPageCard } from '@/components/content/ProposeNewPageCard'
 import { TagFilterBar } from '@/components/content/TagFilterBar'
 import { TOPIC_TAGS } from '@/lib/tags'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 300
 
 export const metadata = {
   title: 'Learn',

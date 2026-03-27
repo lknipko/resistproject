@@ -4,6 +4,27 @@ import { validateZipCode } from '@/lib/validation'
 
 export const runtime = 'nodejs'
 
+// In-memory cache for representative lookups
+const repCache = new Map<string, { data: RepresentativesResponse; timestamp: number }>()
+const CACHE_TTL = 24 * 60 * 60 * 1000 // 24 hours
+
+function getCachedReps(zipCode: string): RepresentativesResponse | null {
+  const cached = repCache.get(zipCode)
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data
+  }
+  return null
+}
+
+function setCachedReps(zipCode: string, data: RepresentativesResponse) {
+  repCache.set(zipCode, { data, timestamp: Date.now() })
+  // Prevent unbounded growth — cap at 1000 entries
+  if (repCache.size > 1000) {
+    const oldest = [...repCache.entries()].sort((a, b) => a[1].timestamp - b[1].timestamp)[0]
+    if (oldest) repCache.delete(oldest[0])
+  }
+}
+
 /**
  * Representative information
  */
@@ -101,6 +122,19 @@ export async function GET(request: NextRequest) {
       )
     }
 
+    // Check in-memory cache first
+    const trimmedZip = zipCode.trim()
+    const cached = getCachedReps(trimmedZip)
+    if (cached) {
+      return NextResponse.json(cached, {
+        status: 200,
+        headers: {
+          'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
+          'X-Cache': 'HIT',
+        },
+      })
+    }
+
     // Check for API key
     const apiKey = process.env.GEOCODIO_API_KEY
     if (!apiKey) {
@@ -149,9 +183,12 @@ export async function GET(request: NextRequest) {
 
     const result: RepresentativesResponse = {
       representatives,
-      zipCode: zipCode.trim(),
+      zipCode: trimmedZip,
       timestamp: new Date().toISOString(),
     }
+
+    // Store in cache
+    setCachedReps(trimmedZip, result)
 
     return NextResponse.json(result, {
       status: 200,

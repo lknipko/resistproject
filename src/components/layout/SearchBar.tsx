@@ -9,8 +9,7 @@ let cachedIndex: SearchIndexEntry[] | null = null
 
 async function loadIndex(): Promise<SearchIndexEntry[]> {
   if (cachedIndex) return cachedIndex
-  // no-store ensures we always get fresh content in dev; CDN handles caching in prod
-  const res = await fetch('/api/search-index', { cache: 'no-store' })
+  const res = await fetch('/api/search-index')
   if (!res.ok) throw new Error('Failed to load search index')
   cachedIndex = await res.json()
   return cachedIndex!

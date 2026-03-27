@@ -27,9 +27,17 @@ export default async function ActPage({
     ),
   ]
 
-  const actPages = activeTag
+  const filteredPages = activeTag
     ? allPages.filter((p) => p.tags?.includes(activeTag))
     : allPages
+
+  // Sort: urgent first, then alphabetical
+  const actPages = [...filteredPages].sort((a, b) => {
+    const aUrgent = a.tags?.includes('Urgent') ? 0 : 1
+    const bUrgent = b.tags?.includes('Urgent') ? 0 : 1
+    if (aUrgent !== bUrgent) return aUrgent - bUrgent
+    return a.title.localeCompare(b.title)
+  })
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">

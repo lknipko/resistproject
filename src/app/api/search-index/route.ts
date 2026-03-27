@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getAllPages } from '@/lib/content'
 import { getPageBySlug } from '@/lib/content'
 
+export const revalidate = 300
+
 /**
  * Strip MDX/markdown syntax to produce plain text suitable for full-content search indexing.
  */

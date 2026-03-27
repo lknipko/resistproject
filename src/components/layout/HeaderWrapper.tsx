@@ -1,27 +1,11 @@
-import { auth } from '@/lib/auth'
-import { prisma } from '@/lib/db'
+'use client'
+
+import { useSession } from 'next-auth/react'
 import Header from './Header'
 
-export default async function HeaderWrapper() {
-  let session = null
-  let userTier = 1
-
-  try {
-    session = await auth()
-
-    // Get user tier if authenticated
-    if (session?.user?.id) {
-      const userExtended = await prisma.userExtended.findUnique({
-        where: { userId: session.user.id },
-        select: { userTier: true }
-      })
-      if (userExtended) {
-        userTier = userExtended.userTier
-      }
-    }
-  } catch (error) {
-    console.error('Auth error in HeaderWrapper:', error)
-  }
+export default function HeaderWrapper() {
+  const { data: session } = useSession()
+  const userTier = session?.user?.userTier ?? 1
 
   return <Header session={session} userTier={userTier} />
 }

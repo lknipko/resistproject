@@ -35,8 +35,11 @@ export function TagFilterBar({ section, activeTag, availableTags }: TagFilterBar
   }
 
   return (
-    <div className="mb-8">
-      <div className="flex flex-wrap gap-2 items-center">
+    <div className="sticky top-[64px] z-40 bg-white shadow-sm mb-8 -mx-4 px-4 py-3">
+      <div
+        className="flex flex-nowrap gap-2 items-center overflow-x-auto scrollbar-hide"
+        style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
         <span className="text-sm text-gray-500 font-medium mr-1 shrink-0">Filter:</span>
         {visibleTags.map((tag) => (
           <button

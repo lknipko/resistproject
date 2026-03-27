@@ -110,6 +110,13 @@ export function validateEditProposal(params: ValidationParams): ValidationResult
 
   const { originalContent, proposedContent, editSummary, editType } = params
 
+  // 0. Absolute content size limit (500 KB) to prevent abuse
+  const MAX_CONTENT_SIZE = 500 * 1024 // 500 KB
+  if (proposedContent.length > MAX_CONTENT_SIZE) {
+    errors.push(`Content exceeds maximum allowed size (${Math.round(MAX_CONTENT_SIZE / 1024)} KB)`)
+    return { passed: false, errors, warnings, details }
+  }
+
   // 1. Edit summary validation
   if (!editSummary || editSummary.trim().length < 10) {
     errors.push('Edit summary must be at least 10 characters')

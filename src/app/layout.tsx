@@ -4,7 +4,6 @@ import './globals.css'
 import HeaderWrapper from '@/components/layout/HeaderWrapper'
 import Footer from '@/components/layout/Footer'
 import { SessionProvider } from '@/components/providers/SessionProvider'
-import { auth } from '@/lib/auth'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,17 +38,15 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const session = await auth()
-
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans min-h-screen flex flex-col antialiased`}>
-        <SessionProvider session={session}>
+        <SessionProvider>
           <HeaderWrapper />
           <main className="flex-grow">
             {children}

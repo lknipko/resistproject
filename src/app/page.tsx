@@ -110,6 +110,43 @@ export default function HomePage() {
     <div>
       <Hero />
 
+      {/* Immediate Action Bar */}
+      <section className="py-6 bg-orange-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <h2 className="text-lg font-bold text-center mb-4">Take Action Right Now</h2>
+          <div className="grid grid-cols-3 gap-3">
+            <a
+              href="tel:+12022243121"
+              className="flex flex-col items-center gap-2 bg-white/15 hover:bg-white/25 rounded-lg p-3 transition-colors text-center"
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <span className="text-sm font-semibold">Call Congress</span>
+            </a>
+            <a
+              href="sms:50409?body=RESIST"
+              className="flex flex-col items-center gap-2 bg-white/15 hover:bg-white/25 rounded-lg p-3 transition-colors text-center"
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+              <span className="text-sm font-semibold">Text Resistbot</span>
+            </a>
+            <Link
+              href="/act"
+              className="flex flex-col items-center gap-2 bg-white/15 hover:bg-white/25 rounded-lg p-3 transition-colors text-center"
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+              <span className="text-sm font-semibold">All Actions</span>
+            </Link>
+          </div>
+          <p className="text-xs text-white/70 text-center mt-3">Capitol switchboard: (202) 224-3121 · Text RESIST to 50409</p>
+        </div>
+      </section>
+
       {/* Most Urgent Issues */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -186,8 +223,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <HowItWorks />
 
       {/* Quick Actions Bar */}
       <section className="py-16 bg-orange-600 text-white">
@@ -286,6 +321,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <HowItWorks />
 
       {/* Join the Community */}
       <section className="py-16 bg-gradient-to-r from-steel-600 to-steel-700 text-white">

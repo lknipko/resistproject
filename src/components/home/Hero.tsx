@@ -4,24 +4,24 @@ import Image from 'next/image'
 export function Hero() {
   return (
     <section className="relative bg-gradient-to-br from-gray-50 to-gray-100 border-b-4 border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="text-center max-w-4xl mx-auto mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+        <div className="text-center max-w-4xl mx-auto mb-6">
           {/* Wordmark Logo */}
-          <div className="flex justify-center mb-16">
-            <div className="flex items-center gap-4 scale-[2] md:scale-[3]">
+          <div className="flex justify-center mb-4">
+            <div className="flex items-center gap-3 md:gap-4">
               <Image
                 src="/logo-icon.svg"
                 alt="Resist Project Logo"
-                width={40}
-                height={40}
-                className="flex-shrink-0"
+                width={120}
+                height={120}
+                className="flex-shrink-0 w-[80px] h-[80px] md:w-[120px] md:h-[120px]"
                 priority
               />
               <div className="flex flex-col leading-tight text-left">
-                <span className="text-xl font-black tracking-tight" style={{ color: '#F15A29' }}>
+                <span className="text-4xl md:text-6xl font-black tracking-tight" style={{ color: '#F15A29' }}>
                   RESIST
                 </span>
-                <span className="text-xl font-black tracking-tight" style={{ color: '#F15A29' }}>
+                <span className="text-4xl md:text-6xl font-black tracking-tight" style={{ color: '#F15A29' }}>
                   PROJECT
                 </span>
               </div>
@@ -41,7 +41,7 @@ export function Hero() {
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <Link
             href="/learn"
-            className="bg-steel-600 hover:bg-steel-700 text-white p-8 rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105 block"
+            className="bg-steel-600 hover:bg-steel-700 text-white p-5 md:p-8 rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105 block"
           >
             <div className="flex items-center gap-3 mb-4">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ export function Hero() {
 
           <Link
             href="/act"
-            className="bg-orange-600 hover:bg-orange-700 text-white p-8 rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105 block"
+            className="bg-orange-600 hover:bg-orange-700 text-white p-5 md:p-8 rounded-lg shadow-lg transition-all hover:shadow-xl hover:scale-105 block"
           >
             <div className="flex items-center gap-3 mb-4">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,6 +69,12 @@ export function Hero() {
             </p>
           </Link>
         </div>
+
+        <p className="text-center text-sm text-gray-500 mt-8">
+          Every fact linked to primary sources: Federal Register, Congress.gov, court filings.
+          <br className="hidden sm:block" />
+          {' '}Community-edited. Updated weekly.
+        </p>
       </div>
     </section>
   )

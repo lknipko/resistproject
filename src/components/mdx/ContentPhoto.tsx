@@ -17,7 +17,7 @@ export function ContentPhoto({ src, caption, credit }: ContentPhotoProps) {
           height={467}
           style={{ width: '100%', height: 'auto' }}
           className="block"
-          unoptimized
+          sizes="(max-width: 768px) 100vw, 700px"
         />
       </div>
       <figcaption className="mt-2 text-center space-y-0.5">

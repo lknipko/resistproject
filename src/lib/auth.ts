@@ -94,6 +94,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const cookieStore = await cookies()
         cookieStore.set('onboarding-needed', '1', {
           httpOnly: false,
+          secure: process.env.NODE_ENV === 'production',
           sameSite: 'lax',
           path: '/',
           maxAge: 60 * 60 * 24, // 24 hours
@@ -120,6 +121,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             const cookieStore = await cookies()
             cookieStore.set('onboarding-needed', '1', {
               httpOnly: false,
+              secure: process.env.NODE_ENV === 'production',
               sameSite: 'lax',
               path: '/',
               maxAge: 60 * 60 * 24,
@@ -139,6 +141,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, user }) {
       if (session.user) {
         session.user.id = user.id
+        // Include userTier in session so client components can access it
+        // without a separate Prisma query
+        const userExtended = await prisma.userExtended.findUnique({
+          where: { userId: user.id },
+          select: { userTier: true },
+        })
+        session.user.userTier = userExtended?.userTier ?? 1
       }
       return session
     },

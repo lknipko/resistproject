@@ -2,21 +2,20 @@
 
 /**
  * SessionProvider wrapper for NextAuth
- * Wraps the app to provide session context to all components
+ * Wraps the app to provide session context to all components.
+ * When no session prop is passed, NextAuth automatically fetches
+ * the session client-side via /api/auth/session.
  */
 
 import { SessionProvider as NextAuthSessionProvider } from 'next-auth/react'
-import type { Session } from 'next-auth'
 
 export function SessionProvider({
   children,
-  session,
 }: {
   children: React.ReactNode
-  session: Session | null
 }) {
   return (
-    <NextAuthSessionProvider session={session}>
+    <NextAuthSessionProvider>
       {children}
     </NextAuthSessionProvider>
   )
