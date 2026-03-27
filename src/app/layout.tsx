@@ -4,6 +4,7 @@ import './globals.css'
 import HeaderWrapper from '@/components/layout/HeaderWrapper'
 import Footer from '@/components/layout/Footer'
 import { SessionProvider } from '@/components/providers/SessionProvider'
+import { ServiceWorkerRegistration } from '@/components/providers/ServiceWorkerRegistration'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -36,6 +37,13 @@ export const metadata: Metadata = {
     description: 'Fact-based civic engagement platform providing verified information and actionable opportunities.',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Resist Project',
+    description: 'Fact-based civic engagement platform providing verified information and actionable opportunities.',
+    images: ['/og-image.png'],
+  },
+  manifest: '/manifest.json',
 }
 
 export default function RootLayout({
@@ -52,6 +60,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <ServiceWorkerRegistration />
         </SessionProvider>
       </body>
     </html>
