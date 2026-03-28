@@ -9,7 +9,7 @@ export function MainContentLayout({ children, sidebar }: MainContentLayoutProps)
   const sidebarContent = sidebar || <AutoSidebar />
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-8 md:gap-12">
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6 md:gap-8 md:pl-4 lg:pl-8">
       <div className="min-w-0">
         {children}
       </div>

@@ -15,12 +15,36 @@ export function AutoSidebar() {
   useEffect(() => {
     // Scan for headings — retry a few times since MDX content may hydrate after this component
     function scanHeadings() {
-      const elements = document.querySelectorAll('h2[id], h3[id]')
-      const items: TOCItem[] = Array.from(elements).map(el => ({
-        id: el.id,
-        text: el.textContent?.replace(/^[▸▾]\s*/, '') || '',
-        level: el.tagName === 'H2' ? 2 : 3,
-      }))
+      // Find regular headings AND collapsible headings (which render as div[data-toc-level])
+      const elements = document.querySelectorAll('h2[id], h3[id], [data-toc-level][id]')
+      const seen = new Set<string>()
+      const items: TOCItem[] = []
+
+      for (const el of elements) {
+        if (!el.id || seen.has(el.id)) continue
+        seen.add(el.id)
+
+        let level: number
+        const tocLevel = el.getAttribute('data-toc-level')
+        if (tocLevel) {
+          level = tocLevel === 'h2' ? 2 : 3
+        } else {
+          level = el.tagName === 'H2' ? 2 : 3
+        }
+
+        // Get text — for collapsibles, grab the button text (skip chevron)
+        let text = ''
+        const button = el.querySelector('button')
+        if (button) {
+          // Collapsible: get text from the span inside the button
+          const span = button.querySelector('span')
+          text = span?.textContent || button.textContent?.replace(/^[▸▾]\s*/, '') || ''
+        } else {
+          text = el.textContent?.replace(/^[▸▾]\s*/, '') || ''
+        }
+
+        if (text) items.push({ id: el.id, text, level })
+      }
       return items
     }
 

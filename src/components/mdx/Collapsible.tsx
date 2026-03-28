@@ -82,7 +82,7 @@ export function Collapsible({
   const wrapperClass = level === 'li' ? 'list-none' : 'my-4'
 
   return (
-    <WrapperTag className={wrapperClass} id={id}>
+    <WrapperTag className={wrapperClass} id={id} data-toc-level={level === 'li' ? undefined : level}>
       {/* Header - looks like a regular heading/list item with chevron */}
       <button
         onClick={handleToggle}
