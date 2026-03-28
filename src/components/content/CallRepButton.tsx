@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Children, isValidElement } from 'react'
+import { useState, useEffect, Children, isValidElement } from 'react'
 import Link from 'next/link'
 import { useUserProfile } from '@/hooks/useUserProfile'
 import { useRepresentatives } from '@/hooks/useRepresentatives'
@@ -49,7 +49,7 @@ export default function CallRepButton({
   const [selectedLoggedOutIndex, setSelectedLoggedOutIndex] = useState(0)
   const { user, loading: userLoading } = useUserProfile()
 
-  // Anonymous zip code state
+  // Anonymous zip code state — syncs across all instances on the page via custom event
   const [anonZipCode, setAnonZipCode] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem('anon_zipCode') || ''
@@ -64,6 +64,22 @@ export default function CallRepButton({
   })
   const [zipError, setZipError] = useState<string | null>(null)
 
+  // Listen for zip code changes from other EmailTemplate/CallRepButton instances
+  useEffect(() => {
+    function handleZipChange(e: Event) {
+      const zip = (e as CustomEvent).detail
+      if (zip) {
+        setAnonZipCode(zip)
+        setZipSubmitted(true)
+      } else {
+        setAnonZipCode('')
+        setZipSubmitted(false)
+      }
+    }
+    window.addEventListener('anonZipChanged', handleZipChange)
+    return () => window.removeEventListener('anonZipChanged', handleZipChange)
+  }, [])
+
   const { representatives, loading: repsLoading, error: repsError } = useRepresentatives(
     user?.zipCode || null,
     zipSubmitted ? anonZipCode : null
@@ -76,6 +92,7 @@ export default function CallRepButton({
       sessionStorage.setItem('anon_zipCode', cleaned)
       setAnonZipCode(cleaned)
       setZipSubmitted(true)
+      window.dispatchEvent(new CustomEvent('anonZipChanged', { detail: cleaned }))
     } else {
       setZipError('Please enter a valid 5-digit zip code.')
     }
@@ -86,6 +103,7 @@ export default function CallRepButton({
     setZipSubmitted(false)
     setAnonZipCode('')
     setZipError(null)
+    window.dispatchEvent(new CustomEvent('anonZipChanged', { detail: null }))
   }
 
   // Parse children to extract CallScript components
