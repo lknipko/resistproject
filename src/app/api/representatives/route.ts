@@ -213,6 +213,9 @@ const CONTACT_FORM_OVERRIDES: Record<string, string> = {
   'Mike Lee': 'https://www.lee.senate.gov/contact',
   'John Curtis': 'https://www.curtis.senate.gov/share-your-opinion/',
   'Blake Moore': 'https://blakemoore.house.gov/contact/email-blake?clear',
+  'Celeste Maloy': 'https://maloy.house.gov/contact/email-me.htm',
+  'Mike Kennedy': 'https://mikekennedy.house.gov/address_authentication?form=/contact/email-me',
+  'Burgess Owens': 'https://owens.house.gov/contact',
 }
 
 /**
