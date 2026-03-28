@@ -181,6 +181,15 @@ export async function GET(request: NextRequest) {
   }
 }
 
+/**
+ * Override map for contact form URLs that Geocodio doesn't provide accurately.
+ */
+const CONTACT_FORM_OVERRIDES: Record<string, string> = {
+  'Mike Lee': 'https://www.lee.senate.gov/contact',
+  'John Curtis': 'https://www.curtis.senate.gov/share-your-opinion/',
+  'Blake Moore': 'https://blakemoore.house.gov/contact/email-blake?clear',
+}
+
 function parseRepresentatives(data: GeocodioResponse): Representative[] {
   const representatives: Representative[] = []
 
@@ -221,13 +230,18 @@ function parseRepresentatives(data: GeocodioResponse): Representative[] {
       channels.push({ type: 'YouTube', id: social.youtube })
     }
 
+    // Use override contact form URL if available
+    const contactFormUrl = CONTACT_FORM_OVERRIDES[name] || contact.contact_form
+    const urls = [contactFormUrl, contact.url].filter((url): url is string => !!url)
+    const uniqueUrls = [...new Set(urls)]
+
     representatives.push({
       name,
       office,
       party: bio.party || 'Unknown',
       phones: contact.phone ? [contact.phone] : [],
       emails: [],
-      urls: [contact.url, contact.contact_form].filter((url): url is string => !!url),
+      urls: uniqueUrls,
       photoUrl: bio.photo_url,
       channels,
     })
