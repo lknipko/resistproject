@@ -12,7 +12,7 @@ export function StartHere({ children }: { children: React.ReactNode }) {
         </span>
         <span className="text-sm text-gray-500">Recommended first action</span>
       </div>
-      <div className="overflow-hidden [&_h3]:!mt-0 [&_h3]:!pt-0 [&_h3]:!border-t-0 [&_h3]:!scroll-mt-0 [&_h3]:!mb-2">{children}</div>
+      <div className="[&_h3]:!mt-0 [&_h3]:!pt-0 [&_h3]:!border-t-0 [&_h3]:!scroll-mt-0 [&_h3]:!mb-2 [&_h3]:!ml-0">{children}</div>
     </div>
   )
 }
