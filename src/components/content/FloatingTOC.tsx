@@ -40,7 +40,7 @@ export function FloatingTOC() {
       {/* Floating button - only on mobile, only after scrolling */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`md:hidden fixed bottom-6 right-4 z-50 w-12 h-12 bg-gray-800 text-white rounded-full shadow-lg flex items-center justify-center transition-all ${
+        className={`lg:hidden fixed bottom-6 right-4 z-50 w-12 h-12 bg-gray-800 text-white rounded-full shadow-lg flex items-center justify-center transition-all ${
           isVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
         aria-label="Table of contents"
@@ -52,7 +52,7 @@ export function FloatingTOC() {
 
       {/* Slide-up panel */}
       {isOpen && (
-        <div className="md:hidden fixed inset-0 z-50">
+        <div className="lg:hidden fixed inset-0 z-50">
           {/* Backdrop */}
           <div className="absolute inset-0 bg-black/40" onClick={() => setIsOpen(false)} />
           {/* Panel */}
