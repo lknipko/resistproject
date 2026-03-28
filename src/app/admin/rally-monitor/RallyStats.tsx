@@ -2,6 +2,14 @@
 
 import { useState, useEffect, useCallback } from 'react'
 
+interface RailwayStatus {
+  available: boolean
+  deploymentStatus?: string
+  lastDeployedAt?: string
+  serviceName?: string
+  error?: string
+}
+
 interface Stats {
   newUsersToday: number
   totalUsers: number
@@ -15,6 +23,7 @@ interface Stats {
   recentSignups: Array<{ displayName: string; createdAt: string }>
   auditActionsToday: number
   auditByCategory: Record<string, number>
+  railway: RailwayStatus
 }
 
 export function RallyStats() {
@@ -171,8 +180,9 @@ export function RallyStats() {
         )}
       </div>
 
-      {/* External dashboards */}
+      {/* Server status and external dashboards */}
       <div className="grid md:grid-cols-2 gap-4">
+        <RailwayStatusCard railway={stats.railway} />
         <a
           href="https://dash.cloudflare.com"
           target="_blank"
@@ -183,18 +193,6 @@ export function RallyStats() {
           <div>
             <div className="font-semibold text-gray-900">Cloudflare Analytics</div>
             <div className="text-sm text-gray-500">Traffic, cache, security</div>
-          </div>
-        </a>
-        <a
-          href="https://railway.app"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 p-4 bg-gray-50 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
-        >
-          <span className="text-xl font-bold text-gray-400">RW</span>
-          <div>
-            <div className="font-semibold text-gray-900">Railway Dashboard</div>
-            <div className="text-sm text-gray-500">CPU, memory, logs</div>
           </div>
         </a>
       </div>
@@ -231,4 +229,127 @@ function StatCard({
       <div className="text-sm mt-1 opacity-75">{label}</div>
     </div>
   )
+}
+
+function RailwayStatusCard({ railway }: { railway: RailwayStatus }) {
+  if (!railway.available) {
+    return (
+      <div className="flex items-center gap-3 p-4 bg-gray-50 border border-gray-300 rounded-lg">
+        <span className="text-xl font-bold text-gray-400">RW</span>
+        <div>
+          <div className="font-semibold text-gray-900">Railway Server Status</div>
+          <div className="text-sm text-gray-500">
+            Set <code className="bg-gray-200 px-1 rounded text-xs">RAILWAY_API_TOKEN</code> to enable.{' '}
+            <a
+              href="https://docs.railway.com/reference/public-api#authentication"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-teal-600 underline"
+            >
+              Docs
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (railway.error) {
+    return (
+      <a
+        href="https://railway.app"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 p-4 bg-yellow-50 border border-yellow-300 rounded-lg hover:bg-yellow-100 transition-colors"
+      >
+        <StatusDot color="yellow" />
+        <div>
+          <div className="font-semibold text-gray-900">Railway Server Status</div>
+          <div className="text-sm text-yellow-700">API error: {railway.error}</div>
+        </div>
+      </a>
+    )
+  }
+
+  const status = railway.deploymentStatus || 'UNKNOWN'
+  const dotColor = getStatusDotColor(status)
+  const statusLabel = formatStatus(status)
+
+  const deployedAt = railway.lastDeployedAt
+    ? new Date(railway.lastDeployedAt)
+    : null
+  const timeAgo = deployedAt ? getTimeAgo(deployedAt) : null
+
+  return (
+    <a
+      href="https://railway.app"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-3 p-4 bg-gray-50 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors"
+    >
+      <StatusDot color={dotColor} />
+      <div className="min-w-0">
+        <div className="font-semibold text-gray-900 flex items-center gap-2">
+          Server Status
+          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${getStatusBadgeClasses(dotColor)}`}>
+            {statusLabel}
+          </span>
+        </div>
+        <div className="text-sm text-gray-500 truncate">
+          {railway.serviceName && <span>{railway.serviceName}</span>}
+          {timeAgo && <span className="ml-1">— deployed {timeAgo}</span>}
+        </div>
+      </div>
+    </a>
+  )
+}
+
+function StatusDot({ color }: { color: 'green' | 'yellow' | 'red' | 'gray' }) {
+  const classes: Record<string, string> = {
+    green: 'bg-green-500',
+    yellow: 'bg-yellow-500',
+    red: 'bg-red-500',
+    gray: 'bg-gray-400',
+  }
+  return (
+    <span className="relative flex h-3 w-3 shrink-0">
+      {color === 'green' && (
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+      )}
+      <span className={`relative inline-flex rounded-full h-3 w-3 ${classes[color]}`} />
+    </span>
+  )
+}
+
+function getStatusDotColor(status: string): 'green' | 'yellow' | 'red' | 'gray' {
+  const upper = status.toUpperCase()
+  if (upper === 'SUCCESS' || upper === 'ACTIVE' || upper === 'READY') return 'green'
+  if (upper === 'DEPLOYING' || upper === 'BUILDING' || upper === 'INITIALIZING' || upper === 'WAITING') return 'yellow'
+  if (upper === 'FAILED' || upper === 'CRASHED' || upper === 'REMOVED') return 'red'
+  return 'gray'
+}
+
+function getStatusBadgeClasses(color: 'green' | 'yellow' | 'red' | 'gray'): string {
+  const map: Record<string, string> = {
+    green: 'bg-green-100 text-green-800',
+    yellow: 'bg-yellow-100 text-yellow-800',
+    red: 'bg-red-100 text-red-800',
+    gray: 'bg-gray-100 text-gray-800',
+  }
+  return map[color]
+}
+
+function formatStatus(status: string): string {
+  return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
+}
+
+function getTimeAgo(date: Date): string {
+  const seconds = Math.floor((Date.now() - date.getTime()) / 1000)
+  if (seconds < 60) return 'just now'
+  const minutes = Math.floor(seconds / 60)
+  if (minutes < 60) return `${minutes}m ago`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  return `${days}d ago`
 }

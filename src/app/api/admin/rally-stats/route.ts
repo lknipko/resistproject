@@ -2,6 +2,101 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 
+interface RailwayStatus {
+  available: boolean
+  deploymentStatus?: string
+  lastDeployedAt?: string
+  serviceName?: string
+  error?: string
+}
+
+async function fetchRailwayStatus(): Promise<RailwayStatus> {
+  const token = process.env.RAILWAY_API_TOKEN
+  if (!token) {
+    return { available: false }
+  }
+
+  try {
+    const query = `
+      query {
+        me {
+          projects {
+            edges {
+              node {
+                name
+                services {
+                  edges {
+                    node {
+                      name
+                      serviceInstances {
+                        edges {
+                          node {
+                            latestDeployment {
+                              status
+                              createdAt
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+
+    const res = await fetch('https://backboard.railway.com/graphql/v2', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ query }),
+      signal: AbortSignal.timeout(5000),
+    })
+
+    if (!res.ok) {
+      return { available: true, error: `Railway API returned ${res.status}` }
+    }
+
+    const data = await res.json()
+
+    if (data.errors) {
+      return { available: true, error: data.errors[0]?.message || 'GraphQL error' }
+    }
+
+    // Find the first project with a service that has a deployment
+    const projects = data.data?.me?.projects?.edges || []
+    for (const projectEdge of projects) {
+      const project = projectEdge.node
+      const services = project.services?.edges || []
+      for (const serviceEdge of services) {
+        const service = serviceEdge.node
+        const instances = service.serviceInstances?.edges || []
+        for (const instanceEdge of instances) {
+          const deployment = instanceEdge.node?.latestDeployment
+          if (deployment) {
+            return {
+              available: true,
+              deploymentStatus: deployment.status,
+              lastDeployedAt: deployment.createdAt,
+              serviceName: service.name || project.name,
+            }
+          }
+        }
+      }
+    }
+
+    return { available: true, error: 'No deployments found' }
+  } catch (e) {
+    const message = e instanceof Error ? e.message : 'Unknown error'
+    return { available: true, error: message }
+  }
+}
+
 export async function GET() {
   const session = await auth()
   if (!session?.user?.id) {
@@ -29,6 +124,7 @@ export async function GET() {
     civicActions,
     linkClicks,
     auditLogs,
+    railway,
   ] = await Promise.all([
     prisma.userExtended.count({ where: { createdAt: { gte: today } } }),
     prisma.userExtended.count(),
@@ -52,6 +148,7 @@ export async function GET() {
       where: { createdAt: { gte: today } },
       select: { actionCategory: true },
     }),
+    fetchRailwayStatus(),
   ])
 
   // Aggregate civic actions by type
@@ -96,5 +193,6 @@ export async function GET() {
     })),
     auditActionsToday: auditLogs.length,
     auditByCategory,
+    railway,
   })
 }
