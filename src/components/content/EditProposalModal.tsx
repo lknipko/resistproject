@@ -95,54 +95,13 @@ function stripLayoutWrappers(content: string): {
  */
 function restoreLayoutWrappers(
   editedContent: string,
-  headerLine: string,
-  sidebarBlock: string,
+  _headerLine: string,
+  _sidebarBlock: string,
 ): string {
-  // Find where to insert the sidebar block.
-  // It goes after the Quick Summary section (and any CTA links), right before
-  // the next ## heading (typically ## Facts or ## Quick Actions).
-  let restored = editedContent.trim()
-
-  // Insert PageHeader and PageContent before the first heading
-  const firstHeadingIndex = restored.search(/^# /m)
-  if (firstHeadingIndex >= 0) {
-    const before = restored.slice(0, firstHeadingIndex)
-    const after = restored.slice(firstHeadingIndex)
-    restored = before + headerLine + '\n\n<PageContent>\n\n' + after
-  } else {
-    // No heading found, just prepend
-    restored = headerLine + '\n\n<PageContent>\n\n' + restored
-  }
-
-  // Insert the sidebar block before the second ## heading
-  // (first ## is Quick Summary, second is Facts/Quick Actions/etc.)
-  if (sidebarBlock) {
-    const h2Regex = /^## /gm
-    let matchCount = 0
-    let secondH2Index = -1
-    let match
-    while ((match = h2Regex.exec(restored)) !== null) {
-      matchCount++
-      if (matchCount === 2) {
-        secondH2Index = match.index
-        break
-      }
-    }
-
-    if (secondH2Index >= 0) {
-      const beforeSidebar = restored.slice(0, secondH2Index)
-      const afterSidebar = restored.slice(secondH2Index)
-      restored = beforeSidebar + sidebarBlock + '\n\n' + afterSidebar
-    }
-  }
-
-  // Close the wrappers at the end
-  if (sidebarBlock) {
-    restored = restored + '\n\n</MainContentLayout>'
-  }
-  restored = restored + '\n\n</PageContent>\n'
-
-  return restored
+  // Layout wrappers (PageHeader, PageContent, MainContentLayout) are now
+  // rendered by page templates, not in MDX content. Just return the
+  // edited content as-is — no wrappers to restore.
+  return editedContent.trim() + '\n'
 }
 
 interface EditProposalModalProps {

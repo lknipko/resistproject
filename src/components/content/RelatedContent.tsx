@@ -55,7 +55,7 @@ export function RelatedContent({ currentSlug, currentSection, currentTags }: Rel
   if (related.length === 0) return null
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mt-4 pb-12">
+    <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mt-4 pb-12">
       <div className="pt-8 border-t border-gray-200">
         <h2 className="text-lg font-semibold text-gray-700 mb-4">Related Pages</h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

@@ -73,7 +73,7 @@ export default async function ActPage({
           {content}
         </MainContentLayout>
       </PageContent>
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mt-6">
+      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mt-6">
         <ShareButton
           title={page.metadata.title}
           text={page.metadata.description || page.metadata.subtitle}
