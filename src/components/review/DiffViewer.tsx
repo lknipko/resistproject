@@ -3,8 +3,8 @@
 /**
  * DiffViewer Component
  *
- * Displays side-by-side diff comparison of original vs proposed content.
- * Uses custom implementation to avoid Next.js Web Worker issues.
+ * Unified diff view with collapsed unchanged sections.
+ * Mobile-friendly single-pane layout.
  */
 
 import { SimpleDiffViewer } from './SimpleDiffViewer'
@@ -12,25 +12,25 @@ import { SimpleDiffViewer } from './SimpleDiffViewer'
 interface DiffViewerProps {
   originalContent: string
   proposedContent: string
+  /** @deprecated No longer used - always renders unified view */
   splitView?: boolean
 }
 
 export function DiffViewer({
   originalContent,
   proposedContent,
-  splitView = true
 }: DiffViewerProps) {
   return (
     <SimpleDiffViewer
       originalContent={originalContent}
       proposedContent={proposedContent}
-      splitView={splitView}
     />
   )
 }
 
 /**
- * Unified (single column) diff viewer for mobile
+ * Unified (single column) diff viewer
+ * @deprecated Use DiffViewer directly - it now always renders unified view
  */
 export function UnifiedDiffViewer({
   originalContent,
@@ -40,7 +40,6 @@ export function UnifiedDiffViewer({
     <DiffViewer
       originalContent={originalContent}
       proposedContent={proposedContent}
-      splitView={false}
     />
   )
 }
