@@ -862,6 +862,92 @@ function detectSection(tree: Root): 'learn' | 'act' {
 }
 
 /**
+ * Group consecutive h3 + EmailTemplate or h3 + CallRepButton pairs
+ * into EmailTemplateGroup or CallScriptGroup wrapper components.
+ *
+ * Detects patterns like:
+ *   ### Heading Text
+ *   <EmailTemplate ... />
+ *   ### Another Heading
+ *   <EmailTemplate ... />
+ *
+ * And wraps them as:
+ *   <EmailTemplateGroup labels='["Heading Text", "Another Heading"]'>
+ *     <EmailTemplate ... />
+ *     <EmailTemplate ... />
+ *   </EmailTemplateGroup>
+ *
+ * Only groups sequences of 2+ consecutive pairs. Also skips
+ * thematic breaks (---) between groups.
+ */
+function groupActionComponents(children: any[]): any[] {
+  const newChildren: any[] = []
+  let i = 0
+
+  while (i < children.length) {
+    const node = children[i]
+
+    // Recursively process children of MDX JSX elements
+    if (node.type === 'mdxJsxFlowElement' && node.children) {
+      node.children = groupActionComponents(node.children)
+      newChildren.push(node)
+      i++
+      continue
+    }
+
+    // Check if this is an h3 heading followed by an EmailTemplate or CallRepButton
+    if (node.type === 'heading' && (node as Heading).depth === 3) {
+      const nextNode = children[i + 1]
+      if (nextNode && nextNode.type === 'mdxJsxFlowElement' &&
+          (nextNode.name === 'EmailTemplate' || nextNode.name === 'CallRepButton')) {
+        const componentName = nextNode.name
+        const groupComponentName = componentName === 'EmailTemplate'
+          ? 'EmailTemplateGroup' : 'CallScriptGroup'
+
+        // Collect all consecutive h3 + component pairs of the same type
+        const labels: string[] = []
+        const components: any[] = []
+        let j = i
+
+        while (j < children.length) {
+          const candidateH3 = children[j]
+          const candidateComponent = children[j + 1]
+
+          if (candidateH3 && candidateH3.type === 'heading' &&
+              (candidateH3 as Heading).depth === 3 &&
+              candidateComponent && candidateComponent.type === 'mdxJsxFlowElement' &&
+              candidateComponent.name === componentName) {
+            labels.push(getHeadingText(candidateH3 as Heading))
+            components.push(candidateComponent)
+            j += 2
+          } else {
+            break
+          }
+        }
+
+        if (components.length >= 2) {
+          // Wrap in group component
+          const group = createMDXElement(
+            groupComponentName,
+            { labels: JSON.stringify(labels) },
+            components
+          )
+          newChildren.push(group)
+          i = j
+          continue
+        }
+        // If only 1 pair found, fall through to add normally
+      }
+    }
+
+    newChildren.push(node)
+    i++
+  }
+
+  return newChildren
+}
+
+/**
  * Remark plugin to transform sections
  */
 export default function remarkSectionWrapper() {
@@ -878,7 +964,10 @@ export default function remarkSectionWrapper() {
     // Phase 2: Process collapsibles (run before section wrapping)
     tree.children = processCollapsibles(tree.children, section) as any
 
-    // Phase 3: Wrap sections
+    // Phase 3: Group consecutive EmailTemplate and CallRepButton components
+    tree.children = groupActionComponents(tree.children) as any
+
+    // Phase 4: Wrap sections
     wrapSections(tree)
   }
 }

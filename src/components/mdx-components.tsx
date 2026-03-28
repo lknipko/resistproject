@@ -29,11 +29,14 @@ import { SectionIntro } from './content/SectionIntro'
 import { RelatedActions } from './content/RelatedActions'
 import { RelatedLinks } from './content/RelatedLinks'
 import { Collapsible } from './mdx/Collapsible'
+import { StartHere } from './mdx/StartHere'
 import { ContentPhoto } from './mdx/ContentPhoto'
 import TrackableLink from './analytics/TrackableLink'
 import EmailTemplate, { EmailMessage } from './content/EmailTemplate'
 import CallRepButton, { CallScript } from './content/CallRepButton'
 import RepresentativeCard from './content/RepresentativeCard'
+import { EmailTemplateGroup } from './content/EmailTemplateGroup'
+import { CallScriptGroup } from './content/CallScriptGroup'
 
 export const mdxComponents: MDXComponents = {
   PageHeader,
@@ -66,6 +69,7 @@ export const mdxComponents: MDXComponents = {
   RelatedActions,
   RelatedLinks,
   Collapsible,
+  StartHere,
   ContentPhoto,
   TrackableLink,
   EmailTemplate,
@@ -73,6 +77,8 @@ export const mdxComponents: MDXComponents = {
   CallRepButton,
   CallScript,
   RepresentativeCard,
+  EmailTemplateGroup,
+  CallScriptGroup,
   // Default HTML elements with custom styling
   h1: ({ children, ...props }) => (
     <h1
