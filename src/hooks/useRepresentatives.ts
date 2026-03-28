@@ -16,18 +16,26 @@ interface UseRepresentativesResult {
  * - Caches results in sessionStorage to avoid repeated API calls
  * - Loading states for UI
  * - Error handling
+ * - Supports anonymous zip code lookup via public endpoint
  *
- * @param zipCode - Zip code to lookup (or null if not available)
+ * @param zipCode - Authenticated user's zip code (or null if not available)
+ * @param anonymousZipCode - Anonymous zip code entered by unauthenticated user (optional)
  * @returns Representatives data, loading state, and error
  */
-export function useRepresentatives(zipCode: string | null): UseRepresentativesResult {
+export function useRepresentatives(
+  zipCode: string | null,
+  anonymousZipCode?: string | null
+): UseRepresentativesResult {
   const [representatives, setRepresentatives] = useState<Representative[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const effectiveZipCode = zipCode || anonymousZipCode || null
+  const endpoint = zipCode ? '/api/representatives' : '/api/representatives/public'
+
   useEffect(() => {
     // Reset state if zip code is null
-    if (!zipCode) {
+    if (!effectiveZipCode) {
       setRepresentatives([])
       setLoading(false)
       setError(null)
@@ -35,7 +43,7 @@ export function useRepresentatives(zipCode: string | null): UseRepresentativesRe
     }
 
     // Check sessionStorage cache first
-    const cacheKey = `reps_${zipCode}`
+    const cacheKey = `reps_${effectiveZipCode}`
     const cached = sessionStorage.getItem(cacheKey)
 
     if (cached) {
@@ -57,7 +65,7 @@ export function useRepresentatives(zipCode: string | null): UseRepresentativesRe
       setError(null)
 
       try {
-        const response = await fetch(`/api/representatives?zipCode=${encodeURIComponent(zipCode)}`)
+        const response = await fetch(`${endpoint}?zipCode=${encodeURIComponent(effectiveZipCode)}`)
 
         if (!response.ok) {
           const errorData = await response.json()
@@ -79,7 +87,7 @@ export function useRepresentatives(zipCode: string | null): UseRepresentativesRe
     }
 
     fetchRepresentatives()
-  }, [zipCode])
+  }, [effectiveZipCode, endpoint])
 
   return { representatives, loading, error }
 }

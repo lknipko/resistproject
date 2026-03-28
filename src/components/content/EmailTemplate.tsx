@@ -54,7 +54,45 @@ export default function EmailTemplate({
   const [selectedLoggedOutIndex, setSelectedLoggedOutIndex] = useState(0)
   const [copiedLoggedOut, setCopiedLoggedOut] = useState(false)
   const { user, loading: userLoading } = useUserProfile()
-  const { representatives, loading: repsLoading, error: repsError } = useRepresentatives(user?.zipCode || null)
+
+  // Anonymous zip code state
+  const [anonZipCode, setAnonZipCode] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('anon_zipCode') || ''
+    }
+    return ''
+  })
+  const [zipSubmitted, setZipSubmitted] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return !!sessionStorage.getItem('anon_zipCode')
+    }
+    return false
+  })
+  const [zipError, setZipError] = useState<string | null>(null)
+
+  const { representatives, loading: repsLoading, error: repsError } = useRepresentatives(
+    user?.zipCode || null,
+    zipSubmitted ? anonZipCode : null
+  )
+
+  function handleZipSubmit() {
+    const cleaned = anonZipCode.trim()
+    if (/^\d{5}(-\d{4})?$/.test(cleaned)) {
+      setZipError(null)
+      sessionStorage.setItem('anon_zipCode', cleaned)
+      setAnonZipCode(cleaned)
+      setZipSubmitted(true)
+    } else {
+      setZipError('Please enter a valid 5-digit zip code.')
+    }
+  }
+
+  function handleChangeZip() {
+    sessionStorage.removeItem('anon_zipCode')
+    setZipSubmitted(false)
+    setAnonZipCode('')
+    setZipError(null)
+  }
 
   // Parse children to extract EmailMessage components
   const messages: ParsedMessage[] = []
@@ -104,9 +142,15 @@ export default function EmailTemplate({
     )
   }
 
-  // Not signed in - show template with placeholders (collapsed by default)
+  // Determine title based on repType
+  const getTitle = () => {
+    if (repType === 'senator') return 'Email Template for your Senators'
+    if (repType === 'representative') return 'Email Template for your Representative'
+    return 'Email Template for your Representatives'
+  }
+
+  // Not signed in — show zip code input or personalized templates
   if (!user) {
-    // Use first message if multiple, otherwise use legacy props
     const displayMessages = hasMultipleMessages ? messages : (legacyMessage ? [legacyMessage] : [])
 
     if (displayMessages.length === 0) {
@@ -115,7 +159,99 @@ export default function EmailTemplate({
 
     const currentDisplayMessage = displayMessages[selectedLoggedOutIndex]
 
-    // Show generic template with placeholders
+    // If zip submitted and reps loaded, show personalized cards
+    if (zipSubmitted && !repsLoading && !repsError && filteredReps.length > 0) {
+      const anonUser = {
+        firstName: null as string | null,
+        lastName: null as string | null,
+        zipCode: anonZipCode,
+        phoneNumber: null as string | null,
+      }
+
+      return (
+        <div className="my-4 md:my-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-600">
+              Showing representatives for <strong>{anonZipCode}</strong>
+            </p>
+            <button
+              onClick={handleChangeZip}
+              className="text-sm text-orange-600 hover:text-orange-700 hover:underline font-medium"
+            >
+              Change zip code
+            </button>
+          </div>
+          {filteredReps.map((rep, index) => (
+            <RepresentativeEmailCard
+              key={index}
+              representative={rep}
+              messages={displayMessages}
+              user={anonUser}
+            />
+          ))}
+          <p className="text-xs text-gray-500">
+            <Link href="/auth/signin" className="text-orange-600 hover:underline">
+              Sign in
+            </Link>{' '}
+            to save your preferences and personalize with your name.
+          </p>
+        </div>
+      )
+    }
+
+    // If zip submitted and loading
+    if (zipSubmitted && repsLoading) {
+      return (
+        <div className="my-4 md:my-6 p-3 md:p-6 bg-gray-50 border border-gray-200 rounded-lg">
+          <div className="flex items-center gap-3">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-orange-600"></div>
+            <p className="text-sm text-gray-700">Looking up your representatives...</p>
+          </div>
+        </div>
+      )
+    }
+
+    // If zip submitted but error
+    if (zipSubmitted && repsError) {
+      return (
+        <div className="my-4 md:my-6 bg-gray-50 border-l-4 border-orange-500 rounded-lg p-3 md:p-6">
+          <div className="mb-3">
+            <h3 className="text-lg font-bold text-gray-900 mb-1">{getTitle()}</h3>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-3">
+              <p className="text-sm text-red-800">{repsError}</p>
+              <button
+                onClick={handleChangeZip}
+                className="text-sm text-orange-600 hover:text-orange-700 hover:underline font-medium mt-1"
+              >
+                Try a different zip code
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    // If zip submitted but no reps found
+    if (zipSubmitted && !repsLoading && filteredReps.length === 0) {
+      return (
+        <div className="my-4 md:my-6 bg-gray-50 border-l-4 border-orange-500 rounded-lg p-3 md:p-6">
+          <div className="mb-3">
+            <h3 className="text-lg font-bold text-gray-900 mb-1">{getTitle()}</h3>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
+              <p className="text-sm text-yellow-800">No representatives found for zip code {anonZipCode}.</p>
+              <button
+                onClick={handleChangeZip}
+                className="text-sm text-orange-600 hover:text-orange-700 hover:underline font-medium mt-1"
+              >
+                Try a different zip code
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    // Show generic template with zip code input
     const genericSubject = currentDisplayMessage.subject
       .replace(/\{firstName\}/g, '[FIRST NAME]')
       .replace(/\{lastName\}/g, '[LAST NAME]')
@@ -128,25 +264,40 @@ export default function EmailTemplate({
       .replace(/\{zipCode\}/g, '[ZIP CODE]')
       .replace(/\{repName\}/g, '[SENATOR/REPRESENTATIVE NAME]')
 
-    // Determine title based on repType
-    const getTitle = () => {
-      if (repType === 'senator') return 'Email Template for your Senators'
-      if (repType === 'representative') return 'Email Template for your Representative'
-      return 'Email Template for your Representatives'
-    }
-
     return (
       <div className="my-4 md:my-6 bg-gray-50 border-l-4 border-orange-500 rounded-lg p-3 md:p-6">
         <div className="mb-4">
           <h3 className="text-lg font-bold text-gray-900 mb-1">{getTitle()}</h3>
-          <p className="text-sm text-gray-600 mb-2">
-            <Link href="/auth/signin" className="text-orange-600 hover:underline font-medium">
-              Sign in
-            </Link>{' '}
-            to get this pre-filled with your information and your representative's contact details.
-          </p>
+
+          {/* Zip code input for anonymous users */}
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 md:p-4 mb-3">
+            <p className="text-sm text-gray-700 mb-2 font-medium">Enter your zip code to personalize with your representatives:</p>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={anonZipCode}
+                onChange={(e) => { setAnonZipCode(e.target.value); setZipError(null) }}
+                placeholder="12345"
+                maxLength={10}
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                onKeyDown={(e) => e.key === 'Enter' && handleZipSubmit()}
+                inputMode="numeric"
+              />
+              <button
+                onClick={handleZipSubmit}
+                className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors text-sm"
+              >
+                Go
+              </button>
+            </div>
+            {zipError && (
+              <p className="text-xs text-red-600 mt-1.5">{zipError}</p>
+            )}
+            <p className="text-xs text-gray-500 mt-1.5">Used only to find your representatives. Not stored.</p>
+          </div>
+
           <p className="text-sm text-gray-600">
-            <strong>Find your representatives:</strong>{' '}
+            <strong>Or find your representatives manually:</strong>{' '}
             <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:underline">
               House.gov
             </a>
@@ -344,8 +495,23 @@ function RepresentativeEmailCard({
   const personalizedSubject = substituteVariables(currentMessage.subject)
   const personalizedBody = substituteVariables(currentMessage.body)
 
+  // For anonymous users (no firstName/lastName), use "A concerned constituent" as sign-off
+  const displayBody = (!user.firstName && !user.lastName)
+    ? personalizedBody
+        .replace(/\[Your First Name\] \[Your Last Name\]/g, 'A concerned constituent')
+        .replace(/\[Your First Name\]/g, '')
+        .replace(/\[Your Last Name\]/g, '')
+    : personalizedBody
+
+  const displaySubject = (!user.firstName && !user.lastName)
+    ? personalizedSubject
+        .replace(/\[Your First Name\] \[Your Last Name\]/g, 'A concerned constituent')
+        .replace(/\[Your First Name\]/g, '')
+        .replace(/\[Your Last Name\]/g, '')
+    : personalizedSubject
+
   // Generate mailto: link
-  const mailtoLink = `mailto:${representative.emails[0] || ''}?subject=${encodeURIComponent(personalizedSubject)}&body=${encodeURIComponent(personalizedBody)}`
+  const mailtoLink = `mailto:${representative.emails[0] || ''}?subject=${encodeURIComponent(displaySubject)}&body=${encodeURIComponent(displayBody)}`
 
   // Email available
   const hasEmail = representative.emails && representative.emails.length > 0
@@ -450,7 +616,7 @@ function RepresentativeEmailCard({
             <button
               onClick={async () => {
                 try {
-                  await navigator.clipboard.writeText(`Subject: ${personalizedSubject}\n\n${personalizedBody}`)
+                  await navigator.clipboard.writeText(`Subject: ${displaySubject}\n\n${displayBody}`)
                   setCopied(true)
                   setTimeout(() => setCopied(false), 2000)
                 } catch (err) {
@@ -474,11 +640,11 @@ function RepresentativeEmailCard({
           )}
           <div className="mb-3">
             <strong className="text-gray-700">Subject:</strong>
-            <span className="ml-2 text-gray-900">{personalizedSubject}</span>
+            <span className="ml-2 text-gray-900">{displaySubject}</span>
           </div>
           <div>
             <strong className="text-gray-700">Message:</strong>
-            <pre className="mt-2 whitespace-pre-wrap font-sans text-gray-900">{personalizedBody}</pre>
+            <pre className="mt-2 whitespace-pre-wrap font-sans text-gray-900">{displayBody}</pre>
           </div>
         </div>
       )}

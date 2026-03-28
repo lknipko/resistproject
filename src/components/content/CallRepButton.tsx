@@ -48,7 +48,45 @@ export default function CallRepButton({
   const [showScript, setShowScript] = useState(false)
   const [selectedLoggedOutIndex, setSelectedLoggedOutIndex] = useState(0)
   const { user, loading: userLoading } = useUserProfile()
-  const { representatives, loading: repsLoading, error: repsError } = useRepresentatives(user?.zipCode || null)
+
+  // Anonymous zip code state
+  const [anonZipCode, setAnonZipCode] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('anon_zipCode') || ''
+    }
+    return ''
+  })
+  const [zipSubmitted, setZipSubmitted] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return !!sessionStorage.getItem('anon_zipCode')
+    }
+    return false
+  })
+  const [zipError, setZipError] = useState<string | null>(null)
+
+  const { representatives, loading: repsLoading, error: repsError } = useRepresentatives(
+    user?.zipCode || null,
+    zipSubmitted ? anonZipCode : null
+  )
+
+  function handleZipSubmit() {
+    const cleaned = anonZipCode.trim()
+    if (/^\d{5}(-\d{4})?$/.test(cleaned)) {
+      setZipError(null)
+      sessionStorage.setItem('anon_zipCode', cleaned)
+      setAnonZipCode(cleaned)
+      setZipSubmitted(true)
+    } else {
+      setZipError('Please enter a valid 5-digit zip code.')
+    }
+  }
+
+  function handleChangeZip() {
+    sessionStorage.removeItem('anon_zipCode')
+    setZipSubmitted(false)
+    setAnonZipCode('')
+    setZipError(null)
+  }
 
   // Parse children to extract CallScript components
   const scripts: ParsedScript[] = []
@@ -96,9 +134,15 @@ export default function CallRepButton({
     )
   }
 
-  // Not signed in - show script with placeholders and Capitol Switchboard (collapsed by default)
+  // Determine title based on repType
+  const getTitle = () => {
+    if (repType === 'senator') return 'Call Script for your Senators'
+    if (repType === 'representative') return 'Call Script for your Representative'
+    return 'Call Script for your Representatives'
+  }
+
+  // Not signed in — show zip code input or personalized call cards
   if (!user) {
-    // Use first script if multiple, otherwise use legacy prop
     const displayScripts = hasMultipleScripts ? scripts : (legacyScript ? [legacyScript] : [])
 
     if (displayScripts.length === 0) {
@@ -107,40 +151,170 @@ export default function CallRepButton({
 
     const currentDisplayScript = displayScripts[selectedLoggedOutIndex]
 
-    // Show generic script with placeholders
+    // If zip submitted and reps loaded, show personalized call cards
+    if (zipSubmitted && !repsLoading && !repsError && filteredReps.length > 0) {
+      const anonUser = {
+        firstName: null as string | null,
+        lastName: null as string | null,
+        zipCode: anonZipCode,
+        phoneNumber: null as string | null,
+      }
+
+      return (
+        <div className="my-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-600">
+              Showing representatives for <strong>{anonZipCode}</strong>
+            </p>
+            <button
+              onClick={handleChangeZip}
+              className="text-sm text-orange-600 hover:text-orange-700 hover:underline font-medium"
+            >
+              Change zip code
+            </button>
+          </div>
+          {filteredReps.map((rep, index) => (
+            <RepCallCard
+              key={index}
+              representative={rep}
+              scripts={displayScripts}
+              user={anonUser}
+            />
+          ))}
+          <p className="text-xs text-gray-500">
+            <Link href="/auth/signin" className="text-orange-600 hover:underline">
+              Sign in
+            </Link>{' '}
+            to save your preferences and personalize with your name.
+          </p>
+        </div>
+      )
+    }
+
+    // If zip submitted and loading
+    if (zipSubmitted && repsLoading) {
+      return (
+        <div className="my-6 p-6 bg-gray-50 border border-gray-200 rounded-lg">
+          <div className="flex items-center gap-3">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-orange-600"></div>
+            <p className="text-sm text-gray-700">Looking up your representatives...</p>
+          </div>
+        </div>
+      )
+    }
+
+    // If zip submitted but error
+    if (zipSubmitted && repsError) {
+      return (
+        <div className="my-6 bg-white border-2 border-orange-500 rounded-lg p-6">
+          <div className="mb-4">
+            <h3 className="text-lg font-bold text-gray-900 mb-1">{getTitle()}</h3>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-3">
+              <p className="text-sm text-red-800">{repsError}</p>
+              <button
+                onClick={handleChangeZip}
+                className="text-sm text-orange-600 hover:text-orange-700 hover:underline font-medium mt-1"
+              >
+                Try a different zip code
+              </button>
+            </div>
+          </div>
+
+          {/* Still show Capitol Switchboard as fallback */}
+          <div className="mb-4">
+            <p className="text-sm font-medium text-gray-700 mb-2">Call the U.S. Capitol Switchboard:</p>
+            <a
+              href="tel:+12022243121"
+              className="inline-block px-6 py-3 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition-colors"
+            >
+              Call (202) 224-3121
+            </a>
+            <p className="text-xs text-gray-600 mt-2">Ask to be connected to your Senator or Representative's office</p>
+          </div>
+        </div>
+      )
+    }
+
+    // If zip submitted but no reps found
+    if (zipSubmitted && !repsLoading && filteredReps.length === 0) {
+      return (
+        <div className="my-6 bg-white border-2 border-orange-500 rounded-lg p-6">
+          <div className="mb-4">
+            <h3 className="text-lg font-bold text-gray-900 mb-1">{getTitle()}</h3>
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
+              <p className="text-sm text-yellow-800">No representatives found for zip code {anonZipCode}.</p>
+              <button
+                onClick={handleChangeZip}
+                className="text-sm text-orange-600 hover:text-orange-700 hover:underline font-medium mt-1"
+              >
+                Try a different zip code
+              </button>
+            </div>
+          </div>
+
+          {/* Still show Capitol Switchboard as fallback */}
+          <div className="mb-4">
+            <p className="text-sm font-medium text-gray-700 mb-2">Call the U.S. Capitol Switchboard:</p>
+            <a
+              href="tel:+12022243121"
+              className="inline-block px-6 py-3 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition-colors"
+            >
+              Call (202) 224-3121
+            </a>
+            <p className="text-xs text-gray-600 mt-2">Ask to be connected to your Senator or Representative's office</p>
+          </div>
+        </div>
+      )
+    }
+
+    // Show generic script with placeholders + zip code input
     const genericScript = currentDisplayScript.script
       .replace(/\{firstName\}/g, '[FIRST NAME]')
       .replace(/\{lastName\}/g, '[LAST NAME]')
       .replace(/\{zipCode\}/g, '[ZIP CODE]')
       .replace(/\{repName\}/g, '[SENATOR/REPRESENTATIVE NAME]')
 
-    // Determine title based on repType
-    const getTitle = () => {
-      if (repType === 'senator') return 'Call Script for your Senators'
-      if (repType === 'representative') return 'Call Script for your Representative'
-      return 'Call Script for your Representatives'
-    }
-
     return (
       <div className="my-6 bg-white border-2 border-orange-500 rounded-lg p-6">
         <div className="mb-4">
           <h3 className="text-lg font-bold text-gray-900 mb-1">{getTitle()}</h3>
-          <p className="text-sm text-gray-600">
-            <Link href="/auth/signin" className="text-orange-600 hover:underline font-medium">
-              Sign in
-            </Link>{' '}
-            to get your representative's phone number and a personalized script.
-          </p>
+
+          {/* Zip code input for anonymous users */}
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 md:p-4 mb-3">
+            <p className="text-sm text-gray-700 mb-2 font-medium">Enter your zip code to get your representatives' direct phone numbers:</p>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={anonZipCode}
+                onChange={(e) => { setAnonZipCode(e.target.value); setZipError(null) }}
+                placeholder="12345"
+                maxLength={10}
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                onKeyDown={(e) => e.key === 'Enter' && handleZipSubmit()}
+                inputMode="numeric"
+              />
+              <button
+                onClick={handleZipSubmit}
+                className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors text-sm"
+              >
+                Go
+              </button>
+            </div>
+            {zipError && (
+              <p className="text-xs text-red-600 mt-1.5">{zipError}</p>
+            )}
+            <p className="text-xs text-gray-500 mt-1.5">Used only to find your representatives. Not stored.</p>
+          </div>
         </div>
 
         {/* Capitol Switchboard Button */}
         <div className="mb-4">
-          <p className="text-sm font-medium text-gray-700 mb-2">Call the U.S. Capitol Switchboard:</p>
+          <p className="text-sm font-medium text-gray-700 mb-2">Or call the U.S. Capitol Switchboard:</p>
           <a
             href="tel:+12022243121"
             className="inline-block px-6 py-3 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition-colors"
           >
-            📞 Call (202) 224-3121
+            Call (202) 224-3121
           </a>
           <p className="text-xs text-gray-600 mt-2">Ask to be connected to your Senator or Representative's office</p>
         </div>
@@ -297,11 +471,20 @@ function RepCallCard({
 
   // Substitute variables in script
   const substituteVariables = (template: string): string => {
-    return template
+    const result = template
       .replace(/\{firstName\}/g, user.firstName || '[Your First Name]')
       .replace(/\{lastName\}/g, user.lastName || '[Your Last Name]')
       .replace(/\{zipCode\}/g, user.zipCode || '[Your Zip Code]')
       .replace(/\{repName\}/g, representative.name)
+
+    // For anonymous users, clean up placeholder names
+    if (!user.firstName && !user.lastName) {
+      return result
+        .replace(/\[Your First Name\] \[Your Last Name\]/g, 'A concerned constituent')
+        .replace(/\[Your First Name\]/g, '')
+        .replace(/\[Your Last Name\]/g, '')
+    }
+    return result
   }
 
   const personalizedScript = substituteVariables(currentScript.script)
@@ -362,7 +545,7 @@ function RepCallCard({
             onClick={handleCallClick}
             className="px-3 py-2 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition-colors text-center w-20 sm:w-auto"
           >
-            📞 Call Now
+            Call Now
           </a>
         ) : (
           <div className="text-sm text-gray-600 flex-shrink-0">
