@@ -247,39 +247,35 @@ export default function HomePage() {
               </p>
             </Link>
 
-            <a
-              href="https://5calls.org"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/act/contact-congress"
               className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-8 text-center transition-all hover:scale-105"
             >
               <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">5 Calls</h3>
+              <h3 className="text-xl font-bold mb-2">Email Your Reps</h3>
               <p className="text-white/90 text-sm">
-                Quick scripts with tap-to-call. Make 5 calls on the issues you care about.
+                Pre-written email templates personalized with your representative&apos;s name. Send in under a minute.
               </p>
-            </a>
+            </Link>
 
-            <a
-              href="https://resist.bot"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/act"
               className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-8 text-center transition-all hover:scale-105"
             >
               <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">Resistbot</h3>
+              <h3 className="text-xl font-bold mb-2">Browse by Issue</h3>
               <p className="text-white/90 text-sm">
-                Text RESIST to 50409 to send letters to your representatives in 2 minutes.
+                120+ actions across immigration, healthcare, democracy, environment, and more.
               </p>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
