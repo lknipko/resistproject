@@ -74,3 +74,29 @@ export async function sendBatchEmails(
 
   return { successCount, failureCount }
 }
+
+export async function notifyAdminOfNewProposal(proposal: {
+  pagePath: string
+  editSummary: string
+  proposerEmail: string | null
+  proposerTier: number
+  status: string
+}): Promise<void> {
+  try {
+    await getResend().emails.send({
+      from: FROM,
+      to: 'lknipko@gmail.com',
+      subject: `New edit proposal: ${proposal.pagePath}`,
+      html: `
+        <h2>New Edit Proposal Submitted</h2>
+        <p><strong>Page:</strong> ${proposal.pagePath}</p>
+        <p><strong>Summary:</strong> ${proposal.editSummary}</p>
+        <p><strong>Proposer:</strong> ${proposal.proposerEmail || 'Unknown'} (Tier ${proposal.proposerTier})</p>
+        <p><strong>Status:</strong> ${proposal.status}</p>
+        <p><a href="${BASE_URL}/review">Review in the queue</a></p>
+      `
+    })
+  } catch (error) {
+    console.error('Failed to send edit notification email:', error)
+  }
+}

@@ -3,7 +3,7 @@ title: "Contribute to Resist Project"
 subtitle: "Help build a community-powered platform for civic engagement"
 type: "act"
 tags: []
-lastUpdated: "2026-02-08"
+lastUpdated: "2026-03-27"
 description: "Learn how to contribute to Resist Project through collaborative editing, how the tier system works, and principles for creating quality content."
 ---
 
@@ -296,11 +296,151 @@ Focus on:
 
 ### Markdown & MDX Guide
 
-Our pages use simple MDX syntax:
-- Standard markdown formatting
-- Special heading recognition (Facts, Analysis, etc.)
-- Automatic component insertion
-- Collapsible sections with `[+]` markers
+Our pages use a **simple syntax system** that automatically transforms plain markdown into styled components. You write standard markdown with a few special patterns, and the system handles the rest. This means less code, consistent styling, and a low barrier to entry for contributors.
+
+#### Section Headings
+
+Certain `##` headings are automatically recognized and wrapped in styled components. You do not need to import anything or write JSX -- just use the heading text.
+
+**Learn page headings:**
+
+| Heading | What it becomes |
+|---------|-----------------|
+| `## Quick Summary` or `## Summary` | Grey summary box with a left border |
+| `## Facts` | Teal facts section with a "verified information" disclaimer |
+| `## Analysis` | Orange analysis section with an "interpretation" disclaimer |
+
+**Act page headings:**
+
+| Heading | What it becomes |
+|---------|-----------------|
+| `## Quick Actions` | Section with auto-inserted intro: "Complete these in under 5 minutes" |
+| `## Sustained Actions` | Section with auto-inserted intro: "Ongoing actions requiring more time commitment" |
+| `## Resources` | Resources wrapper section |
+
+Example of a Learn page skeleton:
+
+```markdown
+# Page Title
+
+## Quick Summary
+
+Brief one-sentence overview of the issue.
+
+## Facts
+
+### Timeline
+
+| Date | Event | Source |
+|------|-------|--------|
+| 2025-01-20 | Event occurred | [source: Document Title](https://example.gov) |
+
+## Analysis
+
+### What This Means
+
+Interpretation and context.
+```
+
+#### Special Link Syntax
+
+The system recognizes special link patterns and converts them into interactive components. Use these inside any section.
+
+**Action and learn cross-links:**
+
+```markdown
+[→ Take Action: Contact your senators](/act/contact-congress)
+```
+Renders as an **orange call-to-action box**. Use on Learn pages to point readers to related Act pages.
+
+```markdown
+[← Learn More: Understand the legal background](/learn/judiciary)
+```
+Renders as a **teal call-to-action box**. Use on Act pages to point readers to related Learn pages.
+
+**Source citations:**
+
+```markdown
+[source: Executive Order 14110](https://whitehouse.gov/eo-14110)
+```
+Renders as a **right-aligned citation link** next to the preceding text.
+
+**Grouped source citations** (multiple sources on one line, separated by `|`):
+
+```markdown
+[source: Court Filing](https://example.gov/filing) | [source: Agency Report](https://example.gov/report)
+```
+Renders as a single line with a "Sources:" prefix and comma-separated links.
+
+#### Collapsible Sections
+
+For pages with extensive evidence or detailed sub-sections, add `[+]` at the start of a heading to make it collapsible. Sections are collapsed by default, keeping pages scannable.
+
+**Collapsible headings:**
+
+```markdown
+## [+] Detailed Evidence
+
+This content is collapsed by default. Click to expand.
+
+### [+] Nested Timeline
+
+Nested collapsible sections are also supported.
+
+### Regular Heading
+
+This heading is NOT collapsible (no [+] marker).
+```
+
+**Collapsible list items:**
+
+```markdown
+- [+] Primary Sources
+
+  Content here is hidden until the user expands it.
+
+  - Executive Order 12345
+  - Court Filing ABC-2025
+
+- Regular list item (not collapsible)
+
+- [+] Another Collapsible Item
+
+  More hidden content.
+```
+
+**Important formatting rules for collapsible list items:**
+- There **must** be a blank line between the `- [+] Title` line and the indented content
+- The content **must** be indented with **2 spaces**
+- Without both of these, the content will not be recognized as part of the collapsible item
+
+#### Start Here Component (Act Pages)
+
+On Act pages, you can highlight a single first action using the `<StartHere>` component:
+
+```markdown
+<StartHere>
+### Your First Action: Call Your Senator (30 seconds)
+
+Use the call button below to reach your senator's office.
+
+<CallRepButton repType="senator" />
+</StartHere>
+```
+
+This renders as a prominent highlighted box encouraging users to take one action immediately.
+
+#### Standard Markdown
+
+All standard markdown works as expected:
+
+- **Bold** with `**text**`, *italics* with `*text*`
+- Headings: `#`, `##`, `###`, `####`
+- Bullet lists with `-` and numbered lists with `1.`
+- Tables with `| Header | Header |` syntax
+- Links with `[text](url)`
+- Block quotes with `>`
+- Code blocks with triple backticks
 
 ### Personalized Action Components
 

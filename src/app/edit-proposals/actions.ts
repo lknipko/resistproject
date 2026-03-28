@@ -147,7 +147,18 @@ export async function submitEditProposal(
       instantApproval
     )
 
-    // 13. If instant approval, award reputation
+    // 13. Notify admin of new proposal (fire-and-forget)
+    import('@/lib/email').then(({ notifyAdminOfNewProposal }) =>
+      notifyAdminOfNewProposal({
+        pagePath: pageMetadata.pagePath,
+        editSummary,
+        proposerEmail: session.user?.email ?? null,
+        proposerTier: userExtended.userTier,
+        status: instantApproval ? 'auto-approved' : 'pending'
+      })
+    ).catch(() => {})
+
+    // 14. If instant approval, award reputation
     if (instantApproval) {
       await prisma.userExtended.update({
         where: { userId: session.user.id },
