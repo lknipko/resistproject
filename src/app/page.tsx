@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Hero } from '@/components/home/Hero'
 import { FeaturedIssue } from '@/components/home/FeaturedIssue'
 import { HowItWorks } from '@/components/home/HowItWorks'
+import { EmailSignupPrompt } from '@/components/content/EmailSignupPrompt'
 
 const BROWSE_CATEGORIES = [
   {
@@ -144,6 +145,14 @@ export default function HomePage() {
             </Link>
           </div>
           <p className="text-xs text-white/70 text-center mt-3">Capitol switchboard: (202) 224-3121</p>
+        </div>
+      </section>
+
+      {/* Email Signup */}
+      <section className="py-5 bg-gray-100 border-b border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <p className="text-sm text-gray-600 mb-2">Get weekly action alerts — join citizens taking action</p>
+          <EmailSignupPrompt source="homepage" compact />
         </div>
       </section>
 

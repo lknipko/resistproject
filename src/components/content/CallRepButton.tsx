@@ -6,6 +6,7 @@ import { useUserProfile } from '@/hooks/useUserProfile'
 import { useRepresentatives } from '@/hooks/useRepresentatives'
 import { Representative } from '@/app/api/representatives/route'
 import { trackCivicActionClient } from '@/lib/tracking'
+import { EmailSignupPrompt } from '@/components/content/EmailSignupPrompt'
 
 interface CallScriptProps {
   topic: string
@@ -199,6 +200,8 @@ export default function CallRepButton({
               user={anonUser}
             />
           ))}
+          {/* Email signup prompt - shown after successful zip lookup for anonymous users */}
+          <EmailSignupPrompt source="post-zip" />
           <p className="text-xs text-gray-500">
             <Link href="/auth/signin" className="text-orange-600 hover:underline">
               Sign in
