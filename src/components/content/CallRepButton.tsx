@@ -533,6 +533,8 @@ function RepCallCard({
             src={representative.photoUrl}
             alt={representative.name}
             className="w-16 h-16 rounded-full object-cover flex-shrink-0"
+            referrerPolicy="no-referrer"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           />
         )}
 

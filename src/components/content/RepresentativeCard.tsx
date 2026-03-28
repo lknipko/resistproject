@@ -180,6 +180,8 @@ export default function RepresentativeCard({ repType = 'all' }: RepresentativeCa
                 src={rep.photoUrl}
                 alt={rep.name}
                 className="w-16 h-16 rounded-full object-cover flex-shrink-0"
+                referrerPolicy="no-referrer"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
               />
             )}
 
