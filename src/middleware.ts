@@ -62,7 +62,7 @@ export function middleware(request: NextRequest) {
     ) {
       limit = 20 // auth sign-in/callback endpoints: tight limit to prevent brute force
     } else if (path.startsWith('/api/')) {
-      limit = 30 // other API routes
+      limit = 60 // other API routes
     } else {
       limit = 120 // page requests: generous for normal browsing
     }
