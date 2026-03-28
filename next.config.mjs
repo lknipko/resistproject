@@ -22,11 +22,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline'", // Next.js requires unsafe-eval and unsafe-inline
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://static.cloudflareinsights.com https://challenges.cloudflare.com", // Next.js + Cloudflare analytics + Turnstile
               "style-src 'self' 'unsafe-inline'", // Tailwind requires unsafe-inline
               "img-src 'self' data: https:", // Allow external images
               "font-src 'self' data:",
-              "connect-src 'self' https://*.railway.app", // Railway API
+              "connect-src 'self' https://*.railway.app https://*.cloudflareinsights.com https://challenges.cloudflare.com https://www.congress.gov https://theunitedstates.io https://*.geocod.io", // Railway, Cloudflare, rep photos, Geocodio
               "frame-ancestors 'none'", // Prevent clickjacking
               "base-uri 'self'",
               "form-action 'self'",
