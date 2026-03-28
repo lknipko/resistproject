@@ -124,26 +124,26 @@ export default function HomePage() {
               </svg>
               <span className="text-sm font-semibold">Call Congress</span>
             </a>
-            <a
-              href="sms:50409?body=RESIST"
+            <Link
+              href="/act/contact-congress"
               className="flex flex-col items-center gap-2 bg-white/15 hover:bg-white/25 rounded-lg p-3 transition-colors text-center"
             >
               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span className="text-sm font-semibold">Text Resistbot</span>
-            </a>
+              <span className="text-sm font-semibold">Email Your Reps</span>
+            </Link>
             <Link
               href="/act"
               className="flex flex-col items-center gap-2 bg-white/15 hover:bg-white/25 rounded-lg p-3 transition-colors text-center"
             >
               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>
-              <span className="text-sm font-semibold">All Actions</span>
+              <span className="text-sm font-semibold">Browse All Actions</span>
             </Link>
           </div>
-          <p className="text-xs text-white/70 text-center mt-3">Capitol switchboard: (202) 224-3121 · Text RESIST to 50409</p>
+          <p className="text-xs text-white/70 text-center mt-3">Capitol switchboard: (202) 224-3121</p>
         </div>
       </section>
 

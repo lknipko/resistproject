@@ -11,11 +11,139 @@
  * - Edit type selector
  * - Client-side validation
  * - Calls submitEditProposal server action
+ *
+ * Layout wrappers (PageHeader, PageContent, MainContentLayout, ContentSidebar)
+ * are stripped from the editor view so contributors see clean markdown.
+ * They are restored when the edit is submitted.
  */
 
-import { useState, FormEvent, useRef } from 'react'
+import { useState, FormEvent, useRef, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { MDXPreview } from './MDXPreview'
+
+/**
+ * Strips layout wrapper JSX from MDX content so the editor shows clean markdown.
+ *
+ * Removes: <PageHeader .../>, <PageContent>, </PageContent>,
+ *          <MainContentLayout sidebar={<ContentSidebar>...</ContentSidebar>}>,
+ *          </MainContentLayout>
+ *
+ * Returns the cleaned content and the extracted wrapper pieces so they can be
+ * restored on save.
+ */
+function stripLayoutWrappers(content: string): {
+  editableContent: string
+  headerLine: string
+  pageContentOpen: string
+  sidebarBlock: string
+  hasWrappers: boolean
+} {
+  // Default: no wrappers found
+  const result = {
+    editableContent: content,
+    headerLine: '',
+    pageContentOpen: '',
+    sidebarBlock: '',
+    hasWrappers: false,
+  }
+
+  // Check if content has layout wrappers
+  if (!content.includes('<PageHeader') && !content.includes('<PageContent>')) {
+    return result
+  }
+
+  result.hasWrappers = true
+  let cleaned = content
+
+  // 1. Extract and remove <PageHeader ... />
+  const headerMatch = cleaned.match(/^<PageHeader[^>]*\/>\s*$/m)
+  if (headerMatch) {
+    result.headerLine = headerMatch[0].trim()
+    cleaned = cleaned.replace(/^<PageHeader[^>]*\/>\s*\n?/m, '')
+  }
+
+  // 2. Remove <PageContent> and </PageContent>
+  const pageContentMatch = cleaned.match(/^<PageContent>\s*$/m)
+  if (pageContentMatch) {
+    result.pageContentOpen = '<PageContent>'
+    cleaned = cleaned.replace(/^<PageContent>\s*\n?/m, '')
+  }
+  cleaned = cleaned.replace(/^<\/PageContent>\s*$/m, '')
+
+  // 3. Extract and remove the MainContentLayout opening tag with sidebar prop
+  //    This block spans multiple lines: <MainContentLayout sidebar={<ContentSidebar>...</ContentSidebar>}>
+  const sidebarRegex = /<MainContentLayout\s*\n?\s*sidebar=\{[\s\S]*?<\/ContentSidebar>\s*\n?\s*\}\s*\n?>/
+  const sidebarMatch = cleaned.match(sidebarRegex)
+  if (sidebarMatch) {
+    result.sidebarBlock = sidebarMatch[0]
+    cleaned = cleaned.replace(sidebarRegex, '')
+  }
+
+  // 4. Remove </MainContentLayout>
+  cleaned = cleaned.replace(/^<\/MainContentLayout>\s*$/m, '')
+
+  // 5. Clean up excessive blank lines (3+ newlines -> 2)
+  cleaned = cleaned.replace(/\n{3,}/g, '\n\n').trim()
+
+  result.editableContent = cleaned
+  return result
+}
+
+/**
+ * Restores layout wrappers around edited content using the pieces extracted
+ * during stripping.
+ */
+function restoreLayoutWrappers(
+  editedContent: string,
+  headerLine: string,
+  sidebarBlock: string,
+): string {
+  // Find where to insert the sidebar block.
+  // It goes after the Quick Summary section (and any CTA links), right before
+  // the next ## heading (typically ## Facts or ## Quick Actions).
+  let restored = editedContent.trim()
+
+  // Insert PageHeader and PageContent before the first heading
+  const firstHeadingIndex = restored.search(/^# /m)
+  if (firstHeadingIndex >= 0) {
+    const before = restored.slice(0, firstHeadingIndex)
+    const after = restored.slice(firstHeadingIndex)
+    restored = before + headerLine + '\n\n<PageContent>\n\n' + after
+  } else {
+    // No heading found, just prepend
+    restored = headerLine + '\n\n<PageContent>\n\n' + restored
+  }
+
+  // Insert the sidebar block before the second ## heading
+  // (first ## is Quick Summary, second is Facts/Quick Actions/etc.)
+  if (sidebarBlock) {
+    const h2Regex = /^## /gm
+    let matchCount = 0
+    let secondH2Index = -1
+    let match
+    while ((match = h2Regex.exec(restored)) !== null) {
+      matchCount++
+      if (matchCount === 2) {
+        secondH2Index = match.index
+        break
+      }
+    }
+
+    if (secondH2Index >= 0) {
+      const beforeSidebar = restored.slice(0, secondH2Index)
+      const afterSidebar = restored.slice(secondH2Index)
+      restored = beforeSidebar + sidebarBlock + '\n\n' + afterSidebar
+    }
+  }
+
+  // Close the wrappers at the end
+  if (sidebarBlock) {
+    restored = restored + '\n\n</MainContentLayout>'
+  }
+  restored = restored + '\n\n</PageContent>\n'
+
+  return restored
+}
 
 interface EditProposalModalProps {
   section: 'learn' | 'act'
@@ -33,7 +161,11 @@ export function EditProposalModal({
   isNewPage = false
 }: EditProposalModalProps) {
   const router = useRouter()
-  const [proposedContent, setProposedContent] = useState(currentContent)
+
+  // Strip layout wrappers so editors see clean markdown
+  const strippedData = useMemo(() => stripLayoutWrappers(currentContent), [currentContent])
+
+  const [proposedContent, setProposedContent] = useState(strippedData.editableContent)
   const [editSummary, setEditSummary] = useState('')
   const [editType, setEditType] = useState<'content' | 'sources' | 'formatting' | 'metadata'>('content')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -83,11 +215,21 @@ export function EditProposalModal({
       // Import the server action dynamically to avoid bundling issues
       const { submitEditProposal } = await import('@/app/edit-proposals/actions')
 
+      // Restore layout wrappers before submitting so the stored content
+      // remains valid MDX with proper page structure
+      const finalProposed = strippedData.hasWrappers
+        ? restoreLayoutWrappers(
+            proposedContent,
+            strippedData.headerLine,
+            strippedData.sidebarBlock,
+          )
+        : proposedContent
+
       const result = await submitEditProposal({
         section,
         slug,
         originalContent: currentContent,
-        proposedContent,
+        proposedContent: finalProposed,
         editSummary,
         editType
       })
@@ -110,8 +252,8 @@ export function EditProposalModal({
     }
   }
 
-  const charactersChanged = Math.abs(proposedContent.length - currentContent.length)
-  const hasChanges = proposedContent !== currentContent
+  const charactersChanged = Math.abs(proposedContent.length - strippedData.editableContent.length)
+  const hasChanges = proposedContent !== strippedData.editableContent
 
   return (
     <div
@@ -213,7 +355,7 @@ export function EditProposalModal({
                       {proposedContent.length} characters
                       {hasChanges && (
                         <span className="ml-2 text-steel-600 font-medium">
-                          ({charactersChanged > 0 ? '+' : ''}{proposedContent.length - currentContent.length})
+                          ({charactersChanged > 0 ? '+' : ''}{proposedContent.length - strippedData.editableContent.length})
                         </span>
                       )}
                     </span>
@@ -253,7 +395,7 @@ export function EditProposalModal({
                     {proposedContent.length} characters
                     {hasChanges && (
                       <span className="ml-2 text-steel-600 font-medium">
-                        ({charactersChanged > 0 ? '+' : ''}{proposedContent.length - currentContent.length})
+                        ({charactersChanged > 0 ? '+' : ''}{proposedContent.length - strippedData.editableContent.length})
                       </span>
                     )}
                   </span>
