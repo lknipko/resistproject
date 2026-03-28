@@ -13,17 +13,32 @@ export function AutoSidebar() {
   const [headings, setHeadings] = useState<TOCItem[]>([])
 
   useEffect(() => {
-    // Small delay to let MDX content render and rehype-slug assign IDs
-    const timer = setTimeout(() => {
+    // Scan for headings — retry a few times since MDX content may hydrate after this component
+    function scanHeadings() {
       const elements = document.querySelectorAll('h2[id], h3[id]')
       const items: TOCItem[] = Array.from(elements).map(el => ({
         id: el.id,
         text: el.textContent?.replace(/^[▸▾]\s*/, '') || '',
         level: el.tagName === 'H2' ? 2 : 3,
       }))
+      return items
+    }
+
+    // Try immediately, then retry with increasing delays
+    const items = scanHeadings()
+    if (items.length > 0) {
       setHeadings(items)
-    }, 100)
-    return () => clearTimeout(timer)
+      return
+    }
+
+    const delays = [100, 300, 800, 1500]
+    const timers = delays.map(delay =>
+      setTimeout(() => {
+        const found = scanHeadings()
+        if (found.length > 0) setHeadings(found)
+      }, delay)
+    )
+    return () => timers.forEach(clearTimeout)
   }, [])
 
   if (headings.length === 0) return null

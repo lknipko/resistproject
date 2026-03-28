@@ -1,5 +1,4 @@
 import type { MDXComponents } from 'mdx/types'
-import { PageHeader } from './content/PageHeader'
 import { PageContent } from './content/PageContent'
 import { TopSection } from './content/TopSection'
 import { QuickSummary } from './content/QuickSummary'
@@ -12,8 +11,12 @@ import { AnalysisSection } from './content/AnalysisSection'
 import { SourceLink } from './content/SourceLink'
 import { SourceGroup } from './content/SourceGroup'
 import { ContentLayout } from './content/ContentLayout'
-import { MainContentLayout } from './content/MainContentLayout'
 import { ContentSidebar } from './content/ContentSidebar'
+
+// Pass-through wrappers: these are now rendered by page templates,
+// but old approved edits or content may still reference them.
+// Rendering just children avoids double-wrapping.
+const PassThrough = ({ children }: { children: React.ReactNode }) => <>{children}</>
 import { CallScript as CallScriptDisplay } from './content/CallScript'
 import { DefinitionList } from './content/DefinitionList'
 import { DefRow } from './content/DefRow'
@@ -40,8 +43,9 @@ import { CallScriptGroup } from './content/CallScriptGroup'
 import { ShareButton } from './content/ShareButton'
 
 export const mdxComponents: MDXComponents = {
-  PageHeader,
+  PageHeader: PassThrough,
   PageContent,
+  MainContentLayout: PassThrough,
   TopSection,
   QuickSummary,
   ActNowBox,
@@ -53,7 +57,6 @@ export const mdxComponents: MDXComponents = {
   SourceLink,
   SourceGroup,
   ContentLayout,
-  MainContentLayout,
   ContentSidebar,
   CallScriptDisplay,
   DefinitionList,
