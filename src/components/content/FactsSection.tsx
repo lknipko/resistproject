@@ -5,7 +5,7 @@ interface FactsSectionProps {
 export function FactsSection({ children }: FactsSectionProps) {
   return (
     <div className="bg-teal-light py-6 px-6 sm:py-8 sm:px-8 md:px-10 outdent mb-12 rounded-sm">
-      <h2 className="text-2xl sm:text-3xl font-bold text-teal-dark uppercase mb-2">
+      <h2 id="facts" className="text-2xl sm:text-3xl font-bold text-teal-dark uppercase mb-2">
         FACTS
       </h2>
       <p className="text-sm italic text-gray-600 mb-6 border-b-2 border-teal-dark pb-6">
