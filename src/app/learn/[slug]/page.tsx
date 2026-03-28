@@ -7,6 +7,8 @@ import { ShareButton } from '@/components/content/ShareButton'
 import { getCachedResolvedContent } from '@/lib/content-resolver'
 import { RelatedContent } from '@/components/content/RelatedContent'
 import { FloatingTOC } from '@/components/content/FloatingTOC'
+import { PageHeader } from '@/components/content/PageHeader'
+import { PageContent } from '@/components/content/PageContent'
 
 export async function generateStaticParams() {
   return getStaticParams('learn')
@@ -64,7 +66,10 @@ export default async function LearnPage({
 
   return (
     <article>
+      <PageHeader type="learn" />
+      <PageContent>
       {content}
+      </PageContent>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mt-6">
         <ShareButton
           title={page.metadata.title}
