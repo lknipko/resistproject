@@ -506,7 +506,7 @@ function RepCallCard({
   }
 
   return (
-    <div className="bg-white border-2 border-orange-500 rounded-lg p-4">
+    <div className="bg-white border-2 border-orange-500 rounded-lg p-2.5 md:p-4">
       {/* Horizontal layout: Image - Info - Button */}
       <div className="flex items-center gap-4 mb-3">
         {/* Photo */}

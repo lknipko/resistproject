@@ -42,13 +42,13 @@ export function CallScriptGroup({ labels, children }: CallScriptGroupProps) {
         const isOpen = index === openIndex
 
         return (
-          <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
+          <div key={index}>
             {/* Accordion header */}
             <button
               onClick={() => setOpenIndex(isOpen ? -1 : index)}
-              className={`w-full flex items-center justify-between p-4 text-left transition-colors ${
+              className={`w-full flex items-center justify-between p-3 md:p-4 text-left transition-colors rounded-lg ${
                 isOpen
-                  ? 'bg-orange-50 border-b border-orange-200'
+                  ? 'bg-orange-50'
                   : 'bg-gray-50 hover:bg-gray-100'
               }`}
             >
@@ -68,12 +68,8 @@ export function CallScriptGroup({ labels, children }: CallScriptGroupProps) {
               </svg>
             </button>
 
-            {/* Accordion content */}
-            {isOpen && (
-              <div className="bg-white">
-                {child}
-              </div>
-            )}
+            {/* Accordion content - renders at full width */}
+            {isOpen && child}
           </div>
         )
       })}
