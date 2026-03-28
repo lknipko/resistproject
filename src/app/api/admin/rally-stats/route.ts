@@ -11,7 +11,7 @@ interface RailwayStatus {
 }
 
 async function fetchRailwayStatus(): Promise<RailwayStatus> {
-  const token = process.env.RAILWAY_API_TOKEN
+  const token = process.env.RAILWAY_TOKEN
   if (!token) {
     return { available: false }
   }
