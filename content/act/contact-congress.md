@@ -14,7 +14,7 @@ Your representatives need to hear from constituents. Use these tools and scripts
 - [House.gov - Find Your Representative](https://www.house.gov/representatives/find-your-representative)
 - [Senate.gov - Find Your Senators](https://www.senate.gov/senators/senators-contact.htm)
 
-**Fastest Method:** Text your zip code to [Resistbot](https://resist.bot/) at **50409**
+**Fastest Method:** Use our [email templates and call scripts](/act/contact-congress) to contact your reps in under a minute
 
 ### Make a Phone Call
 
@@ -34,15 +34,11 @@ Your representatives need to hear from constituents. Use these tools and scripts
 
 ### Send a Letter
 
-**Resistbot** - Text RESIST to 50409
-- Guides you through writing a letter
-- Sends to all your representatives at once
-- Free to use
+**Use our built-in tools above** to email or call your representatives with pre-written templates.
 
-**5 Calls** - [5calls.org](https://5calls.org)
-- Issue-specific call scripts
-- Tracks your calls
-- Suggests who to call
+**Additional external tools:**
+- **Resistbot** - Text RESIST to 50409 to send letters to all your reps
+- **5 Calls** - [5calls.org](https://5calls.org) for issue-specific call scripts
 
 ---
 
@@ -131,10 +127,11 @@ Your local newspaper reaches your representative's office. Guidelines:
 
 | Tool | Best For | Link |
 |------|----------|------|
-| **Resistbot** | Quick letters to all reps | Text RESIST to 50409 |
-| **5 Calls** | Issue-specific calling | [5calls.org](https://5calls.org) |
+| **Resist Project** | Email templates and call scripts | [Contact Congress](/act/contact-congress) |
 | **Call Shifter** | Call campaigns | [callshifter.com](https://callshifter.com/) |
 | **Town Hall Project** | Find town halls | [townhallproject.com](https://townhallproject.com/) |
+| **Resistbot** | Text-based letters to reps | Text RESIST to 50409 |
+| **5 Calls** | Issue-specific calling | [5calls.org](https://5calls.org) |
 
 ### Sample Email Template
 
