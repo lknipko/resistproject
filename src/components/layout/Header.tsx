@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import AuthButtonClient from './AuthButtonClient'
 import Logo from './Logo'
 import SearchBar from './SearchBar'
@@ -19,6 +20,12 @@ interface HeaderProps {
 
 export default function Header({ session, userTier = 1 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+
+  // Close mobile menu on navigation
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname])
 
   return (
     <header className="sticky top-0 z-50 bg-teal-dark text-white shadow-md">

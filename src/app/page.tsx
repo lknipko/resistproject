@@ -224,62 +224,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Quick Actions Bar */}
-      <section className="py-16 bg-orange-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Take Action in 5 Minutes
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <Link
-              href="/act/contact-congress"
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-8 text-center transition-all hover:scale-105"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Call Congress</h3>
-              <p className="text-white/90 text-sm">
-                Use issue-specific scripts to call your representatives. High call volume works.
-              </p>
-            </Link>
-
-            <Link
-              href="/act/contact-congress"
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-8 text-center transition-all hover:scale-105"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Email Your Reps</h3>
-              <p className="text-white/90 text-sm">
-                Pre-written email templates personalized with your representative&apos;s name. Send in under a minute.
-              </p>
-            </Link>
-
-            <Link
-              href="/act"
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white/30 rounded-lg p-8 text-center transition-all hover:scale-105"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Browse by Issue</h3>
-              <p className="text-white/90 text-sm">
-                120+ actions across immigration, healthcare, democracy, environment, and more.
-              </p>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Browse by Category */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

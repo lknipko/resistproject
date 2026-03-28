@@ -37,6 +37,7 @@ import CallRepButton, { CallScript } from './content/CallRepButton'
 import RepresentativeCard from './content/RepresentativeCard'
 import { EmailTemplateGroup } from './content/EmailTemplateGroup'
 import { CallScriptGroup } from './content/CallScriptGroup'
+import { ShareButton } from './content/ShareButton'
 
 export const mdxComponents: MDXComponents = {
   PageHeader,
@@ -79,6 +80,7 @@ export const mdxComponents: MDXComponents = {
   RepresentativeCard,
   EmailTemplateGroup,
   CallScriptGroup,
+  ShareButton,
   // Default HTML elements with custom styling
   h1: ({ children, ...props }) => (
     <h1

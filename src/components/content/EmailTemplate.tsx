@@ -52,6 +52,7 @@ export default function EmailTemplate({
   // All hooks must be called at the top, before any conditional returns
   const [showPreview, setShowPreview] = useState(false)
   const [selectedLoggedOutIndex, setSelectedLoggedOutIndex] = useState(0)
+  const [copiedLoggedOut, setCopiedLoggedOut] = useState(false)
   const { user, loading: userLoading } = useUserProfile()
   const { representatives, loading: repsLoading, error: repsError } = useRepresentatives(user?.zipCode || null)
 
@@ -94,7 +95,7 @@ export default function EmailTemplate({
   // Loading states
   if (userLoading) {
     return (
-      <div className="my-6 p-6 bg-gray-50 border border-gray-200 rounded-lg">
+      <div className="my-4 md:my-6 p-3 md:p-6 bg-gray-50 border border-gray-200 rounded-lg">
         <div className="animate-pulse space-y-3">
           <div className="h-4 bg-gray-300 rounded w-3/4"></div>
           <div className="h-4 bg-gray-300 rounded w-1/2"></div>
@@ -135,7 +136,7 @@ export default function EmailTemplate({
     }
 
     return (
-      <div className="my-6 bg-gray-50 border-l-4 border-orange-500 rounded-lg p-6">
+      <div className="my-4 md:my-6 bg-gray-50 border-l-4 border-orange-500 rounded-lg p-3 md:p-6">
         <div className="mb-4">
           <h3 className="text-lg font-bold text-gray-900 mb-1">{getTitle()}</h3>
           <p className="text-sm text-gray-600 mb-2">
@@ -165,24 +166,46 @@ export default function EmailTemplate({
         </button>
 
         {showPreview && (
-          <div className="mt-3 p-4 bg-white border border-gray-200 rounded-md text-sm">
-            {/* Topic Selector (if multiple messages) */}
-            {displayMessages.length > 1 && (
-              <div className="mb-3">
-                <label className="text-sm font-medium text-gray-700 mr-2">Topic:</label>
-                <select
-                  value={selectedLoggedOutIndex}
-                  onChange={(e) => setSelectedLoggedOutIndex(Number(e.target.value))}
-                  className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:border-orange-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
-                >
-                  {displayMessages.map((msg, idx) => (
-                    <option key={idx} value={idx}>
-                      {msg.topic}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+          <div className="mt-3 p-2 md:p-4 bg-white border border-gray-200 rounded-md text-sm">
+            {/* Topic Selector and Copy button */}
+            <div className="flex justify-between items-center mb-3 gap-3">
+              {/* Topic Selector (if multiple messages) */}
+              {displayMessages.length > 1 ? (
+                <div className="flex items-center gap-2">
+                  <label className="text-sm font-medium text-gray-700">Topic:</label>
+                  <select
+                    value={selectedLoggedOutIndex}
+                    onChange={(e) => setSelectedLoggedOutIndex(Number(e.target.value))}
+                    className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:border-orange-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
+                  >
+                    {displayMessages.map((msg, idx) => (
+                      <option key={idx} value={idx}>
+                        {msg.topic}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : <div />}
+
+              {/* Copy button */}
+              <button
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(`Subject: ${genericSubject}\n\n${genericBody}`)
+                    setCopiedLoggedOut(true)
+                    setTimeout(() => setCopiedLoggedOut(false), 2000)
+                  } catch (err) {
+                    console.error('Failed to copy:', err)
+                  }
+                }}
+                className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors whitespace-nowrap"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                {copiedLoggedOut ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
 
             <div className="mb-3">
               <strong className="text-gray-700">Subject:</strong>
@@ -201,7 +224,7 @@ export default function EmailTemplate({
   // Profile incomplete - prompt to complete
   if (!user.civicProfileCompleted) {
     return (
-      <div className="my-6 p-6 bg-orange-50 border border-orange-200 rounded-lg">
+      <div className="my-4 md:my-6 p-3 md:p-6 bg-orange-50 border border-orange-200 rounded-lg">
         <h3 className="text-lg font-semibold text-orange-900 mb-2">
           Complete your profile for personalized templates
         </h3>
@@ -221,7 +244,7 @@ export default function EmailTemplate({
   // Loading representatives
   if (repsLoading) {
     return (
-      <div className="my-6 p-6 bg-gray-50 border border-gray-200 rounded-lg">
+      <div className="my-4 md:my-6 p-3 md:p-6 bg-gray-50 border border-gray-200 rounded-lg">
         <div className="animate-pulse space-y-3">
           <div className="h-4 bg-gray-300 rounded w-3/4"></div>
           <div className="h-4 bg-gray-300 rounded w-1/2"></div>
@@ -233,7 +256,7 @@ export default function EmailTemplate({
   // Error fetching representatives
   if (repsError) {
     return (
-      <div className="my-6 p-6 bg-red-50 border border-red-200 rounded-lg">
+      <div className="my-4 md:my-6 p-3 md:p-6 bg-red-50 border border-red-200 rounded-lg">
         <h3 className="text-lg font-semibold text-red-900 mb-2">
           Unable to load representatives
         </h3>
@@ -252,7 +275,7 @@ export default function EmailTemplate({
   // No representatives found
   if (filteredReps.length === 0) {
     return (
-      <div className="my-6 p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
+      <div className="my-4 md:my-6 p-3 md:p-6 bg-yellow-50 border border-yellow-200 rounded-lg">
         <h3 className="text-lg font-semibold text-yellow-900 mb-2">
           No representatives found
         </h3>
@@ -268,7 +291,7 @@ export default function EmailTemplate({
 
   // Success - render email templates
   return (
-    <div className="my-6 space-y-4">
+    <div className="my-4 md:my-6 space-y-4">
       {filteredReps.map((rep, index) => (
         <RepresentativeEmailCard
           key={index}
@@ -337,7 +360,7 @@ function RepresentativeEmailCard({
   }
 
   return (
-    <div className="bg-gray-50 border-l-4 border-orange-500 rounded-lg p-4">
+    <div className="bg-gray-50 border-l-4 border-orange-500 rounded-lg p-2.5 md:p-4">
       {/* Horizontal layout: Image - Info - Button */}
       <div className="flex items-center gap-4 mb-3">
         {/* Photo */}
@@ -402,51 +425,46 @@ function RepresentativeEmailCard({
       </button>
 
       {showPreview && (
-        <div className="mt-3 p-4 bg-white border border-gray-200 rounded-md text-sm">
+        <div className="mt-3 p-2 md:p-4 bg-white border border-gray-200 rounded-md text-sm">
           {/* Topic selector (left) and Copy button (right) */}
-          {(hasMultipleMessages || !hasEmail) && (
-            <div className="flex justify-between items-center mb-3 gap-3">
-              {/* Topic Selector */}
-              {hasMultipleMessages && (
-                <div className="flex items-center gap-2">
-                  <label className="text-sm font-medium text-gray-700">Topic:</label>
-                  <select
-                    value={selectedMessageIndex}
-                    onChange={(e) => setSelectedMessageIndex(Number(e.target.value))}
-                    className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:border-orange-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
-                  >
-                    {messages.map((msg, idx) => (
-                      <option key={idx} value={idx}>
-                        {msg.topic}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              {/* Copy button */}
-              {!hasEmail && (
-                <button
-                  onClick={async () => {
-                    try {
-                      await navigator.clipboard.writeText(`Subject: ${personalizedSubject}\n\n${personalizedBody}`)
-                      setCopied(true)
-                      setTimeout(() => setCopied(false), 2000)
-                    } catch (err) {
-                      console.error('Failed to copy:', err)
-                    }
-                  }}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 text-sm rounded-md hover:bg-gray-200 transition-colors whitespace-nowrap"
+          <div className="flex justify-between items-center mb-3 gap-3">
+            {/* Topic Selector */}
+            {hasMultipleMessages ? (
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium text-gray-700">Topic:</label>
+                <select
+                  value={selectedMessageIndex}
+                  onChange={(e) => setSelectedMessageIndex(Number(e.target.value))}
+                  className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white text-gray-700 hover:border-orange-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none"
                 >
-                  {copied ? (
-                    <span className="text-green-600">✓<span className="hidden md:inline"> Copied!</span></span>
-                  ) : (
-                    <>📋<span className="hidden md:inline"> Copy Message</span></>
-                  )}
-                </button>
-              )}
-            </div>
-          )}
+                  {messages.map((msg, idx) => (
+                    <option key={idx} value={idx}>
+                      {msg.topic}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : <div />}
+
+            {/* Copy button - always visible */}
+            <button
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(`Subject: ${personalizedSubject}\n\n${personalizedBody}`)
+                  setCopied(true)
+                  setTimeout(() => setCopied(false), 2000)
+                } catch (err) {
+                  console.error('Failed to copy:', err)
+                }
+              }}
+              className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors whitespace-nowrap"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
 
           {hasEmail && (
             <div className="mb-3">
