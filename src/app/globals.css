@@ -113,3 +113,12 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id],
   max-width: 100% !important;
   position: static !important;
 }
+
+/* Floating TOC slide-up animation */
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slide-up 0.25s ease-out;
+}

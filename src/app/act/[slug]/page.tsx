@@ -6,6 +6,7 @@ import { EditPageButton } from '@/components/content/EditPageButton'
 import { ShareButton } from '@/components/content/ShareButton'
 import { getCachedResolvedContent } from '@/lib/content-resolver'
 import { RelatedContent } from '@/components/content/RelatedContent'
+import { FloatingTOC } from '@/components/content/FloatingTOC'
 
 export async function generateStaticParams() {
   return getStaticParams('act')
@@ -90,6 +91,7 @@ export default async function ActPage({
         slug={slug}
         currentContent={resolvedData.content}
       />
+      <FloatingTOC />
     </article>
   )
 }

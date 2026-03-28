@@ -174,9 +174,10 @@ export function EditProposalModal({
   const [showHelp, setShowHelp] = useState(false)
   const [mobileTab, setMobileTab] = useState<'edit' | 'preview'>('edit') // For mobile view
 
-  // Refs for synchronized scrolling (desktop only)
+  // Refs for synchronized scrolling
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const previewRef = useRef<HTMLDivElement>(null)
+  const mobilePreviewRef = useRef<HTMLDivElement>(null)
   const [isSyncingScroll, setIsSyncingScroll] = useState(false)
 
   // Synchronized scrolling - when one scrolls, update the other
@@ -204,6 +205,27 @@ export function EditProposalModal({
       (textareaRef.current.scrollHeight - textareaRef.current.clientHeight)
 
     setTimeout(() => setIsSyncingScroll(false), 10)
+  }
+
+  // Mobile tab switch with approximate scroll sync
+  const handleMobileTabSwitch = (tab: 'edit' | 'preview') => {
+    if (tab === 'preview' && textareaRef.current) {
+      // Save scroll percentage from textarea
+      const maxTextareaScroll = textareaRef.current.scrollHeight - textareaRef.current.clientHeight
+      const scrollPercent = maxTextareaScroll > 0
+        ? textareaRef.current.scrollTop / maxTextareaScroll
+        : 0
+      setMobileTab(tab)
+      // After render, scroll preview to same percentage
+      requestAnimationFrame(() => {
+        if (mobilePreviewRef.current) {
+          const maxScroll = mobilePreviewRef.current.scrollHeight - mobilePreviewRef.current.clientHeight
+          mobilePreviewRef.current.scrollTop = scrollPercent * maxScroll
+        }
+      })
+    } else {
+      setMobileTab(tab)
+    }
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -265,7 +287,7 @@ export function EditProposalModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
+        <div className="flex items-center justify-between p-3 md:p-6 border-b">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Suggest Edit</h2>
             <p className="text-sm text-gray-600 mt-1">
@@ -303,7 +325,7 @@ export function EditProposalModal({
           {/* Mobile tabs (< md) */}
           <div className="flex md:hidden">
             <button
-              onClick={() => setMobileTab('edit')}
+              onClick={() => handleMobileTabSwitch('edit')}
               className={`flex-1 py-3 px-6 font-semibold transition-colors ${
                 mobileTab === 'edit'
                   ? 'text-steel-600 border-b-2 border-steel-600 bg-white'
@@ -313,7 +335,7 @@ export function EditProposalModal({
               Edit
             </button>
             <button
-              onClick={() => setMobileTab('preview')}
+              onClick={() => handleMobileTabSwitch('preview')}
               className={`flex-1 py-3 px-6 font-semibold transition-colors ${
                 mobileTab === 'preview'
                   ? 'text-steel-600 border-b-2 border-steel-600 bg-white'
@@ -343,12 +365,13 @@ export function EditProposalModal({
               {mobileTab === 'edit' ? (
                 <div className="flex-1 flex flex-col min-h-0">
                   <textarea
+                    ref={textareaRef}
                     value={proposedContent}
                     onChange={(e) => setProposedContent(e.target.value)}
                     className="flex-1 p-4 font-mono text-sm border-none focus:ring-0 focus:outline-none resize-none min-h-0"
                     placeholder="Edit the page content here (Markdown format)"
                     disabled={isSubmitting || success}
-                    style={{ minHeight: '400px' }}
+                    style={{ minHeight: '60vh' }}
                   />
                   <div className="flex-shrink-0 flex items-center justify-between p-3 border-t bg-gray-50 text-sm text-gray-600">
                     <span>
@@ -369,7 +392,7 @@ export function EditProposalModal({
                   </div>
                 </div>
               ) : (
-                <div className="flex-1 overflow-y-auto p-4 bg-gray-50 min-h-0">
+                <div ref={mobilePreviewRef} className="flex-1 overflow-y-auto p-4 bg-gray-50 min-h-0">
                   <div className="bg-white rounded-lg shadow-sm p-4 force-mobile-layout">
                     <MDXPreview content={proposedContent} />
                   </div>
@@ -526,7 +549,7 @@ export function EditProposalModal({
           )}
 
           {/* Footer */}
-          <div className="flex items-center justify-between p-6 border-t bg-gray-50">
+          <div className="flex items-center justify-between p-3 md:p-6 border-t bg-gray-50">
             <button
               type="button"
               onClick={onClose}

@@ -49,44 +49,48 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
   // --- Rate limiting (runs first) -------------------------------------------
-  const windowMs = 60 * 1000 // 1-minute window
-  let limit: number
+  // Skip rate limiting entirely for the session endpoint — NextAuth polls it
+  // frequently (every few seconds when the tab is focused) and it's a
+  // read-only cached response with no abuse vector.
+  if (path !== '/api/auth/session') {
+    const windowMs = 60 * 1000 // 1-minute window
+    let limit: number
 
-  if (
-    path.startsWith('/api/auth') &&
-    !path.startsWith('/api/auth/verify-request') &&
-    !path.startsWith('/api/auth/session')
-  ) {
-    limit = 20 // auth sign-in/callback endpoints: tight limit to prevent brute force
-  } else if (path.startsWith('/api/')) {
-    limit = 30 // other API routes
-  } else {
-    limit = 120 // page requests: generous for normal browsing
-  }
+    if (
+      path.startsWith('/api/auth') &&
+      !path.startsWith('/api/auth/verify-request')
+    ) {
+      limit = 20 // auth sign-in/callback endpoints: tight limit to prevent brute force
+    } else if (path.startsWith('/api/')) {
+      limit = 30 // other API routes
+    } else {
+      limit = 120 // page requests: generous for normal browsing
+    }
 
-  if (isRateLimited(ip, limit, windowMs)) {
-    // For API routes, return plain text
-    if (path.startsWith('/api/')) {
-      return new NextResponse('Too Many Requests', {
+    if (isRateLimited(ip, limit, windowMs)) {
+      // For API routes, return plain text
+      if (path.startsWith('/api/')) {
+        return new NextResponse('Too Many Requests', {
+          status: 429,
+          headers: { 'Retry-After': '60', 'Content-Type': 'text/plain' },
+        })
+      }
+      // For page routes, return styled HTML
+      return new NextResponse(`
+        <!DOCTYPE html>
+        <html><head><title>Too Many Requests</title></head>
+        <body style="font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f9fafb;">
+          <div style="text-align: center; max-width: 400px; padding: 2rem;">
+            <h1 style="font-size: 1.5rem; color: #111827; margin-bottom: 0.5rem;">Slow down</h1>
+            <p style="color: #6b7280;">You're making requests too quickly. Please wait a moment and try again.</p>
+            <a href="/" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 1.5rem; background: #1a4f6e; color: white; border-radius: 0.5rem; text-decoration: none;">Go Home</a>
+          </div>
+        </body></html>
+      `, {
         status: 429,
-        headers: { 'Retry-After': '60', 'Content-Type': 'text/plain' },
+        headers: { 'Retry-After': '60', 'Content-Type': 'text/html' },
       })
     }
-    // For page routes, return styled HTML
-    return new NextResponse(`
-      <!DOCTYPE html>
-      <html><head><title>Too Many Requests</title></head>
-      <body style="font-family: system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f9fafb;">
-        <div style="text-align: center; max-width: 400px; padding: 2rem;">
-          <h1 style="font-size: 1.5rem; color: #111827; margin-bottom: 0.5rem;">Slow down</h1>
-          <p style="color: #6b7280;">You're making requests too quickly. Please wait a moment and try again.</p>
-          <a href="/" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 1.5rem; background: #1a4f6e; color: white; border-radius: 0.5rem; text-decoration: none;">Go Home</a>
-        </div>
-      </body></html>
-    `, {
-      status: 429,
-      headers: { 'Retry-After': '60', 'Content-Type': 'text/html' },
-    })
   }
 
   // --- Onboarding redirect (existing logic) ---------------------------------
