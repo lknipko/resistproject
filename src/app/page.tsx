@@ -171,15 +171,15 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <FeaturedIssue
               title="US-Iran Military Conflict"
-              description="Over 1,750 killed in 4 weeks. 82nd Airborne deploying; ground invasion under consideration. No congressional authorization. Trump: 'I don't care about reaching a deal.' War Powers clock expires April 29."
+              description="Day 34: Over 2,100 killed. Trump's first primetime address threatens to destroy all Iranian power plants. New missile wave hits Tel Aviv and US bases. Oil at $106/barrel, gas above $4/gallon. War Powers clock expires April 29."
               learnSlug="iran-war"
               actSlug="iran-war"
               badge="Urgent"
               icon="government"
             />
             <FeaturedIssue
-              title="DHS Shutdown: 6+ Weeks"
-              description="DHS unfunded since Feb 14. Senate has failed 7 times to advance funding. TSA wait times hit 4.5+ hours. Officers working without pay. Border security, FEMA, and cybersecurity all degraded."
+              title="DHS Shutdown: 47 Days"
+              description="DHS unfunded since Feb 14. New Secretary Mullin sworn in March 24. USCIS partially resumed asylum processing. TSA officers still working without pay. 'Phase II' mass deportations being pushed."
               learnSlug="dhs-shutdown"
               actSlug="dhs-funding"
               badge="Urgent"
@@ -187,7 +187,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="ICE Detention & Deportation"
-              description="72,000+ detained, arrests exceeding 1,000/day. DOJ admitted ICE gave courts false info about courthouse arrest authority (March 25) — and said the policy won't change. 65% say ICE has gone too far."
+              description="Detention at all-time high: 72,000+, arrests exceeding 1,000/day. Pro-Trump groups pushing 'Phase II' worksite raids. Federal judge issued 69-page order restricting detainee transfers. 65% say ICE has gone too far."
               learnSlug="ice-detention-deportation"
               actSlug="ice-detention-defense"
               badge="Urgent"
@@ -195,7 +195,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="DOGE & Government Dismantlement"
-              description="260K+ federal employees fired. SSA in crisis: 24% call answer rate, website crashing. SSA IG now investigating alleged DOGE data breach — NUMIDENT database with SSNs for nearly every American."
+              description="300K+ federal employees fired (9% of workforce). Independent analysis: DOGE cost taxpayers $135B vs. claimed $215B in savings. Staffer admitted under oath DOGE failed to reduce the deficit. ~25K workers rehired."
               learnSlug="doge"
               actSlug="protect-federal-services"
               badge="Urgent"
@@ -211,7 +211,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="Medicaid & ACA Safety Net Cuts"
-              description="10.5 million projected to lose coverage. Nebraska enforcing work requirements May 1 — first state. 80 hours/month requirement. ACA subsidies expired: 22 million face doubled premiums."
+              description="10.5 million projected to lose coverage. Provider tax changes took effect April 1. 100% drug tariffs signed April 2 will further squeeze costs. Nebraska enforcing work requirements May 1. ACA subsidies expired."
               learnSlug="obbba-medicaid"
               actSlug="medicaid-enrollment"
               badge="Urgent"
