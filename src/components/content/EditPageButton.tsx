@@ -13,7 +13,7 @@ import { useSession } from 'next-auth/react'
 import { EditProposalModal } from './EditProposalModal'
 
 interface EditPageButtonProps {
-  section: 'learn' | 'act'
+  section: 'learn' | 'act' | 'environment'
   slug: string
   currentContent: string
 }

@@ -7,7 +7,7 @@ interface PageOption {
   title: string
   description: string
   path: string
-  type: 'learn' | 'act'
+  type: 'learn' | 'act' | 'environment'
   tags: string[]
   slug: string
 }
@@ -23,7 +23,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
   const [introText, setIntroText] = useState('')
   // Ordered array of selected page paths (order = display order in email)
   const [orderedPaths, setOrderedPaths] = useState<string[]>([])
-  const [filter, setFilter] = useState<'all' | 'urgent' | 'learn' | 'act'>('urgent')
+  const [filter, setFilter] = useState<'all' | 'urgent' | 'learn' | 'act' | 'environment'>('urgent')
   const [previewHtml, setPreviewHtml] = useState<string | null>(null)
   const [showConfirm, setShowConfirm] = useState(false)
   const [result, setResult] = useState<{

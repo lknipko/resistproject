@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 interface CollapsibleProps {
   title: string
   level: 'h2' | 'h3' | 'h4' | 'li'
-  section?: 'learn' | 'act'
+  section?: 'learn' | 'act' | 'environment'
   children: React.ReactNode
   defaultOpen?: boolean
   id?: string // Heading slug from rehype-slug
@@ -46,9 +46,15 @@ export function Collapsible({
   }, [id])
 
   // Section-based accent colors
-  const accentColor = section === 'learn' ? 'text-steel-600' : 'text-orange-600'
-  const borderColor = section === 'learn' ? 'border-steel-600' : 'border-orange-500'
-  const hoverColor = section === 'learn' ? 'hover:text-steel-700' : 'hover:text-orange-700'
+  const sectionColors: Record<string, { accent: string; border: string; hover: string }> = {
+    learn: { accent: 'text-steel-600', border: 'border-steel-600', hover: 'hover:text-steel-700' },
+    act: { accent: 'text-orange-600', border: 'border-orange-500', hover: 'hover:text-orange-700' },
+    environment: { accent: 'text-forest-600', border: 'border-forest-500', hover: 'hover:text-forest-700' },
+  }
+  const colors = sectionColors[section] ?? sectionColors.learn
+  const accentColor = colors.accent
+  const borderColor = colors.border
+  const hoverColor = colors.hover
 
   // Font sizes and styling based on level (matches regular headings/list items)
   const headingStyles = {

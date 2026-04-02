@@ -37,7 +37,7 @@ function extractExcerpt(raw: string): string {
 
 export interface SearchIndexEntry {
   slug: string
-  section: 'learn' | 'act'
+  section: 'learn' | 'act' | 'environment'
   title: string
   description: string
   tags: string[]
@@ -73,6 +73,20 @@ export async function GET() {
       description: page.description ?? '',
       tags: page.tags ?? [],
       path: `/act/${page.slug}`,
+      excerpt: full ? extractExcerpt(full.content) : '',
+    })
+  }
+
+  const envPages = getAllPages('environment')
+  for (const page of envPages) {
+    const full = getPageBySlug('environment', page.slug)
+    index.push({
+      slug: page.slug,
+      section: 'environment',
+      title: page.title,
+      description: page.description ?? '',
+      tags: page.tags ?? [],
+      path: `/environment/${page.slug}`,
       excerpt: full ? extractExcerpt(full.content) : '',
     })
   }

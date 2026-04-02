@@ -2,7 +2,7 @@ interface FeaturedPage {
   title: string
   description: string
   path: string
-  type: 'learn' | 'act'
+  type: 'learn' | 'act' | 'environment'
   tags: string[]
 }
 

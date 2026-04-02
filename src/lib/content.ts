@@ -8,7 +8,7 @@ const contentDirectory = path.join(process.cwd(), 'content')
 /**
  * Get all MDX files from a specific section (learn or act)
  */
-export function getContentFiles(section: 'learn' | 'act'): string[] {
+export function getContentFiles(section: 'learn' | 'act' | 'environment'): string[] {
   const sectionPath = path.join(contentDirectory, section)
 
   try {
@@ -29,7 +29,7 @@ export function getContentFiles(section: 'learn' | 'act'): string[] {
 /**
  * Get metadata for all pages in a section
  */
-export function getAllPages(section: 'learn' | 'act'): PageMetadata[] {
+export function getAllPages(section: 'learn' | 'act' | 'environment'): PageMetadata[] {
   const files = getContentFiles(section)
 
   return files.map((filename) => {
@@ -49,7 +49,7 @@ export function getAllPages(section: 'learn' | 'act'): PageMetadata[] {
 /**
  * Get a single page by slug
  */
-export function getPageBySlug(section: 'learn' | 'act', slug: string): PageContent | null {
+export function getPageBySlug(section: 'learn' | 'act' | 'environment', slug: string): PageContent | null {
   try {
     const filePath = path.join(contentDirectory, section, `${slug}.mdx`)
     const fileContents = fs.readFileSync(filePath, 'utf8')
@@ -71,7 +71,7 @@ export function getPageBySlug(section: 'learn' | 'act', slug: string): PageConte
 /**
  * Generate static params for all pages in a section
  */
-export function generateStaticParams(section: 'learn' | 'act') {
+export function generateStaticParams(section: 'learn' | 'act' | 'environment') {
   const files = getContentFiles(section)
   return files.map((filename) => ({
     slug: filename.replace(/\.mdx$/, ''),

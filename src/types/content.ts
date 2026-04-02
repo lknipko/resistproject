@@ -1,7 +1,9 @@
+export type SiteSection = 'learn' | 'act' | 'environment'
+
 export interface PageFrontmatter {
   title: string
   subtitle?: string
-  type: 'learn' | 'act'
+  type: SiteSection
   tags?: string[]
   urgency?: 'high' | 'medium' | 'low'
   actLink?: string

@@ -92,6 +92,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   }
 
+  // Environment section landing page
+  entries.push({
+    url: `${baseUrl}/environment`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.9,
+  })
+
+  // Environment pages
+  const envSlugs = getMDXFiles('environment')
+  for (const slug of envSlugs) {
+    const { lastUpdated } = getMDXFrontmatter('environment', slug)
+    entries.push({
+      url: `${baseUrl}/environment/${slug}`,
+      lastModified: lastUpdated ? new Date(lastUpdated) : new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })
+  }
+
   // Other important pages
   entries.push(
     {

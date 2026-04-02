@@ -105,7 +105,7 @@ function restoreLayoutWrappers(
 }
 
 interface EditProposalModalProps {
-  section: 'learn' | 'act'
+  section: 'learn' | 'act' | 'environment'
   slug: string
   currentContent: string
   onClose: () => void

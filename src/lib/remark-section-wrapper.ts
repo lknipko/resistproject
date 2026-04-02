@@ -179,7 +179,7 @@ function collectCollapsibleContent(children: any[], startIndex: number, currentL
 /**
  * Process list items for collapsibles
  */
-function processListItems(listNode: any, section: 'learn' | 'act'): any {
+function processListItems(listNode: any, section: 'learn' | 'act' | 'environment'): any {
   if (!listNode.children) {
     return listNode
   }
@@ -240,7 +240,7 @@ function processListItems(listNode: any, section: 'learn' | 'act'): any {
  * Process collapsibles recursively
  * This runs BEFORE section wrapping to allow collapsibles inside sections
  */
-function processCollapsibles(children: any[], section: 'learn' | 'act' = 'learn'): any[] {
+function processCollapsibles(children: any[], section: 'learn' | 'act' | 'environment' = 'learn'): any[] {
   const newChildren: any[] = []
   let i = 0
 
@@ -849,12 +849,16 @@ function parsePersonalizedActionBlock(
 /**
  * Detect section type from tree metadata (frontmatter)
  */
-function detectSection(tree: Root): 'learn' | 'act' {
+function detectSection(tree: Root): 'learn' | 'act' | 'environment' {
   // Check if tree has data.frontmatter (set by remark-frontmatter or parseFrontmatter)
   const frontmatter = (tree as any).data?.frontmatter
 
   if (frontmatter?.type === 'act') {
     return 'act'
+  }
+
+  if (frontmatter?.type === 'environment') {
+    return 'environment'
   }
 
   // Default to 'learn' if not specified

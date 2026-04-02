@@ -22,7 +22,7 @@ import { logEditSubmission, createAuditLog } from '@/lib/audit'
 import { revalidatePath } from 'next/cache'
 
 interface SubmitEditProposalParams {
-  section: 'learn' | 'act'
+  section: 'learn' | 'act' | 'environment'
   slug: string
   originalContent: string
   proposedContent: string

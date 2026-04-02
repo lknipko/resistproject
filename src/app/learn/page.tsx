@@ -95,6 +95,27 @@ export default async function LearnPage({
         {!activeTag && <ProposeNewPageCard section="learn" />}
       </div>
 
+      {/* Environment Hub cross-link */}
+      {!activeTag && (
+        <Link
+          href="/environment"
+          className="block mt-8 p-6 bg-forest-50 border-2 border-forest-200 rounded-lg hover:border-forest-400 transition-all group"
+        >
+          <div className="flex items-center gap-3">
+            <svg className="w-8 h-8 text-forest-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h2 className="text-lg font-semibold text-forest-800 group-hover:text-forest-900">Looking for environment content?</h2>
+              <p className="text-sm text-forest-600">Explore our dedicated Environment Hub for climate, water, public lands, and more.</p>
+            </div>
+            <svg className="w-5 h-5 text-forest-400 group-hover:text-forest-600 flex-shrink-0 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </div>
+        </Link>
+      )}
+
       {learnPages.length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-500 text-lg">

@@ -18,7 +18,7 @@ interface PageData {
  * Get a page by section and slug from the file system.
  */
 export function getPageBySlug(
-  section: 'learn' | 'act',
+  section: 'learn' | 'act' | 'environment',
   slug: string
 ): PageData | null {
   try {
@@ -46,7 +46,7 @@ export function getPageBySlug(
 /**
  * Get all pages in a section.
  */
-export function getAllPagesInSection(section: 'learn' | 'act'): PageData[] {
+export function getAllPagesInSection(section: 'learn' | 'act' | 'environment'): PageData[] {
   try {
     const contentDirectory = path.join(process.cwd(), 'content')
     const sectionPath = path.join(contentDirectory, section)

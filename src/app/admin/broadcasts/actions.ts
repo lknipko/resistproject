@@ -27,7 +27,7 @@ export async function previewBroadcast(data: {
     title: string
     description: string
     path: string
-    type: 'learn' | 'act'
+    type: 'learn' | 'act' | 'environment'
     tags: string[]
   }>
 }): Promise<{ html: string } | { error: string }> {
@@ -60,7 +60,7 @@ export async function sendBroadcast(data: {
     title: string
     description: string
     path: string
-    type: 'learn' | 'act'
+    type: 'learn' | 'act' | 'environment'
     tags: string[]
   }>
 }): Promise<BroadcastResult> {
@@ -178,7 +178,7 @@ export async function sendTestEmail(data: {
     title: string
     description: string
     path: string
-    type: 'learn' | 'act'
+    type: 'learn' | 'act' | 'environment'
     tags: string[]
   }>
 }): Promise<BroadcastResult> {

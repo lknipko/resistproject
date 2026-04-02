@@ -29,7 +29,7 @@ interface PageFrontmatter {
  * @returns PageMetadata record
  */
 export async function ensurePageMetadata(
-  section: 'learn' | 'act',
+  section: 'learn' | 'act' | 'environment',
   slug: string
 ): Promise<PageMetadata> {
   const pagePath = `/${section}/${slug}`
@@ -96,7 +96,7 @@ export async function ensurePageMetadata(
  * @returns PageMetadata record or null
  */
 export async function getPageMetadata(
-  section: 'learn' | 'act',
+  section: 'learn' | 'act' | 'environment',
   slug: string
 ): Promise<PageMetadata | null> {
   const pagePath = `/${section}/${slug}`
@@ -113,7 +113,7 @@ export async function getPageMetadata(
  * @returns Array of PageMetadata records
  */
 export async function getAllPageMetadata(
-  section: 'learn' | 'act'
+  section: 'learn' | 'act' | 'environment'
 ): Promise<PageMetadata[]> {
   return await prisma.pageMetadata.findMany({
     where: {

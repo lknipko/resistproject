@@ -24,7 +24,7 @@ interface ResolvedContent {
  * @returns Resolved content with version info
  */
 export async function getResolvedContent(
-  section: 'learn' | 'act',
+  section: 'learn' | 'act' | 'environment',
   slug: string
 ): Promise<ResolvedContent> {
   // 1. Load base file content
@@ -114,7 +114,7 @@ export const getCachedResolvedContent = cache(getResolvedContent)
  * Check if a page has any approved edits.
  */
 export async function hasApprovedEdits(
-  section: 'learn' | 'act',
+  section: 'learn' | 'act' | 'environment',
   slug: string
 ): Promise<boolean> {
   const pagePath = `/${section}/${slug}`
@@ -151,7 +151,7 @@ export async function hasApprovedEdits(
  * Get edit history for a page.
  */
 export async function getPageEditHistory(
-  section: 'learn' | 'act',
+  section: 'learn' | 'act' | 'environment',
   slug: string
 ) {
   const pagePath = `/${section}/${slug}`

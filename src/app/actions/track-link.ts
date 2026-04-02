@@ -18,7 +18,7 @@ export async function trackExternalLink(data: {
   category: string
   label?: string
   sourcePage: string
-  sourceSection: 'learn' | 'act'
+  sourceSection: 'learn' | 'act' | 'environment'
 }) {
   try {
     await prisma.externalLinkClick.create({

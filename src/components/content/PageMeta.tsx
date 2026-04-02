@@ -5,7 +5,7 @@ interface PageMetaProps {
   tags?: string[]
   lastUpdated: string
   /** 'learn' or 'act' — used to build tag filter links */
-  section?: 'learn' | 'act'
+  section?: 'learn' | 'act' | 'environment'
 }
 
 export function PageMeta({ tags, lastUpdated, section }: PageMetaProps) {

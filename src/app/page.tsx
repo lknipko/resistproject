@@ -271,6 +271,35 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Environment Hub */}
+      <section className="py-12 bg-gradient-to-r from-forest-700 to-forest-600 text-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-8">
+          <div className="flex-shrink-0">
+            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
+              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">Environment Hub</h2>
+            <p className="text-forest-100 text-lg mb-4">
+              Track environmental rollbacks, protect public lands and wildlife, monitor air and water quality,
+              and take action for a healthier planet.
+            </p>
+            <Link
+              href="/environment"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-forest-700 hover:bg-forest-50 font-bold rounded-lg shadow-lg transition-all hover:scale-105"
+            >
+              Explore Environment Hub
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <HowItWorks />
 
       {/* Join the Community */}
