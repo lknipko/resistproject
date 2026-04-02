@@ -8,6 +8,51 @@ import { Representative } from '@/app/api/representatives/route'
 import { trackCivicActionClient } from '@/lib/tracking'
 import { EmailSignupPrompt } from '@/components/content/EmailSignupPrompt'
 
+/**
+ * iOS Safari-compatible clipboard copy.
+ * The async navigator.clipboard API loses the user gesture context on link clicks
+ * in iOS Safari, so we use the synchronous execCommand('copy') fallback.
+ */
+function copyToClipboardSync(text: string) {
+  // Fire-and-forget modern API (works on desktop, may fail on iOS during navigation)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).catch(() => {})
+  }
+  // Synchronous fallback via execCommand — required for iOS Safari
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.setAttribute('readonly', '')
+  textarea.style.position = 'fixed'
+  textarea.style.left = '-9999px'
+  textarea.style.top = '-9999px'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
+
+  // iOS needs setSelectionRange + contentEditable
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+  if (isIOS) {
+    textarea.contentEditable = 'true'
+    textarea.readOnly = false
+    const range = document.createRange()
+    range.selectNodeContents(textarea)
+    const selection = window.getSelection()
+    if (selection) {
+      selection.removeAllRanges()
+      selection.addRange(range)
+    }
+    textarea.setSelectionRange(0, text.length)
+  } else {
+    textarea.select()
+  }
+
+  try {
+    document.execCommand('copy')
+  } catch (err) {
+    // execCommand may throw in some environments
+  }
+  document.body.removeChild(textarea)
+}
+
 interface EmailMessageProps {
   topic: string
   subject: string
@@ -361,14 +406,10 @@ export default function EmailTemplate({
 
               {/* Copy button */}
               <button
-                onClick={async () => {
-                  try {
-                    await navigator.clipboard.writeText(`Subject: ${genericSubject}\n\n${genericBody}`)
-                    setCopiedLoggedOut(true)
-                    setTimeout(() => setCopiedLoggedOut(false), 2000)
-                  } catch (err) {
-                    console.error('Failed to copy:', err)
-                  }
+                onClick={() => {
+                  copyToClipboardSync(`Subject: ${genericSubject}\n\n${genericBody}`)
+                  setCopiedLoggedOut(true)
+                  setTimeout(() => setCopiedLoggedOut(false), 2000)
                 }}
                 className={`flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-md transition-colors whitespace-nowrap ${
                   copiedLoggedOut
@@ -545,20 +586,16 @@ function RepresentativeEmailCard({
   const [sendCopied, setSendCopied] = useState(false)
 
   // Track email click and copy to clipboard as fallback (NO PII - only rep name and office)
-  const handleEmailClick = async () => {
+  const handleEmailClick = () => {
     trackCivicActionClient({
       actionType: 'email_clicked',
       repName: representative.name,
       repOffice: representative.office,
     })
-    // Auto-copy to clipboard as fallback for broken mailto: encoding
-    try {
-      await navigator.clipboard.writeText(`Subject: ${displaySubject}\n\n${displayBody}`)
-      setSendCopied(true)
-      setTimeout(() => setSendCopied(false), 4000)
-    } catch (err) {
-      // Clipboard access may fail — mailto: still works as primary
-    }
+    // Copy plain text to clipboard so users can paste into contact forms
+    copyToClipboardSync(`Subject: ${displaySubject}\n\n${displayBody}`)
+    setSendCopied(true)
+    setTimeout(() => setSendCopied(false), 4000)
   }
 
   return (
@@ -659,14 +696,10 @@ function RepresentativeEmailCard({
 
             {/* Copy button - always visible */}
             <button
-              onClick={async () => {
-                try {
-                  await navigator.clipboard.writeText(`Subject: ${displaySubject}\n\n${displayBody}`)
-                  setCopied(true)
-                  setTimeout(() => setCopied(false), 2000)
-                } catch (err) {
-                  console.error('Failed to copy:', err)
-                }
+              onClick={() => {
+                copyToClipboardSync(`Subject: ${displaySubject}\n\n${displayBody}`)
+                setCopied(true)
+                setTimeout(() => setCopied(false), 2000)
               }}
               className={`flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-md transition-colors whitespace-nowrap ${
                 copied

@@ -5,10 +5,10 @@ import { useSession } from 'next-auth/react'
 import { EditProposalModal } from './EditProposalModal'
 
 interface ProposeNewPageButtonProps {
-  section: 'learn' | 'act'
+  section: 'learn' | 'act' | 'environment'
 }
 
-const NEW_PAGE_TEMPLATES = {
+const NEW_PAGE_TEMPLATES: Record<'learn' | 'act' | 'environment', string> = {
   learn: `# [Page Title]
 
 ## Quick Summary
@@ -130,6 +130,32 @@ proposed regulations or policies.
 
 - [Learn Page Title](/learn/slug) - Context about this issue
 - [Another Learn Page](/learn/slug) - Related background
+`,
+  environment: `# [Topic Title]
+
+## Quick Summary
+
+**Key Point:** Brief summary of this environmental issue.
+
+## Facts
+
+- Important fact [source: Document](https://example.gov)
+
+## Analysis
+
+Explanation of the environmental impact.
+
+## Quick Actions
+
+**Script:** "Hello, I'm calling about [ENVIRONMENTAL ISSUE]."
+
+## Sustained Actions
+
+- **Organization** ([Website](https://example.org))
+
+## Resources
+
+- Monitoring tools and databases
 `
 }
 
