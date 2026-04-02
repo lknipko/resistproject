@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import HeaderWrapper from '@/components/layout/HeaderWrapper'
-import Footer from '@/components/layout/Footer'
+import { MainChrome } from '@/components/layout/MainChrome'
 import { SessionProvider } from '@/components/providers/SessionProvider'
 import { ServiceWorkerRegistration } from '@/components/providers/ServiceWorkerRegistration'
 
@@ -55,11 +54,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} font-sans min-h-screen flex flex-col antialiased`}>
         <SessionProvider>
-          <HeaderWrapper />
-          <main className="flex-grow">
+          <MainChrome>
             {children}
-          </main>
-          <Footer />
+          </MainChrome>
           <ServiceWorkerRegistration />
         </SessionProvider>
       </body>

@@ -1,26 +1,40 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 interface TOCItem {
   id: string
   text: string
   level: number
+  isAction?: boolean
 }
 
 export function FloatingTOC() {
   const [isOpen, setIsOpen] = useState(false)
   const [headings, setHeadings] = useState<TOCItem[]>([])
   const [isVisible, setIsVisible] = useState(false)
+  const pathname = usePathname()
+  const isEnvironment = pathname.startsWith('/environment')
 
   // Collect headings from the page
   useEffect(() => {
     const elements = document.querySelectorAll('h2[id], h3[id]')
-    const items: TOCItem[] = Array.from(elements).map(el => ({
-      id: el.id,
-      text: el.textContent || '',
-      level: el.tagName === 'H2' ? 2 : 3,
-    }))
+    const ACTION_IDS = ['quick-actions', 'sustained-actions', 'resources']
+    let inActionSection = false
+    const items: TOCItem[] = Array.from(elements).map(el => {
+      const id = el.id
+      const level = el.tagName === 'H2' ? 2 : 3
+      if (level === 2) {
+        inActionSection = ACTION_IDS.includes(id)
+      }
+      return {
+        id,
+        text: el.textContent || '',
+        level,
+        isAction: inActionSection,
+      }
+    })
     setHeadings(items)
   }, [])
 
@@ -66,18 +80,23 @@ export function FloatingTOC() {
               </button>
             </div>
             <nav className="px-4 py-3">
-              {headings.map((heading) => (
-                <a
-                  key={heading.id}
-                  href={`#${heading.id}`}
-                  onClick={() => setIsOpen(false)}
-                  className={`block py-2.5 text-sm border-b border-gray-100 last:border-0 ${
-                    heading.level === 3 ? 'pl-4 text-gray-600' : 'font-medium text-gray-900'
-                  }`}
-                >
-                  {heading.text}
-                </a>
-              ))}
+              {headings.map((heading) => {
+                const actionColor = isEnvironment && heading.isAction
+                const h2Class = actionColor ? 'font-medium text-forest-700' : 'font-medium text-gray-900'
+                const h3Class = actionColor ? 'pl-4 text-forest-600' : 'pl-4 text-gray-600'
+                return (
+                  <a
+                    key={heading.id}
+                    href={`#${heading.id}`}
+                    onClick={() => setIsOpen(false)}
+                    className={`block py-2.5 text-sm border-b border-gray-100 last:border-0 ${
+                      heading.level === 3 ? h3Class : h2Class
+                    }`}
+                  >
+                    {heading.text}
+                  </a>
+                )
+              })}
             </nav>
           </div>
         </div>

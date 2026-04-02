@@ -8,6 +8,7 @@ import { LearnMoreBox } from './content/LearnMoreBox'
 import { LearnMoreBottom } from './content/LearnMoreBottom'
 import { FactsSection } from './content/FactsSection'
 import { AnalysisSection } from './content/AnalysisSection'
+import { ActionsSection } from './content/ActionsSection'
 import { SourceLink } from './content/SourceLink'
 import { SourceGroup } from './content/SourceGroup'
 import { ContentLayout } from './content/ContentLayout'
@@ -54,6 +55,7 @@ export const mdxComponents: MDXComponents = {
   LearnMoreBottom,
   FactsSection,
   AnalysisSection,
+  ActionsSection,
   SourceLink,
   SourceGroup,
   ContentLayout,

@@ -36,15 +36,13 @@ const SECTION_DEFINITIONS: SectionDefinition[] = [
   },
   {
     name: 'quick-actions',
-    component: 'div', // Not a special component, just gets intro text
+    component: 'ActionsSection',
     matchHeadings: ['quick actions'],
-    autoIntro: 'Complete these in under 5 minutes',
   },
   {
     name: 'sustained-actions',
-    component: 'div',
+    component: 'ActionsSection',
     matchHeadings: ['sustained actions'],
-    autoIntro: 'Ongoing actions requiring more time commitment',
   },
   {
     name: 'resources',
@@ -552,7 +550,7 @@ function transformPhotoLinks(tree: Root): void {
 /**
  * Process children array (works recursively on nested JSX)
  */
-function processChildren(children: any[]): any[] {
+function processChildren(children: any[], section: string = 'learn'): any[] {
   const newChildren: any[] = []
   let currentSection: {
     definition: SectionDefinition
@@ -571,7 +569,7 @@ function processChildren(children: any[]): any[] {
       // Check if we're currently building a QuickSummary section
       if (currentSection && currentSection.definition.name === 'quick-summary') {
         // Close the QuickSummary section first
-        const quickSummary = wrapSection(currentSection)
+        const quickSummary = wrapSection(currentSection, section)
         currentSection = null
 
         // Wrap QuickSummary and CTA box together in TopSection
@@ -602,7 +600,7 @@ function processChildren(children: any[]): any[] {
 
     // If this is an MDX JSX element (but not CTA box), recursively process its children
     if (node.type === 'mdxJsxFlowElement' && node.children) {
-      node.children = processChildren(node.children)
+      node.children = processChildren(node.children, section)
 
       // After processing children, check if we have a current section
       if (currentSection) {
@@ -617,7 +615,7 @@ function processChildren(children: any[]): any[] {
     if (node.type === 'heading' && (node as Heading).depth === 2) {
       // If we have a current section, close it
       if (currentSection) {
-        newChildren.push(wrapSection(currentSection))
+        newChildren.push(wrapSection(currentSection, section))
         currentSection = null
       }
 
@@ -649,7 +647,7 @@ function processChildren(children: any[]): any[] {
 
   // Close final section if any
   if (currentSection) {
-    newChildren.push(wrapSection(currentSection))
+    newChildren.push(wrapSection(currentSection, section))
   }
 
   return newChildren
@@ -658,19 +656,19 @@ function processChildren(children: any[]): any[] {
 /**
  * Main section wrapping logic
  */
-function wrapSections(tree: Root): void {
-  tree.children = processChildren(tree.children) as any
+function wrapSections(tree: Root, section: string): void {
+  tree.children = processChildren(tree.children, section) as any
 }
 
 /**
  * Wrap a section in its component
  */
-function wrapSection(section: {
+function wrapSection(sectionData: {
   definition: SectionDefinition
   heading: Heading
   content: any[]
-}): any {
-  const { definition, heading, content } = section
+}, pageSection: string = 'learn'): any {
+  const { definition, heading, content } = sectionData
 
   // For sections with auto-intro, insert intro text at start of content
   let finalContent: any[] = content
@@ -679,13 +677,20 @@ function wrapSection(section: {
     finalContent = [intro, ...content]
   }
 
+  // Build props — pass section and heading title to components that need them
+  const props: Record<string, string> = { section: pageSection }
+  const headingText = getHeadingText(heading)
+  if (headingText) {
+    props.title = headingText
+  }
+
   // For 'div' component (simple wrapper), preserve the heading
   if (definition.component === 'div') {
     return createMDXElement(definition.component, {}, [heading, ...finalContent])
   }
 
   // For special components, exclude the heading (component provides its own)
-  return createMDXElement(definition.component, {}, finalContent)
+  return createMDXElement(definition.component, props, finalContent)
 }
 
 /**
@@ -971,7 +976,7 @@ export default function remarkSectionWrapper() {
     // Phase 3: Group consecutive EmailTemplate and CallRepButton components
     tree.children = groupActionComponents(tree.children) as any
 
-    // Phase 4: Wrap sections
-    wrapSections(tree)
+    // Phase 4: Wrap sections (pass section type for conditional styling)
+    wrapSections(tree, section)
   }
 }

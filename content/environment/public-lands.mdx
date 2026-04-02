@@ -89,10 +89,35 @@ The National Environmental Policy Act (NEPA) requires environmental review befor
 
 ## Quick Actions
 
-### Contact Your Representatives
+### Email Your Senator: Protect Public Lands (30 seconds)
 
-**Script:**
-"Hello, my name is [NAME] from [CITY, STATE]. I'm calling to urge [REPRESENTATIVE] to protect our public lands. I oppose the reduction of national monuments and the fast-tracking of drilling permits without environmental review. Public lands belong to all Americans and should be managed for conservation, recreation, and tribal cultural preservation -- not just resource extraction. Thank you."
+<EmailTemplate
+  subject="Protect National Monuments and Public Lands"
+  repType="senator"
+  body={`Dear Senator {repName},
+
+I am writing as your constituent from {zipCode} to urge you to protect our national monuments and public lands from reduction and fast-tracked resource extraction.
+
+Executive Order 14174 opened the Arctic National Wildlife Refuge to drilling, directed review of 27+ national monuments for potential reduction, and ordered agencies to bypass environmental review for energy projects. Public lands belong to all Americans — they support $887 billion in annual economic activity and 7.6 million jobs.
+
+Minimum bids for federal oil and gas leases remain at $10/acre (set in 1987) and royalty rates at 12.5% — the lowest in the developed world. American taxpayers are subsidizing the extraction of resources from their own lands.
+
+I urge you to support legislation protecting national monuments from reduction and reforming the federal oil and gas leasing program to ensure fair returns for taxpayers.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton repType="all">
+  <CallScript topic="Protect Public Lands" script={`Hi, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge {repName} to protect our public lands. I oppose the reduction of national monuments and the fast-tracking of drilling permits without environmental review.
+
+Public lands belong to all Americans and should be managed for conservation, recreation, and tribal cultural preservation — not just resource extraction. Thank you.`} />
+</CallRepButton>
 
 ### Comment on BLM Lease Sales
 

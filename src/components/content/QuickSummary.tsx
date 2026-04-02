@@ -1,11 +1,13 @@
 interface QuickSummaryProps {
   children: React.ReactNode
   highlight?: string
+  section?: string
+  title?: string
 }
 
 export function QuickSummary({ children, highlight }: QuickSummaryProps) {
   return (
-    <div className="bg-gray-100 p-6 border-l-4 border-gray-400">
+    <div className="bg-gray-100 p-6 border-l-4 border-gray-400 outdent mb-8 rounded-sm">
       <h2 id="quick-summary" className="text-base font-bold text-gray-700 uppercase tracking-wide mb-4 !m-0 !p-0 !border-0 !bg-transparent">
         QUICK SUMMARY
       </h2>

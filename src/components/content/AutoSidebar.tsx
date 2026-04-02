@@ -80,8 +80,10 @@ export function AutoSidebar() {
     }
   }
 
-  // Determine page type from the URL or from the page header element
-  const isActPage = typeof window !== 'undefined' && window.location.pathname.startsWith('/act')
+  // Determine page type from the URL
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : ''
+  const isActPage = pathname.startsWith('/act')
+  const isEnvironmentPage = pathname.startsWith('/environment')
 
   return (
     <ContentSidebar>
@@ -89,17 +91,26 @@ export function AutoSidebar() {
         {grouped.map((group) => {
           const text = group.h2.text
           const isFactsHeading = text.toLowerCase() === 'facts'
-          const isAnalysisOrAction = text.toLowerCase().includes('analysis') ||
-            text.toLowerCase().includes('action') ||
+          const isAnalysisHeading = text.toLowerCase().includes('analysis')
+          const isActionHeading = text.toLowerCase().includes('action') ||
             text.toLowerCase().includes('sustained') ||
             text.toLowerCase().includes('resources')
 
-          // Learn pages: facts=teal, analysis=orange
-          // Act pages: everything orange
           let colorClass: string
-          if (isActPage) {
+          if (isEnvironmentPage) {
+            // Environment: facts=steel/blue, analysis=orange, actions=green
+            if (isFactsHeading) {
+              colorClass = 'text-steel-600 hover:underline'
+            } else if (isAnalysisHeading) {
+              colorClass = 'text-orange hover:underline'
+            } else if (isActionHeading) {
+              colorClass = 'text-forest-700 hover:underline'
+            } else {
+              colorClass = 'text-teal hover:underline'
+            }
+          } else if (isActPage) {
             colorClass = 'text-orange hover:underline'
-          } else if (isAnalysisOrAction) {
+          } else if (isAnalysisHeading || isActionHeading) {
             colorClass = 'text-orange hover:underline'
           } else {
             colorClass = 'text-teal hover:underline'

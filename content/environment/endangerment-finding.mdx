@@ -95,14 +95,35 @@ The DC Circuit lawsuit is the most promising path to blocking the rescission. Ke
 
 ## Quick Actions
 
-### Contact Your Senators
+### Email Your Senator: Codify EPA Climate Authority (30 seconds)
 
-Call and urge them to support legislative action on climate change and oppose EPA's rescission of the Endangerment Finding.
+<EmailTemplate
+  subject="Codify EPA Authority to Regulate Greenhouse Gas Emissions"
+  repType="senator"
+  body={`Dear Senator {repName},
 
-**Script:**
-"Hello, my name is [NAME] from [CITY, STATE]. I'm calling to urge [SENATOR NAME] to oppose EPA's rescission of the Endangerment Finding, which takes effect April 20. This eliminates all federal greenhouse gas regulation. Please support legislation to codify EPA's authority to regulate greenhouse gas emissions. Thank you."
+I am writing as your constituent from {zipCode} to urge you to support legislation codifying EPA's authority to regulate greenhouse gas emissions under the Clean Air Act.
 
-**Find your senators:** [senate.gov/senators/senators-contact.htm](https://www.senate.gov/senators/senators-contact.htm)
+EPA's rescission of the 2009 Endangerment Finding takes effect April 20, 2026, eliminating all federal greenhouse gas regulation. This is not a policy disagreement — it is the removal of the scientific and legal foundation for protecting Americans from climate change.
+
+The Endangerment Finding was based on overwhelming scientific consensus and was upheld by the DC Circuit Court. Removing it ignores the evidence and leaves the federal government unable to address the greatest environmental challenge of our time.
+
+I urge you to introduce or cosponsor legislation that permanently codifies EPA's authority to regulate greenhouse gases. 24 states have already sued to block the rescission — Congress should act as well.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton repType="all">
+  <CallScript topic="Endangerment Finding Rescission" script={`Hi, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling to urge {repName} to oppose EPA's rescission of the Endangerment Finding, which takes effect April 20. This eliminates all federal greenhouse gas regulation — every climate rule depends on it.
+
+24 states and 10 cities have sued to block this. I urge {repName} to support legislation codifying EPA's authority to regulate greenhouse gas emissions. Thank you.`} />
+</CallRepButton>
 
 ### Submit Comments Supporting the Lawsuit
 

@@ -89,12 +89,35 @@ The Biden-era Lead and Copper Rule Improvements (LCRI), which required removal o
 3. **Test your water:** Get a certified lab test (~$30-150) through your state health department
 4. **Check for lead:** Free lead testing available in most states -- contact your water utility
 
-### Contact Congress About Water Funding
+### Email Your Senator: Fund Clean Water (30 seconds)
 
-**Script:**
-"Hello, my name is [NAME] from [CITY, STATE]. I'm calling about the proposed 75% cut to the Clean Water State Revolving Fund. My community depends on federal water infrastructure funding for [safe drinking water / wastewater treatment / stormwater management]. Please fully fund the Clean Water SRF and Superfund program in FY2026 appropriations. Thank you."
+<EmailTemplate
+  subject="Fully Fund the Clean Water State Revolving Fund and Superfund"
+  repType="senator"
+  body={`Dear Senator {repName},
 
-**Find your representatives:** [house.gov/representatives/find-your-representative](https://www.house.gov/representatives/find-your-representative)
+I am writing as your constituent from {zipCode} to urge you to fully fund the Clean Water State Revolving Fund and Superfund program in FY2026 appropriations.
+
+The proposed budget cuts the Clean Water SRF by 75% (from $1.6 billion to $400 million) and Superfund cleanup by 67%. These programs provide the funding my community depends on for safe drinking water, wastewater treatment, and toxic site cleanup.
+
+73 million Americans live within 3 miles of a Superfund site. Over 100 million have PFAS in their drinking water. 9.2 million homes still have lead service lines. This is not the time to cut water infrastructure funding.
+
+Please oppose these cuts and fully fund EPA water programs.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton repType="all">
+  <CallScript topic="Clean Water Funding" script={`Hi, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling about the proposed 75% cut to the Clean Water State Revolving Fund. My community depends on federal water infrastructure funding for safe drinking water and wastewater treatment.
+
+Cutting Superfund cleanup by 67% leaves toxic waste sites in communities like ours. Please fully fund the Clean Water SRF and Superfund program in FY2026 appropriations. Thank you.`} />
+</CallRepButton>
 
 ### Submit Public Comments
 

@@ -95,10 +95,35 @@ Executive Order 14192 requires agencies to repeal 10 existing regulations for ev
 - **PurpleAir** ([purpleair.com](https://www.purpleair.com)) -- Community air quality monitoring network
 - **IQAir** ([iqair.com](https://www.iqair.com)) -- Global air quality rankings
 
-### Contact Your Representatives
+### Email Your Senator: Defend Air Quality Standards (30 seconds)
 
-**Script:**
-"Hello, my name is [NAME] from [CITY, STATE]. I'm calling about EPA's rollback of air quality protections. The value of human life should remain part of regulatory cost-benefit analysis. Clean air saves lives -- EPA's own data shows the Clean Air Act prevents over 200,000 premature deaths annually. Please oppose weakening PM2.5 standards and support full EPA funding. Thank you."
+<EmailTemplate
+  subject="Oppose Rollback of Air Quality Standards and Restore the Value of Statistical Life"
+  repType="senator"
+  body={`Dear Senator {repName},
+
+I am writing as your constituent from {zipCode} about EPA's rollback of air quality protections.
+
+EPA has removed the Value of Statistical Life from regulatory cost-benefit analysis — the metric that quantifies the health benefits of clean air regulations. Without it, no new health-based regulation can be justified, because only industry compliance costs appear in the analysis.
+
+The Clean Air Act has prevented over 200,000 premature deaths annually and delivered $2 trillion in health benefits against $65 billion in costs. PM2.5 standards alone prevent 13,000 deaths per year. These are not abstract numbers — they represent Americans who are alive because of clean air protections.
+
+I urge you to oppose any weakening of PM2.5 air quality standards and to support legislation requiring EPA to use the Value of Statistical Life in regulatory analysis.
+
+Sincerely,
+{firstName} {lastName}
+{zipCode}`}
+/>
+
+### Call Your Representatives
+
+<CallRepButton repType="all">
+  <CallScript topic="Air Quality Standards" script={`Hi, my name is {firstName} {lastName} and I'm a constituent from {zipCode}.
+
+I'm calling about EPA's rollback of air quality protections. The value of human life should remain part of regulatory cost-benefit analysis. Clean air saves lives — EPA's own data shows the Clean Air Act prevents over 200,000 premature deaths annually.
+
+Please oppose weakening PM2.5 standards and support full EPA funding. Thank you.`} />
+</CallRepButton>
 
 ### Submit Public Comments
 

@@ -1,8 +1,10 @@
 interface AnalysisSectionProps {
   children: React.ReactNode
+  section?: string
+  title?: string
 }
 
-export function AnalysisSection({ children }: AnalysisSectionProps) {
+export function AnalysisSection({ children, section, title }: AnalysisSectionProps) {
   return (
     <div className="mt-12 mb-8 analysis-section">
       <h2 id="analysis" className="text-2xl sm:text-3xl font-bold text-orange uppercase mb-2 outdent">

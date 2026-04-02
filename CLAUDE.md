@@ -60,15 +60,19 @@ resistproject/                    # ← Working directory (git repo root)
 │   │   ├── api/
 │   │   │   └── search-index/   # Full-text search index endpoint
 │   │   ├── learn/              # Learn pages
-│   │   └── act/                # Action pages
+│   │   ├── act/                # Action pages
+│   │   └── (environment)/      # Environment Hub (route group with isolated layout)
+│   │       └── environment/    # /environment/* pages
 │   ├── components/
-│   │   ├── layout/             # Header, Footer, AuthButton, UserMenu, SearchBar
+│   │   ├── layout/             # Header, Footer, AuthButton, UserMenu, SearchBar, MainChrome
+│   │   ├── environment/        # EnvironmentHeader, EnvironmentFooter
 │   │   └── content/            # Content display components (TagFilterBar, RelatedContent, ...)
 │   ├── lib/
 │   │   ├── auth.ts             # NextAuth configuration
 │   │   ├── db.ts               # Prisma client
 │   │   ├── mdx.ts              # MDX processing
 │   │   ├── tags.ts             # Canonical tag taxonomy (shared server+client)
+│   │   ├── environment-tags.ts # Environment section tag taxonomy
 │   │   └── remark-section-wrapper.ts  # MDX simple syntax plugin
 │   └── types/
 │       └── next-auth.d.ts      # NextAuth type extensions
@@ -78,7 +82,8 @@ resistproject/                    # ← Working directory (git repo root)
 ├── content/                     # MDX content files
 │   ├── home.mdx
 │   ├── learn/                  # Educational content
-│   └── act/                    # Action opportunities
+│   ├── act/                    # Action opportunities
+│   └── environment/            # Environment Hub content (unified facts+actions)
 ├── public/                      # Static assets
 ├── Dockerfile                   # Production Docker image
 ├── railway.toml                 # Railway deployment config
@@ -370,6 +375,77 @@ Full-text Fuse.js search in the header, interactive tag filtering on index pages
 **Content updates:**
 - All 51 MDX frontmatter `tags:` fields migrated to canonical tags
 - Hardcoded `## Related Actions` / `## Related Learn Pages` sections removed from MDX files (replaced by RelatedContent component)
+
+---
+
+### ✅ Environment Hub (2026-04-02)
+
+**Overview:**
+A dedicated environment sub-section at `/environment/*` with its own green visual identity, header, and footer. Shares the same Next.js app, database, auth, and deployment as the main site. NOT a main nav item — linked from the homepage and learn/act landing pages.
+
+**Key Design Decisions:**
+- **Unified pages:** Environment pages combine facts AND actions on a single page (unlike learn/act split on the main site)
+- **Own layout:** Route group `(environment)` with `EnvironmentHeader` and `EnvironmentFooter`, isolated from main site chrome via `MainChrome` conditional wrapper
+- **Color scheme:** Facts = blue/steel, Analysis = orange, Actions = forest green. `forest` Tailwind palette (50-900)
+- **Own tag taxonomy:** Finer-grained than the main site's single "Environment" tag
+
+**Route Structure:**
+```
+src/app/(environment)/
+  layout.tsx              # Nested layout (EnvironmentHeader + EnvironmentFooter)
+  environment/
+    page.tsx              # Landing page with hero, tag filter, topic grid
+    [slug]/
+      page.tsx            # Individual topic pages (MDX)
+```
+
+**Layout Isolation:**
+- `src/components/layout/MainChrome.tsx` — Client component wrapping root layout. Checks `usePathname()`: on `/environment/*` renders just `{children}` (no main header/footer), otherwise renders `HeaderWrapper` + `Footer`.
+- `src/app/(environment)/layout.tsx` — Nested layout (no `<html>`/`<body>`) that renders `EnvironmentHeader` + `EnvironmentFooter`.
+
+**Environment-Specific Components:**
+- `src/components/environment/EnvironmentHeader.tsx` — Dark green (`forest-800`) header with globe icon, "Environment Hub" branding, "← Main Site" link
+- `src/components/environment/EnvironmentFooter.tsx` — Green-themed footer
+- `src/components/content/ActionsSection.tsx` — Wrapper for Quick Actions / Sustained Actions headings. Green on environment pages, orange on act pages. Renders its own intro subtitle text.
+
+**Environment Tag Taxonomy (`src/lib/environment-tags.ts`):**
+- **Topic tags (10):** Air Quality, Water, Public Lands, Wildlife, Climate, Energy, Environmental Justice, Toxics & Chemicals, Oceans & Coasts, Agriculture
+- **Status tags (4):** Urgent, Ongoing, Under Litigation, Comment Period Open
+
+**Section Color Scheme (environment pages):**
+- `QuickSummary` — Gray (same as learn/act)
+- `FactsSection` — Blue/steel (`bg-steel-50`, `text-steel-700`, `border-steel-600`)
+- `AnalysisSection` — Orange (same as learn/act)
+- `ActionsSection` — Forest green (`text-forest-800`, `border-forest-600`)
+- `Collapsible` — Green accents (`border-forest-500`)
+- TOC sidebar and floating TOC — Green links for action sections
+
+**Section Type (`SiteSection`):**
+- Defined in `src/types/content.ts` as `'learn' | 'act' | 'environment'`
+- Used across ~20 files. The remark plugin detects section from frontmatter and passes it as a `section` prop to `FactsSection`, `AnalysisSection`, `ActionsSection`, `QuickSummary`, and `Collapsible`.
+- `TagFilterBar`, `PageHeader`, `RelatedContent`, `PageMeta` all handle all three sections with appropriate color schemes.
+
+**Cross-Linking:**
+- Homepage: Green banner section between "Browse by Category" and "How It Works"
+- `/learn` landing: Green card at bottom — "Looking for environment content?"
+- `/act` landing: Green card at bottom — "Looking for environmental actions?"
+- Search index (`/api/search-index`) includes environment pages
+- Sitemap includes environment pages
+- `RelatedContent` cross-links across all three sections
+
+**Content (`content/environment/*.mdx`):**
+- `endangerment-finding.mdx` — EPA Endangerment Finding rescission (Urgent)
+- `clean-water.mdx` — WOTUS, PFAS, Superfund, lead pipes
+- `public-lands.mdx` — ANWR, national monuments, BLM leasing
+- `air-quality.mdx` — PM2.5, VSL removal, vehicle emissions
+- `citizen-science.mdx` — Air/water monitoring, iNaturalist, community science
+- All pages with political actions use `<EmailTemplate>` and `<CallRepButton>` interactive components
+
+**Adding New Environment Pages:**
+1. Create `content/environment/new-topic.mdx` with frontmatter `type: "environment"`
+2. Use environment tags from `src/lib/environment-tags.ts`
+3. Follow unified format: Quick Summary, Facts, Analysis, Quick Actions, Sustained Actions, Resources
+4. Page auto-appears on `/environment` landing and in search/sitemap
 
 ---
 
