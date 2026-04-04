@@ -378,16 +378,17 @@ Full-text Fuse.js search in the header, interactive tag filtering on index pages
 
 ---
 
-### ✅ Environment Hub (2026-04-02)
+### ✅ "Our Home" Environment Section (launched 2026-04-02, massively expanded 2026-04-04)
 
 **Overview:**
-A dedicated environment sub-section at `/environment/*` with its own green visual identity, header, and footer. Shares the same Next.js app, database, auth, and deployment as the main site. NOT a main nav item — linked from the homepage and learn/act landing pages.
+A dedicated environment sub-section at `/environment/*` branded "Our Home", with its own green visual identity, header, and footer. Shares the same Next.js app, database, auth, and deployment as the main site. NOT a main nav item — linked from the homepage and learn/act landing pages. Old URLs (`/learn/climate-environment`, `/act/environment`) permanently redirect here.
 
 **Key Design Decisions:**
 - **Unified pages:** Environment pages combine facts AND actions on a single page (unlike learn/act split on the main site)
 - **Own layout:** Route group `(environment)` with `EnvironmentHeader` and `EnvironmentFooter`, isolated from main site chrome via `MainChrome` conditional wrapper
 - **Color scheme:** Facts = blue/steel, Analysis = orange, Actions = forest green. `forest` Tailwind palette (50-900)
 - **Own tag taxonomy:** Finer-grained than the main site's single "Environment" tag
+- **Collapsible sections:** All dense evidence uses `### [+] Section` syntax to keep pages scannable
 
 **Route Structure:**
 ```
@@ -404,13 +405,13 @@ src/app/(environment)/
 - `src/app/(environment)/layout.tsx` — Nested layout (no `<html>`/`<body>`) that renders `EnvironmentHeader` + `EnvironmentFooter`.
 
 **Environment-Specific Components:**
-- `src/components/environment/EnvironmentHeader.tsx` — Dark green (`forest-800`) header with globe icon, "Environment Hub" branding, "← Main Site" link
+- `src/components/environment/EnvironmentHeader.tsx` — Dark green (`forest-800`) header. Dimmed Resist Project logo (opacity-50) + "RESIST PROJECT" in muted text + "/" divider + "Our Home" in bold white. On mobile, only "Our Home" shows.
 - `src/components/environment/EnvironmentFooter.tsx` — Green-themed footer
 - `src/components/content/ActionsSection.tsx` — Wrapper for Quick Actions / Sustained Actions headings. Green on environment pages, orange on act pages. Renders its own intro subtitle text.
 
 **Environment Tag Taxonomy (`src/lib/environment-tags.ts`):**
-- **Topic tags (10):** Air Quality, Water, Public Lands, Wildlife, Climate, Energy, Environmental Justice, Toxics & Chemicals, Oceans & Coasts, Agriculture
-- **Status tags (4):** Urgent, Ongoing, Under Litigation, Comment Period Open
+- **Topic tags (16):** Air Quality, Water, Public Lands, Wildlife, Climate, Energy, Environmental Justice, Toxics & Chemicals, Oceans & Coasts, Agriculture, Health, Forests, Utah & Local, Corporate Accountability, Policy & Regulation, Science & Monitoring
+- **Status tags (5):** Urgent, Ongoing, Under Litigation, Comment Period Open, New
 
 **Section Color Scheme (environment pages):**
 - `QuickSummary` — Gray (same as learn/act)
@@ -425,27 +426,41 @@ src/app/(environment)/
 - Used across ~20 files. The remark plugin detects section from frontmatter and passes it as a `section` prop to `FactsSection`, `AnalysisSection`, `ActionsSection`, `QuickSummary`, and `Collapsible`.
 - `TagFilterBar`, `PageHeader`, `RelatedContent`, `PageMeta` all handle all three sections with appropriate color schemes.
 
-**Cross-Linking:**
+**Cross-Linking Architecture:**
 - Homepage: Green banner section between "Browse by Category" and "How It Works"
 - `/learn` landing: Green card at bottom — "Looking for environment content?"
 - `/act` landing: Green card at bottom — "Looking for environmental actions?"
 - Search index (`/api/search-index`) includes environment pages
 - Sitemap includes environment pages
 - `RelatedContent` cross-links across all three sections
+- **Hub pages** (climate-science, epa-rollbacks, fossil-fuel-industry) each have a "Related Issues" section linking to 6-7 spoke pages
+- **Utah cluster** (great-salt-lake, utah-air-quality, utah-water-rights, utah-mining, wasatch-development, utah-wildfire-smoke, bears-ears-grand-staircase, colorado-river, geothermal-energy) each have a "Related Utah Environmental Issues" section cross-linking to the most relevant siblings
 
-**Content (`content/environment/*.mdx`):**
-- `endangerment-finding.mdx` — EPA Endangerment Finding rescission (Urgent)
-- `clean-water.mdx` — WOTUS, PFAS, Superfund, lead pipes
-- `public-lands.mdx` — ANWR, national monuments, BLM leasing
-- `air-quality.mdx` — PM2.5, VSL removal, vehicle emissions
-- `citizen-science.mdx` — Air/water monitoring, iNaturalist, community science
-- All pages with political actions use `<EmailTemplate>` and `<CallRepButton>` interactive components
+**Charts (`public/environment/charts/`):**
+19 matplotlib PNG charts at 150 DPI. Generation scripts in `scripts/gen_chart_*.py` and `scripts/chart_*.py`.
+
+**Photos (`public/environment/photos/`):**
+12 public-domain JPG photos sourced from .gov agencies (NASA, NOAA, USFWS, DOE, NPS, USCG, NIFC). All resized to max 1600px wide.
+
+**Content (`content/environment/*.mdx`) — 62 pages total:**
+
+*Original 5:* air-quality, clean-water, public-lands, endangerment-finding, citizen-science
+
+*Tier 1 (15 pages):* climate-science, epa-rollbacks, fossil-fuel-industry, fossil-fuel-subsidies, great-salt-lake, utah-air-quality, extreme-weather, endangered-species, environmental-racism, pfas-forever-chemicals, microplastics, bears-ears-grand-staircase, solar-wind-energy, climate-impacts, indigenous-environmental-rights
+
+*Tier 2 (24 pages):* coral-reefs, dams-rivers, deforestation, groundwater-depletion, coal-ash, fracking, pollinator-decline, wildfire-crisis, ocean-plastic, carcinogens, pesticides-herbicides, nuclear-energy, sea-level-rise, geothermal-energy, colorado-river, wetlands-protection, superfund-sites, methane-emissions, bird-decline, oil-spills, utah-mining, utah-water-rights, wasatch-development, utah-wildfire-smoke
+
+*Tier 3 (18 pages):* light-pollution, invasive-species, soil-health, deep-sea-mining, overfishing, energy-storage-grid, offshore-drilling, climate-migration, green-infrastructure, arctic-ice-loss, marine-mammals, predator-management, waste-recycling, food-agriculture-environment, climate-tipping-points, state-environmental-policy, environmental-litigation, greenwashing
+
+**Action Diversity Standard (all pages):**
+Every page must include at minimum: EmailTemplate + CallRepButton + 5 additional action types from: citizen science apps, regulations.gov public comments (with docket numbers where possible), consumer choices, local government engagement, volunteering, FOIA requests, community organizing.
 
 **Adding New Environment Pages:**
 1. Create `content/environment/new-topic.mdx` with frontmatter `type: "environment"`
-2. Use environment tags from `src/lib/environment-tags.ts`
-3. Follow unified format: Quick Summary, Facts, Analysis, Quick Actions, Sustained Actions, Resources
+2. Use tags from `src/lib/environment-tags.ts` (exact strings only)
+3. Follow unified format: Quick Summary, Facts (with `### [+]` collapsibles for dense evidence), Analysis, Quick Actions (EmailTemplate + CallRepButton + 5+ diverse actions), Sustained Actions (5+ orgs), Resources
 4. Page auto-appears on `/environment` landing and in search/sitemap
+5. Add cross-links from relevant hub pages or Utah cluster pages as appropriate
 
 ---
 
