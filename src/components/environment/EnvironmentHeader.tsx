@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import AuthButtonClient from '@/components/layout/AuthButtonClient'
@@ -21,13 +22,25 @@ export default function EnvironmentHeader() {
     <header className="sticky top-0 z-50 bg-forest-800 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/environment" className="flex items-center gap-2 group">
-            <svg className="w-7 h-7 text-forest-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-xl font-bold tracking-tight group-hover:text-forest-200 transition-colors">
-              Environment Hub
-            </span>
+          {/* Logo: dimmed Resist Project branding + "Our Home" */}
+          <Link href="/environment" className="flex items-center gap-3 group">
+            <Image
+              src="/logo-icon-white.svg"
+              alt="Resist Project Logo"
+              width={36}
+              height={36}
+              className="flex-shrink-0 opacity-50 group-hover:opacity-70 transition-opacity"
+              priority
+            />
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-bold tracking-tight text-white/40 hidden sm:inline">
+                RESIST PROJECT
+              </span>
+              <span className="text-white/25 hidden sm:inline">/</span>
+              <span className="text-xl font-black tracking-tight text-white group-hover:text-forest-200 transition-colors">
+                Our Home
+              </span>
+            </div>
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">

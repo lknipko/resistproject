@@ -271,7 +271,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Environment Hub */}
+      {/* Our Home — Environment Section */}
       <section className="py-12 bg-gradient-to-r from-forest-700 to-forest-600 text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-8">
           <div className="flex-shrink-0">
@@ -282,7 +282,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="flex-1 text-center md:text-left">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Environment Hub</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">Our Home</h2>
             <p className="text-forest-100 text-lg mb-4">
               Track environmental rollbacks, protect public lands and wildlife, monitor air and water quality,
               and take action for a healthier planet.
@@ -291,7 +291,7 @@ export default function HomePage() {
               href="/environment"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white text-forest-700 hover:bg-forest-50 font-bold rounded-lg shadow-lg transition-all hover:scale-105"
             >
-              Explore Environment Hub
+              Explore Our Home
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>

@@ -68,6 +68,16 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/learn/climate-environment',
+        destination: '/environment',
+        permanent: true,
+      },
+      {
+        source: '/act/environment',
+        destination: '/environment',
+        permanent: true,
+      },
     ]
   },
 }

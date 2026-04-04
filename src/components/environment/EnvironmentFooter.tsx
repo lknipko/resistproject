@@ -6,7 +6,7 @@ export default function EnvironmentFooter() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-white font-semibold mb-4">Environment Hub</h3>
+            <h3 className="text-white font-semibold mb-4">Our Home</h3>
             <p className="text-sm">
               Track environmental rollbacks, protect public lands, and take action for clean air, water, and wildlife.
             </p>
@@ -29,7 +29,7 @@ export default function EnvironmentFooter() {
           </div>
         </div>
         <div className="border-t border-forest-800 pt-8 text-sm text-center">
-          <p>&copy; {new Date().getFullYear()} Resist Project &mdash; Environment Hub. All sources are publicly verified.</p>
+          <p>&copy; {new Date().getFullYear()} Resist Project &mdash; Our Home. All sources are publicly verified.</p>
         </div>
       </div>
     </footer>

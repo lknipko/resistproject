@@ -95,7 +95,7 @@ export default async function LearnPage({
         {!activeTag && <ProposeNewPageCard section="learn" />}
       </div>
 
-      {/* Environment Hub cross-link */}
+      {/* Our Home cross-link */}
       {!activeTag && (
         <Link
           href="/environment"
@@ -107,7 +107,7 @@ export default async function LearnPage({
             </svg>
             <div>
               <h2 className="text-lg font-semibold text-forest-800 group-hover:text-forest-900">Looking for environment content?</h2>
-              <p className="text-sm text-forest-600">Explore our dedicated Environment Hub for climate, water, public lands, and more.</p>
+              <p className="text-sm text-forest-600">Visit Our Home for climate, water, public lands, and more.</p>
             </div>
             <svg className="w-5 h-5 text-forest-400 group-hover:text-forest-600 flex-shrink-0 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />

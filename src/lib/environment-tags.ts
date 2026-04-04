@@ -13,6 +13,12 @@ export const ENVIRONMENT_TOPIC_TAGS: string[] = [
   'Toxics & Chemicals',
   'Oceans & Coasts',
   'Agriculture',
+  'Health',
+  'Forests',
+  'Utah & Local',
+  'Corporate Accountability',
+  'Policy & Regulation',
+  'Science & Monitoring',
 ]
 
 export const ENVIRONMENT_STATUS_TAGS: string[] = [
@@ -20,4 +26,5 @@ export const ENVIRONMENT_STATUS_TAGS: string[] = [
   'Ongoing',
   'Under Litigation',
   'Comment Period Open',
+  'New',
 ]

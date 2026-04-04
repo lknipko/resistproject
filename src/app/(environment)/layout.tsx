@@ -4,16 +4,16 @@ import EnvironmentFooter from '@/components/environment/EnvironmentFooter'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Environment Hub | Resist Project',
-    template: '%s | Environment Hub',
+    default: 'Our Home | Resist Project',
+    template: '%s | Our Home',
   },
   description: 'Track environmental rollbacks, protect public lands, and take action for clean air, water, and wildlife.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://resistproject.com/environment',
-    siteName: 'Resist Project — Environment Hub',
-    title: 'Environment Hub',
+    siteName: 'Resist Project — Our Home',
+    title: 'Our Home',
     description: 'Track environmental rollbacks, protect public lands, and take action for clean air, water, and wildlife.',
   },
 }

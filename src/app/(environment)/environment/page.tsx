@@ -7,7 +7,7 @@ import { ENVIRONMENT_TOPIC_TAGS } from '@/lib/environment-tags'
 export const revalidate = 300
 
 export const metadata = {
-  title: 'Environment Hub',
+  title: 'Our Home | Resist Project',
   description: 'Track environmental rollbacks, protect public lands, and take action for clean air, water, and wildlife.',
 }
 
@@ -41,7 +41,7 @@ export default async function EnvironmentPage({
     <div className="max-w-7xl mx-auto px-4 py-12">
       {/* Hero */}
       <div className="mb-10 bg-gradient-to-r from-forest-700 to-forest-600 rounded-2xl p-8 md:p-12 text-white">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Environment Hub</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Home</h1>
         <p className="text-xl text-forest-100 max-w-3xl">
           Track environmental rollbacks, protect public lands and wildlife, monitor air and water quality,
           and take action for a healthier planet.

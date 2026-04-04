@@ -7,7 +7,6 @@ import { ShareButton } from '@/components/content/ShareButton'
 import { getCachedResolvedContent } from '@/lib/content-resolver'
 import { RelatedContent } from '@/components/content/RelatedContent'
 import { FloatingTOC } from '@/components/content/FloatingTOC'
-import { PageHeader } from '@/components/content/PageHeader'
 import { PageContent } from '@/components/content/PageContent'
 import { MainContentLayout } from '@/components/content/MainContentLayout'
 
@@ -60,7 +59,6 @@ export default async function EnvironmentTopicPage({
 
   return (
     <article>
-      <PageHeader type="environment" />
       <PageContent>
         <MainContentLayout>
           {content}
