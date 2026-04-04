@@ -1,24 +1,24 @@
 /**
  * Environment section tag taxonomy.
- * Finer-grained than the main site's single "Environment" topic tag.
+ * 7 consolidated topic tags replace the original 16 granular tags.
+ *
+ * Old → New mapping:
+ *   Climate, Air Quality, Science & Monitoring → Climate & Atmosphere
+ *   Public Lands, Forests, Wildlife            → Land & Wilderness
+ *   Water, Oceans & Coasts                     → Water & Oceans
+ *   Energy, Policy & Regulation                → Energy & Extraction
+ *   Toxics & Chemicals, Health, Agriculture    → Toxics & Health
+ *   Environmental Justice, Corporate Account.  → People & Justice
+ *   Utah & Local                               → Utah & Local (unchanged)
  */
 export const ENVIRONMENT_TOPIC_TAGS: string[] = [
-  'Air Quality',
-  'Water',
-  'Public Lands',
-  'Wildlife',
-  'Climate',
-  'Energy',
-  'Environmental Justice',
-  'Toxics & Chemicals',
-  'Oceans & Coasts',
-  'Agriculture',
-  'Health',
-  'Forests',
+  'Climate & Atmosphere',
+  'Land & Wilderness',
+  'Water & Oceans',
+  'Energy & Extraction',
+  'Toxics & Health',
+  'People & Justice',
   'Utah & Local',
-  'Corporate Accountability',
-  'Policy & Regulation',
-  'Science & Monitoring',
 ]
 
 export const ENVIRONMENT_STATUS_TAGS: string[] = [

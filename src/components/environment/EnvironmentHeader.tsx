@@ -44,7 +44,7 @@ export default function EnvironmentHeader() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/environment" className="hover:text-forest-200 transition-colors font-medium">
+            <Link href="/environment/topics" className="hover:text-forest-200 transition-colors font-medium">
               Topics
             </Link>
             <Link href="/" className="hover:text-forest-200 transition-colors text-sm text-forest-300">
@@ -75,7 +75,7 @@ export default function EnvironmentHeader() {
           <nav className="md:hidden mt-4 pb-4 border-t border-forest-700 pt-4">
             <div className="flex flex-col gap-4">
               <Link
-                href="/environment"
+                href="/environment/topics"
                 className="hover:text-forest-200 transition-colors font-medium text-lg"
                 onClick={() => setMobileMenuOpen(false)}
               >

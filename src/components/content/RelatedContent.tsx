@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllPages } from '@/lib/content'
 import { TOPIC_TAGS } from '@/lib/tags'
+import { ENVIRONMENT_TOPIC_TAGS } from '@/lib/environment-tags'
 import type { PageMetadata } from '@/types/content'
 
 interface RelatedContentProps {
@@ -15,8 +16,13 @@ interface Candidate {
   score: number
 }
 
+function getTopicTagsForSection(section: 'learn' | 'act' | 'environment'): string[] {
+  return section === 'environment' ? ENVIRONMENT_TOPIC_TAGS : TOPIC_TAGS
+}
+
 export function RelatedContent({ currentSlug, currentSection, currentTags }: RelatedContentProps) {
-  const topicTags = currentTags.filter((t) => TOPIC_TAGS.includes(t))
+  const sectionTopicTags = getTopicTagsForSection(currentSection)
+  const topicTags = currentTags.filter((t) => sectionTopicTags.includes(t))
   if (topicTags.length === 0) return null
 
   const allSections: Array<'learn' | 'act' | 'environment'> = ['learn', 'act', 'environment']
@@ -24,11 +30,14 @@ export function RelatedContent({ currentSlug, currentSection, currentTags }: Rel
 
   const candidates: Candidate[] = []
 
-  // Score pages from other sections (cross-section preferred)
+  // Score pages from other sections (cross-section preferred).
+  // Environment uses its own tag taxonomy so cross-section matching
+  // only applies within learn ↔ act.
   for (const otherSection of otherSections) {
+    const otherTopicTags = getTopicTagsForSection(otherSection)
     for (const page of getAllPages(otherSection)) {
       const sharedTags = (page.tags ?? []).filter(
-        (t) => TOPIC_TAGS.includes(t) && topicTags.includes(t)
+        (t) => otherTopicTags.includes(t) && topicTags.includes(t)
       ).length
       if (sharedTags === 0) continue
 
@@ -41,7 +50,7 @@ export function RelatedContent({ currentSlug, currentSection, currentTags }: Rel
   for (const page of getAllPages(currentSection)) {
     if (page.slug === currentSlug) continue
     const sharedTags = (page.tags ?? []).filter(
-      (t) => TOPIC_TAGS.includes(t) && topicTags.includes(t)
+      (t) => sectionTopicTags.includes(t) && topicTags.includes(t)
     ).length
     if (sharedTags === 0) continue
 

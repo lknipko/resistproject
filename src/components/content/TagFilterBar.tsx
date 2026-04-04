@@ -11,10 +11,13 @@ interface TagFilterBarProps {
   activeTag?: string
   /** Only the topic tags that appear on at least one page in this section */
   availableTags: string[]
+  /** Override the base path used for tag routing (defaults to /{section}) */
+  basePath?: string
 }
 
-export function TagFilterBar({ section, activeTag, availableTags }: TagFilterBarProps) {
+export function TagFilterBar({ section, activeTag, availableTags, basePath }: TagFilterBarProps) {
   const router = useRouter()
+  const base = basePath ?? `/${section}`
 
   const sectionStyles: Record<string, { active: string; hover: string; clear: string }> = {
     learn: {
@@ -43,9 +46,9 @@ export function TagFilterBar({ section, activeTag, availableTags }: TagFilterBar
 
   const handleTagClick = (tag: string) => {
     if (tag === activeTag) {
-      router.push(`/${section}`)
+      router.push(base)
     } else {
-      router.push(`/${section}?tag=${encodeURIComponent(tag)}`)
+      router.push(`${base}?tag=${encodeURIComponent(tag)}`)
     }
   }
 
@@ -78,7 +81,7 @@ export function TagFilterBar({ section, activeTag, availableTags }: TagFilterBar
           Showing pages tagged <strong>{activeTag}</strong>
           {' — '}
           <button
-            onClick={() => router.push(`/${section}`)}
+            onClick={() => router.push(base)}
             className={`${clearClasses} hover:underline font-medium`}
           >
             Show all
