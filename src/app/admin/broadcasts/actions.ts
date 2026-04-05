@@ -23,6 +23,7 @@ export async function getRecipientCount(): Promise<number> {
 
 export async function previewBroadcast(data: {
   introText: string
+  theme?: 'main' | 'ourhome'
   selectedPages: Array<{
     title: string
     description: string
@@ -48,6 +49,7 @@ export async function previewBroadcast(data: {
     introText: data.introText,
     featuredPages: data.selectedPages,
     unsubscribeUrl: '#preview-unsubscribe',
+    theme: data.theme,
   })
 
   return { html }
@@ -56,6 +58,7 @@ export async function previewBroadcast(data: {
 export async function sendBroadcast(data: {
   subject: string
   introText: string
+  theme?: 'main' | 'ourhome'
   selectedPages: Array<{
     title: string
     description: string
@@ -114,6 +117,7 @@ export async function sendBroadcast(data: {
         introText: data.introText,
         featuredPages: data.selectedPages,
         unsubscribeUrl: generateUnsubscribeUrl(r.email),
+        theme: data.theme,
       }),
     }))
 
@@ -174,6 +178,7 @@ export async function sendTestEmail(data: {
   subject: string
   introText: string
   testEmail: string
+  theme?: 'main' | 'ourhome'
   selectedPages: Array<{
     title: string
     description: string
@@ -205,6 +210,7 @@ export async function sendTestEmail(data: {
       introText: data.introText,
       featuredPages: data.selectedPages,
       unsubscribeUrl: generateUnsubscribeUrl(data.testEmail),
+      theme: data.theme,
     })
 
     const result = await sendBatchEmails(data.subject, [

@@ -107,7 +107,7 @@ export default async function ActPage({
       {/* Our Home cross-link */}
       {!activeTag && (
         <Link
-          href="/environment"
+          href="/ourhome"
           className="block mt-8 p-6 bg-forest-50 border-2 border-forest-200 rounded-lg hover:border-forest-400 transition-all group"
         >
           <div className="flex items-center gap-3">

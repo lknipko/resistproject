@@ -77,9 +77,16 @@ export default async function BroadcastsPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Email Broadcasts</h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 mb-3">
             Send email updates to subscribers about new and urgent content.
           </p>
+          <a
+            href="/admin/broadcasts/ourhome"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-forest-50 border border-forest-200 text-forest-800 rounded-lg text-sm font-medium hover:bg-forest-100 transition-colors"
+          >
+            <span className="text-forest-600">🌿</span>
+            Switch to Our Home Broadcasts
+          </a>
         </div>
 
         {/* Compose Section */}

@@ -86,7 +86,7 @@ export async function GET() {
       title: page.title,
       description: page.description ?? '',
       tags: page.tags ?? [],
-      path: `/environment/${page.slug}`,
+      path: `/ourhome/${page.slug}`,
       excerpt: full ? extractExcerpt(full.content) : '',
     })
   }

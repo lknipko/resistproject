@@ -10,6 +10,7 @@ interface BroadcastEmailParams {
   introText: string
   featuredPages: FeaturedPage[]
   unsubscribeUrl: string
+  theme?: 'main' | 'ourhome'
 }
 
 // Convert **bold** markdown to <strong> tags (after HTML escaping)
@@ -29,16 +30,32 @@ export function renderBroadcastEmail({
   introText,
   featuredPages,
   unsubscribeUrl,
+  theme = 'main',
 }: BroadcastEmailParams): string {
   const BASE_URL = process.env.NEXTAUTH_URL || 'https://resistproject.com'
+  const isOurHome = theme === 'ourhome'
 
   const pageCards = featuredPages
     .map((page) => {
       const isAct = page.type === 'act'
-      const accentColor = isAct ? '#ea580c' : '#0d9488'
-      const badgeColor = isAct ? '#fff7ed' : '#f0fdfa'
-      const badgeTextColor = isAct ? '#c2410c' : '#0f766e'
-      const typeLabel = isAct ? 'Take Action' : 'Learn More'
+      const isEnv = page.type === 'environment'
+      let accentColor: string, badgeColor: string, badgeTextColor: string, typeLabel: string
+      if (isEnv) {
+        accentColor = '#15803d'   // forest-700
+        badgeColor  = '#f0fdf4'   // forest-50
+        badgeTextColor = '#166534' // forest-800
+        typeLabel = 'Read & Act'
+      } else if (isAct) {
+        accentColor = '#ea580c'
+        badgeColor  = '#fff7ed'
+        badgeTextColor = '#c2410c'
+        typeLabel = 'Take Action'
+      } else {
+        accentColor = '#0d9488'
+        badgeColor  = '#f0fdfa'
+        badgeTextColor = '#0f766e'
+        typeLabel = 'Learn More'
+      }
       const isUrgent = page.tags.includes('Urgent')
       const url = `${BASE_URL}${page.path}`
 
@@ -70,22 +87,30 @@ export function renderBroadcastEmail({
     })
     .join('')
 
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resist Project Update</title>
-</head>
-<body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f3f4f6;">
-    <tr>
-      <td align="center" style="padding: 32px 16px;">
-        <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+  // Theme-specific values
+  const headerBg = isOurHome
+    ? 'linear-gradient(135deg, #14532d 0%, #166534 100%)'   // forest-900 → forest-800
+    : 'linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%)'
+  const ctaBg    = isOurHome ? '#166534' : '#1e3a5f'
+  const ctaLabel = isOurHome ? 'Visit Our Home' : 'Visit Resist Project'
+  const ctaUrl   = isOurHome ? `${BASE_URL}/ourhome` : BASE_URL
+  const subtitleColor = isOurHome ? '#86efac' : '#93c5fd'  // forest-300 vs blue-300
 
-          <!-- Header -->
-          <tr>
-            <td style="padding: 32px 32px 24px; background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); text-align: center;">
+  const headerContent = isOurHome ? `
+              <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
+                <tr>
+                  <!-- Logo dimmed, like the Our Home site header -->
+                  <td style="vertical-align: middle; padding-right: 12px;">
+                    <img src="${LOGO_URL}" alt="Resist Project" width="26" height="28" style="display: block; opacity: 0.45;" />
+                  </td>
+                  <!-- Stacked: RESIST PROJECT above Our Home -->
+                  <td style="vertical-align: middle; text-align: left;">
+                    <div style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1;">RESIST PROJECT</div>
+                    <div style="font-size: 24px; font-weight: 900; color: #ffffff; letter-spacing: -0.02em; line-height: 1.15; margin-top: 3px;">Our Home</div>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin: 10px 0 0; font-size: 13px; color: ${subtitleColor};">Environmental Action Update</p>` : `
               <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
                 <tr>
                   <td style="vertical-align: middle; padding-right: 12px;">
@@ -96,7 +121,25 @@ export function renderBroadcastEmail({
                   </td>
                 </tr>
               </table>
-              <p style="margin: 8px 0 0; font-size: 14px; color: #93c5fd;">Civic Action Alert</p>
+              <p style="margin: 8px 0 0; font-size: 14px; color: ${subtitleColor};">Civic Action Alert</p>`
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${isOurHome ? 'Our Home — Resist Project' : 'Resist Project Update'}</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f3f4f6;">
+    <tr>
+      <td align="center" style="padding: 32px 16px;">
+        <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding: 32px 32px 24px; background: ${headerBg}; text-align: center;">
+              ${headerContent}
             </td>
           </tr>
 
@@ -119,7 +162,7 @@ export function renderBroadcastEmail({
           <!-- CTA -->
           <tr>
             <td style="padding: 0 32px 32px; text-align: center;">
-              <a href="${BASE_URL}" style="display: inline-block; padding: 12px 32px; font-size: 15px; font-weight: 600; color: #ffffff; background-color: #1e3a5f; border-radius: 8px; text-decoration: none;">Visit Resist Project</a>
+              <a href="${ctaUrl}" style="display: inline-block; padding: 12px 32px; font-size: 15px; font-weight: 600; color: #ffffff; background-color: ${ctaBg}; border-radius: 8px; text-decoration: none;">${ctaLabel}</a>
             </td>
           </tr>
 

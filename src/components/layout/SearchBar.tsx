@@ -33,11 +33,13 @@ function buildFuse(entries: SearchIndexEntry[]) {
 const SECTION_LABEL: Record<string, string> = {
   learn: 'LEARN',
   act: 'ACT',
+  environment: 'OUR HOME',
 }
 
 const SECTION_COLORS: Record<string, string> = {
   learn: 'bg-teal-100 text-teal-800',
   act: 'bg-orange-100 text-orange-800',
+  environment: 'bg-forest-100 text-forest-800',
 }
 
 export default function SearchBar({ fullWidth = false }: { fullWidth?: boolean }) {

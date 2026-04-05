@@ -16,14 +16,24 @@ interface BroadcastComposerProps {
   pages: PageOption[]
   recipientCount: number
   adminEmail: string
+  filterTabs?: Array<'urgent' | 'all' | 'learn' | 'act' | 'environment'>
+  accentColor?: 'steel' | 'forest'
 }
 
-export function BroadcastComposer({ pages, recipientCount, adminEmail }: BroadcastComposerProps) {
+export function BroadcastComposer({
+  pages,
+  recipientCount,
+  adminEmail,
+  filterTabs = ['urgent', 'all', 'learn', 'act'],
+  accentColor = 'steel',
+}: BroadcastComposerProps) {
   const [subject, setSubject] = useState('')
   const [introText, setIntroText] = useState('')
   // Ordered array of selected page paths (order = display order in email)
   const [orderedPaths, setOrderedPaths] = useState<string[]>([])
-  const [filter, setFilter] = useState<'all' | 'urgent' | 'learn' | 'act' | 'environment'>('urgent')
+  const [filter, setFilter] = useState<'all' | 'urgent' | 'learn' | 'act' | 'environment'>(
+    filterTabs[0] ?? 'urgent'
+  )
   const [previewHtml, setPreviewHtml] = useState<string | null>(null)
   const [showConfirm, setShowConfirm] = useState(false)
   const [result, setResult] = useState<{
@@ -35,6 +45,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
   } | null>(null)
 
   const [isPending, startTransition] = useTransition()
+  const theme = accentColor === 'forest' ? 'ourhome' : 'main'
 
   const selectedPaths = new Set(orderedPaths)
 
@@ -42,6 +53,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
     if (filter === 'urgent') return p.tags.includes('Urgent')
     if (filter === 'learn') return p.type === 'learn'
     if (filter === 'act') return p.type === 'act'
+    if (filter === 'environment') return p.type === 'environment'
     return true
   })
 
@@ -82,6 +94,12 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
     })
   }
 
+  function pageBadge(type: 'learn' | 'act' | 'environment') {
+    if (type === 'act') return { label: 'ACT', cls: 'bg-orange-100 text-orange-700' }
+    if (type === 'environment') return { label: 'OUR HOME', cls: 'bg-forest-100 text-forest-800' }
+    return { label: 'LEARN', cls: 'bg-teal-100 text-teal-700' }
+  }
+
   function getSelectedPages() {
     const pageMap = new Map(pages.map((p) => [p.path, p]))
     return orderedPaths
@@ -96,7 +114,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
     if (selected.length === 0) return
 
     startTransition(async () => {
-      const res = await previewBroadcast({ introText, selectedPages: selected })
+      const res = await previewBroadcast({ introText, selectedPages: selected, theme })
       if ('html' in res) {
         setPreviewHtml(res.html)
       } else {
@@ -111,7 +129,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
     if (selected.length === 0) return
 
     startTransition(async () => {
-      const res = await sendBroadcast({ subject, introText, selectedPages: selected })
+      const res = await sendBroadcast({ subject, introText, selectedPages: selected, theme })
       setResult(res)
       setShowConfirm(false)
       if (res.success) {
@@ -131,6 +149,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
         introText,
         testEmail: adminEmail,
         selectedPages: selected,
+        theme,
       })
       setResult(res)
     })
@@ -150,7 +169,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
           onChange={(e) => setSubject(e.target.value)}
           maxLength={200}
           placeholder="e.g., Urgent: New Actions Available on Iran War"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-steel-500 focus:border-transparent"
+          className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent ${accentColor === 'forest' ? 'focus:ring-forest-500' : 'focus:ring-steel-500'}`}
         />
         <p className="mt-1 text-xs text-gray-500">{subject.length}/200 characters</p>
       </div>
@@ -163,7 +182,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
           onChange={(e) => setIntroText(e.target.value)}
           rows={4}
           placeholder="Write a brief message to your subscribers about why this update matters..."
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-steel-500 focus:border-transparent resize-y"
+          className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent resize-y ${accentColor === 'forest' ? 'focus:ring-forest-500' : 'focus:ring-steel-500'}`}
         />
         <p className="mt-1 text-xs text-gray-500">
           Use <code className="bg-gray-100 px-1 rounded">**bold text**</code> for emphasis.
@@ -201,10 +220,8 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
                       &#9660;
                     </button>
                   </div>
-                  <span className={`text-xs font-semibold px-1.5 py-0.5 rounded ${
-                    page.type === 'act' ? 'bg-orange-100 text-orange-700' : 'bg-teal-100 text-teal-700'
-                  }`}>
-                    {page.type === 'act' ? 'ACT' : 'LEARN'}
+                  <span className={`text-xs font-semibold px-1.5 py-0.5 rounded ${pageBadge(page.type).cls}`}>
+                    {pageBadge(page.type).label}
                   </span>
                   <span className="font-medium text-gray-900 text-sm flex-1 truncate">{page.title}</span>
                   <button
@@ -228,20 +245,24 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
         </label>
 
         {/* Filter buttons */}
-        <div className="flex gap-2 mb-3">
-          {(['urgent', 'all', 'learn', 'act'] as const).map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-                filter === f
-                  ? 'bg-steel-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {f === 'urgent' ? 'Urgent' : f === 'all' ? 'All' : f === 'learn' ? 'Learn' : 'Act'}
-            </button>
-          ))}
+        <div className="flex gap-2 mb-3 flex-wrap">
+          {filterTabs.map((f) => {
+            const labels: Record<string, string> = {
+              urgent: 'Urgent', all: 'All', learn: 'Learn', act: 'Act', environment: 'Our Home',
+            }
+            const activeClass = accentColor === 'forest' ? 'bg-forest-700 text-white' : 'bg-steel-600 text-white'
+            return (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
+                  filter === f ? activeClass : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {labels[f]}
+              </button>
+            )
+          })}
         </div>
 
         {/* Page list */}
@@ -261,12 +282,8 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className={`text-xs font-semibold px-1.5 py-0.5 rounded ${
-                    page.type === 'act'
-                      ? 'bg-orange-100 text-orange-700'
-                      : 'bg-teal-100 text-teal-700'
-                  }`}>
-                    {page.type === 'act' ? 'ACT' : 'LEARN'}
+                  <span className={`text-xs font-semibold px-1.5 py-0.5 rounded ${pageBadge(page.type).cls}`}>
+                    {pageBadge(page.type).label}
                   </span>
                   <span className="font-medium text-gray-900 truncate">{page.title}</span>
                   {page.tags.includes('Urgent') && (
@@ -316,7 +333,7 @@ export function BroadcastComposer({ pages, recipientCount, adminEmail }: Broadca
         <button
           onClick={() => setShowConfirm(true)}
           disabled={isPending || !canSend}
-          className="px-5 py-2.5 bg-steel-600 text-white rounded-lg font-medium hover:bg-steel-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className={`px-5 py-2.5 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${accentColor === 'forest' ? 'bg-forest-700 hover:bg-forest-800' : 'bg-steel-600 hover:bg-steel-700'}`}
         >
           Send Broadcast
         </button>

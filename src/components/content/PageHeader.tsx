@@ -8,7 +8,7 @@ interface PageHeaderProps {
 const sectionConfig: Record<string, { href: string; bg: string }> = {
   learn: { href: '/learn', bg: 'bg-steel-600' },
   act: { href: '/act', bg: 'bg-orange-dark' },
-  environment: { href: '/environment', bg: 'bg-forest-700' },
+  environment: { href: '/ourhome', bg: 'bg-forest-700' },
 }
 
 export function PageHeader({ type }: PageHeaderProps) {

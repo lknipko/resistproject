@@ -23,7 +23,7 @@ export default function EnvironmentHeader() {
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo: dimmed Resist Project branding + "Our Home" */}
-          <Link href="/environment" className="flex items-center gap-3 group">
+          <Link href="/ourhome" className="flex items-center gap-3 group">
             <Image
               src="/logo-icon-white.svg"
               alt="Resist Project Logo"
@@ -44,7 +44,7 @@ export default function EnvironmentHeader() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/environment/topics" className="hover:text-forest-200 transition-colors font-medium">
+            <Link href="/ourhome/topics" className="hover:text-forest-200 transition-colors font-medium">
               Topics
             </Link>
             <Link href="/" className="hover:text-forest-200 transition-colors text-sm text-forest-300">
@@ -75,7 +75,7 @@ export default function EnvironmentHeader() {
           <nav className="md:hidden mt-4 pb-4 border-t border-forest-700 pt-4">
             <div className="flex flex-col gap-4">
               <Link
-                href="/environment/topics"
+                href="/ourhome/topics"
                 className="hover:text-forest-200 transition-colors font-medium text-lg"
                 onClick={() => setMobileMenuOpen(false)}
               >

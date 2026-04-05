@@ -5,11 +5,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const IMAGES = [
-  { src: '/environment/hero/canyon.jpg', alt: 'Mesa Arch at sunrise, Canyonlands National Park' },
-  { src: '/environment/hero/mountain-lake.jpg', alt: 'Snow-capped mountains reflected in an alpine lake' },
-  { src: '/environment/hero/forest.jpg', alt: 'Pacific Northwest forest at sunset' },
-  { src: '/environment/hero/meadow.jpg', alt: 'Wildflower meadow at stormy sunset' },
-  { src: '/environment/hero/ocean.jpg', alt: 'Ocean sunset with birds in flight' },
+  { src: '/ourhome/hero/canyon.jpg', alt: 'Mesa Arch at sunrise, Canyonlands National Park' },
+  { src: '/ourhome/hero/mountain-lake.jpg', alt: 'Snow-capped mountains reflected in an alpine lake' },
+  { src: '/ourhome/hero/forest.jpg', alt: 'Pacific Northwest forest at sunset' },
+  { src: '/ourhome/hero/meadow.jpg', alt: 'Wildflower meadow at stormy sunset' },
+  { src: '/ourhome/hero/ocean.jpg', alt: 'Ocean sunset with birds in flight' },
 ]
 
 const DISPLAY_MS = 15000
@@ -84,12 +84,11 @@ export default function HeroSlideshow({ hasActiveIssues }: HeroSlideshowProps) {
             Our Home
           </h1>
           <p className="text-xl text-white/85 leading-relaxed mb-8 max-w-xl">
-            The natural world is under coordinated pressure. This is where we track it — and where
-            we find ways to push back.
+            This land is your land. The beauty we could never create is being destroyed. You can stop it.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/environment/topics"
+              href="/ourhome/topics"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-forest-800 font-semibold rounded-lg hover:bg-forest-50 transition-colors text-sm"
             >
               Browse All Topics

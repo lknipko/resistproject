@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { ContentSidebar } from './ContentSidebar'
 
 interface TOCItem {
@@ -9,13 +9,16 @@ interface TOCItem {
   level: number
 }
 
+type Group = { h2: TOCItem; h3s: TOCItem[] }
+
 export function AutoSidebar() {
   const [headings, setHeadings] = useState<TOCItem[]>([])
+  const [activeId, setActiveId] = useState<string>('')
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
 
+  // Scan headings from DOM
   useEffect(() => {
-    // Scan for headings — retry a few times since MDX content may hydrate after this component
     function scanHeadings() {
-      // Find regular headings AND collapsible headings (which render as div[data-toc-level])
       const elements = document.querySelectorAll('h2[id], h3[id], [data-toc-level][id]')
       const seen = new Set<string>()
       const items: TOCItem[] = []
@@ -32,11 +35,9 @@ export function AutoSidebar() {
           level = el.tagName === 'H2' ? 2 : 3
         }
 
-        // Get text — for collapsibles, grab the button text (skip chevron)
         let text = ''
         const button = el.querySelector('button')
         if (button) {
-          // Collapsible: get text from the span inside the button
           const span = button.querySelector('span')
           text = span?.textContent || button.textContent?.replace(/^[▸▾]\s*/, '') || ''
         } else {
@@ -48,7 +49,6 @@ export function AutoSidebar() {
       return items
     }
 
-    // Try immediately, then retry with increasing delays
     const items = scanHeadings()
     if (items.length > 0) {
       setHeadings(items)
@@ -65,67 +65,135 @@ export function AutoSidebar() {
     return () => timers.forEach(clearTimeout)
   }, [])
 
+  // Group h3s under their preceding h2
+  const grouped = useMemo<Group[]>(() => {
+    const result: Group[] = []
+    let current: Group | null = null
+    for (const heading of headings) {
+      if (heading.level === 2) {
+        current = { h2: heading, h3s: [] }
+        result.push(current)
+      } else if (heading.level === 3 && current) {
+        current.h3s.push(heading)
+      }
+    }
+    return result
+  }, [headings])
+
+  // Track active h2 section via scroll position
+  useEffect(() => {
+    if (grouped.length === 0) return
+
+    function updateActive() {
+      const OFFSET = 130 // px from top — accounts for sticky header
+      let active = grouped[0].h2.id
+      for (const group of grouped) {
+        const el = document.getElementById(group.h2.id)
+        if (el && el.getBoundingClientRect().top <= OFFSET) {
+          active = group.h2.id
+        }
+      }
+      setActiveId(active)
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true })
+    updateActive()
+    return () => window.removeEventListener('scroll', updateActive)
+  }, [grouped])
+
   if (headings.length === 0) return null
 
-  // Group h3s under their preceding h2
-  const grouped: { h2: TOCItem; h3s: TOCItem[] }[] = []
-  let currentGroup: { h2: TOCItem; h3s: TOCItem[] } | null = null
-
-  for (const heading of headings) {
-    if (heading.level === 2) {
-      currentGroup = { h2: heading, h3s: [] }
-      grouped.push(currentGroup)
-    } else if (heading.level === 3 && currentGroup) {
-      currentGroup.h3s.push(heading)
-    }
-  }
-
-  // Determine page type from the URL
   const pathname = typeof window !== 'undefined' ? window.location.pathname : ''
   const isActPage = pathname.startsWith('/act')
-  const isEnvironmentPage = pathname.startsWith('/environment')
+  const isEnvironmentPage = pathname.startsWith('/ourhome')
 
   return (
     <ContentSidebar>
-      <ul className="space-y-3">
+      <ul className="space-y-0.5">
         {grouped.map((group) => {
           const text = group.h2.text
           const isFactsHeading = text.toLowerCase() === 'facts'
           const isAnalysisHeading = text.toLowerCase().includes('analysis')
-          const isActionHeading = text.toLowerCase().includes('action') ||
+          const isActionHeading =
+            text.toLowerCase().includes('action') ||
             text.toLowerCase().includes('sustained') ||
             text.toLowerCase().includes('resources')
 
-          let colorClass: string
+          // Text color classes for h2 link
+          let h2Color: string
+          let dotBg: string
           if (isEnvironmentPage) {
-            // Environment: facts=steel/blue, analysis=orange, actions=green
             if (isFactsHeading) {
-              colorClass = 'text-steel-600 hover:underline'
+              h2Color = 'text-steel-600 hover:text-steel-700'
+              dotBg = 'bg-steel-600'
             } else if (isAnalysisHeading) {
-              colorClass = 'text-orange hover:underline'
+              h2Color = 'text-orange hover:text-orange-dark'
+              dotBg = 'bg-orange'
             } else if (isActionHeading) {
-              colorClass = 'text-forest-700 hover:underline'
+              h2Color = 'text-forest-700 hover:text-forest-800'
+              dotBg = 'bg-forest-700'
             } else {
-              colorClass = 'text-teal hover:underline'
+              h2Color = 'text-teal hover:text-teal-dark'
+              dotBg = 'bg-teal'
             }
           } else if (isActPage) {
-            colorClass = 'text-orange hover:underline'
+            h2Color = 'text-orange hover:text-orange-dark'
+            dotBg = 'bg-orange'
           } else if (isAnalysisHeading || isActionHeading) {
-            colorClass = 'text-orange hover:underline'
+            h2Color = 'text-orange hover:text-orange-dark'
+            dotBg = 'bg-orange'
           } else {
-            colorClass = 'text-teal hover:underline'
+            h2Color = 'text-teal hover:text-teal-dark'
+            dotBg = 'bg-teal'
           }
 
+          const isActive = activeId === group.h2.id
+          const isExpanded = isActive || hoveredId === group.h2.id
+          const displayText = isFactsHeading
+            ? 'FACTS'
+            : text.toLowerCase() === 'analysis'
+            ? 'ANALYSIS'
+            : text
+
           return (
-            <li key={group.h2.id} className="font-semibold">
-              <a href={`#${group.h2.id}`} className={colorClass}>
-                {isFactsHeading ? 'FACTS' : text.toLowerCase() === 'analysis' ? 'ANALYSIS' : text}
-              </a>
+            <li
+              key={group.h2.id}
+              onMouseEnter={() => setHoveredId(group.h2.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              className="py-1"
+            >
+              {/* h2 row: dot + label */}
+              <div className="flex items-center gap-1.5">
+                {/* Active indicator dot — always occupies space to prevent layout shift */}
+                <span
+                  aria-hidden="true"
+                  className={`shrink-0 w-1.5 h-1.5 rounded-full transition-all duration-200 ${dotBg} ${
+                    isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                  }`}
+                />
+                <a
+                  href={`#${group.h2.id}`}
+                  className={`font-semibold text-sm leading-snug transition-colors ${h2Color} ${
+                    isActive ? 'opacity-100' : 'opacity-80 hover:opacity-100'
+                  }`}
+                >
+                  {displayText}
+                </a>
+              </div>
+
+              {/* h3 subheadings — slide in/out */}
               {group.h3s.length > 0 && (
-                <ul className="ml-6 mt-2 space-y-1.5 font-normal">
+                <ul
+                  className={`overflow-hidden transition-all duration-200 ease-in-out ${
+                    isExpanded ? 'max-h-96 opacity-100 mt-1' : 'max-h-0 opacity-0 mt-0'
+                  }`}
+                >
                   {group.h3s.map((h3) => (
                     <li key={h3.id}>
-                      <a href={`#${h3.id}`} className={colorClass}>
+                      <a
+                        href={`#${h3.id}`}
+                        className={`block py-0.5 pl-4 text-xs leading-snug transition-colors ${h2Color} opacity-80 hover:opacity-100`}
+                      >
                         {h3.text}
                       </a>
                     </li>

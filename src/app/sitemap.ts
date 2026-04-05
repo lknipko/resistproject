@@ -94,7 +94,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Environment section landing page
   entries.push({
-    url: `${baseUrl}/environment`,
+    url: `${baseUrl}/ourhome`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.9,
@@ -105,7 +105,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const slug of envSlugs) {
     const { lastUpdated } = getMDXFrontmatter('environment', slug)
     entries.push({
-      url: `${baseUrl}/environment/${slug}`,
+      url: `${baseUrl}/ourhome/${slug}`,
       lastModified: lastUpdated ? new Date(lastUpdated) : new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,

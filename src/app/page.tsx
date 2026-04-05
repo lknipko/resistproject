@@ -288,7 +288,7 @@ export default function HomePage() {
               and take action for a healthier planet.
             </p>
             <Link
-              href="/environment"
+              href="/ourhome"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white text-forest-700 hover:bg-forest-50 font-bold rounded-lg shadow-lg transition-all hover:scale-105"
             >
               Explore Our Home

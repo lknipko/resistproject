@@ -68,14 +68,26 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      // Old /environment/* URLs → /ourhome/*
+      {
+        source: '/environment',
+        destination: '/ourhome',
+        permanent: true,
+      },
+      {
+        source: '/environment/:path*',
+        destination: '/ourhome/:path*',
+        permanent: true,
+      },
+      // Old learn/act environment pages → Our Home
       {
         source: '/learn/climate-environment',
-        destination: '/environment',
+        destination: '/ourhome',
         permanent: true,
       },
       {
         source: '/act/environment',
-        destination: '/environment',
+        destination: '/ourhome',
         permanent: true,
       },
     ]

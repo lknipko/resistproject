@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://resistproject.com/environment',
+    url: 'https://resistproject.com/ourhome',
     siteName: 'Resist Project — Our Home',
     title: 'Our Home',
     description: 'Track environmental rollbacks, protect public lands, and take action for clean air, water, and wildlife.',

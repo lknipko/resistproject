@@ -64,6 +64,14 @@ export function RelatedContent({ currentSlug, currentSection, currentTags }: Rel
 
   if (related.length === 0) return null
 
+  function sectionUrlPath(s: 'learn' | 'act' | 'environment'): string {
+    return s === 'environment' ? 'ourhome' : s
+  }
+
+  function sectionLabel(s: 'learn' | 'act' | 'environment'): string {
+    return s === 'environment' ? 'Our Home' : s
+  }
+
   return (
     <div className="max-w-[1300px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 mt-4 pb-12">
       <div className="pt-8 border-t border-gray-200">
@@ -79,7 +87,7 @@ export function RelatedContent({ currentSlug, currentSection, currentTags }: Rel
             return (
               <Link
                 key={`${section}/${page.slug}`}
-                href={`/${section}/${page.slug}`}
+                href={`/${sectionUrlPath(section)}/${page.slug}`}
                 className={[
                   'block p-4 rounded-lg border transition-all hover:shadow-sm',
                   s.card,
@@ -92,7 +100,7 @@ export function RelatedContent({ currentSlug, currentSection, currentTags }: Rel
                       s.badge,
                     ].join(' ')}
                   >
-                    {section}
+                    {sectionLabel(section)}
                   </span>
                 </div>
                 <p className="text-sm font-semibold text-gray-900 leading-snug">{page.title}</p>

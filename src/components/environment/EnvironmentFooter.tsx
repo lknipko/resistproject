@@ -14,8 +14,8 @@ export default function EnvironmentFooter() {
           <div>
             <h3 className="text-white font-semibold mb-4">Navigate</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/environment" className="hover:text-white transition-colors">Home</Link></li>
-              <li><Link href="/environment/topics" className="hover:text-white transition-colors">All Topics</Link></li>
+              <li><Link href="/ourhome" className="hover:text-white transition-colors">Home</Link></li>
+              <li><Link href="/ourhome/topics" className="hover:text-white transition-colors">All Topics</Link></li>
               <li><Link href="/" className="hover:text-white transition-colors">Main Site</Link></li>
               <li><Link href="/learn" className="hover:text-white transition-colors">Learn</Link></li>
               <li><Link href="/act" className="hover:text-white transition-colors">Act</Link></li>

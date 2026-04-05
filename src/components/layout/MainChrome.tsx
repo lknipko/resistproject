@@ -6,7 +6,7 @@ import Footer from './Footer'
 
 export function MainChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isEnvironment = pathname.startsWith('/environment')
+  const isEnvironment = pathname.startsWith('/ourhome')
 
   if (isEnvironment) {
     return <>{children}</>
