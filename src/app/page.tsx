@@ -171,15 +171,15 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <FeaturedIssue
               title="US-Iran Military Conflict"
-              description="Day 34: Over 2,100 killed. Trump's first primetime address threatens to destroy all Iranian power plants. New missile wave hits Tel Aviv and US bases. Oil at $106/barrel, gas above $4/gallon. War Powers clock expires April 29."
+              description="Day 49: Over 2,100 killed. Ceasefire extension being negotiated — both sides have violated it. Separate Israel-Lebanon ceasefire announced. US completes Syria withdrawal. War Powers clock expires April 29 — 12 days away."
               learnSlug="iran-war"
               actSlug="iran-war"
               badge="Urgent"
               icon="government"
             />
             <FeaturedIssue
-              title="DHS Shutdown: 47 Days"
-              description="DHS unfunded since Feb 14. New Secretary Mullin sworn in March 24. USCIS partially resumed asylum processing. TSA officers still working without pay. 'Phase II' mass deportations being pushed."
+              title="DHS Shutdown: 62 Days"
+              description="DHS unfunded since Feb 14. TSA officers still working without pay. USCIS partially resumed asylum processing. ICE sets official target of 1 million deportations/year. Bank citizenship data collection order in progress."
               learnSlug="dhs-shutdown"
               actSlug="dhs-funding"
               badge="Urgent"
@@ -187,7 +187,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="ICE Detention & Deportation"
-              description="Detention at all-time high: 72,000+, arrests exceeding 1,000/day. Pro-Trump groups pushing 'Phase II' worksite raids. Federal judge issued 69-page order restricting detainee transfers. 65% say ICE has gone too far."
+              description="ICE sets 1M deportation target. Detention at 72,000+, arrests exceeding 1,000/day. ICE admits using Graphite spyware to read encrypted messages. Banks to be ordered to collect citizenship data on all customers."
               learnSlug="ice-detention-deportation"
               actSlug="ice-detention-defense"
               badge="Urgent"
@@ -195,7 +195,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="DOGE & Government Dismantlement"
-              description="300K+ federal employees fired (9% of workforce). Independent analysis: DOGE cost taxpayers $135B vs. claimed $215B in savings. Staffer admitted under oath DOGE failed to reduce the deficit. ~25K workers rehired."
+              description="300K+ federal employees fired (9% of workforce). Deferred resignation program cost $4.5B while workers sat idle. Total DOGE costs: $71B. GSA rehiring 400 employees after cuts gutted operations. Set to terminate July 4."
               learnSlug="doge"
               actSlug="protect-federal-services"
               badge="Urgent"
@@ -203,7 +203,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="Election Security Dismantled"
-              description="With 2026 midterms approaching: EI-ISAC defunded, 130 CISA election workers eliminated, FBI Foreign Influence Task Force disbanded. 78% of state election officials report zero federal communication."
+              description="With 2026 midterms approaching: EI-ISAC defunded, CISA election workers eliminated, FBI task force disbanded. Mail-in voting EO draws lawsuits from 23 state AGs. FISA Section 702 expires April 20."
               learnSlug="election-security"
               actSlug="protect-your-vote"
               badge="Urgent"
@@ -211,7 +211,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="Medicaid & ACA Safety Net Cuts"
-              description="10.5 million projected to lose coverage. Provider tax changes took effect April 1. 100% drug tariffs signed April 2 will further squeeze costs. Nebraska enforcing work requirements May 1. ACA subsidies expired."
+              description="446 hospitals at high risk of closing. 734 rural hospitals (1/3 of all) at risk — nearly 60% no longer deliver babies. 10.5M projected to lose coverage. Nebraska enforcing work requirements May 1. 100% drug tariffs signed."
               learnSlug="obbba-medicaid"
               actSlug="medicaid-enrollment"
               badge="Urgent"
