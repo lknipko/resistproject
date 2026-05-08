@@ -171,23 +171,23 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <FeaturedIssue
               title="US-Iran Military Conflict"
-              description="Day 49: Over 2,100 killed. Ceasefire extension being negotiated — both sides have violated it. Separate Israel-Lebanon ceasefire announced. US completes Syria withdrawal. War Powers clock expires April 29 — 12 days away."
+              description="Day 69: Over 3,600 killed in Iran. Ceasefire extended but both sides violating it — May 7 Hormuz naval battle. War Powers votes failed in both chambers. Trump declared hostilities 'terminated' to dodge 60-day deadline."
               learnSlug="iran-war"
               actSlug="iran-war"
               badge="Urgent"
               icon="government"
             />
             <FeaturedIssue
-              title="DHS Shutdown: 62 Days"
-              description="DHS unfunded since Feb 14. TSA officers still working without pay. USCIS partially resumed asylum processing. ICE sets official target of 1 million deportations/year. Bank citizenship data collection order in progress."
-              learnSlug="dhs-shutdown"
-              actSlug="dhs-funding"
+              title="Voting Rights Gutted"
+              description="SCOTUS gutted VRA Section 2 in Callais (6-3). Louisiana suspended primary after 100K+ early votes. SAVE Act defeated 48-50. Biggest blow to voting rights since Shelby County. 2026 midterms at stake."
+              learnSlug="voting-rights"
+              actSlug="protect-your-vote"
               badge="Urgent"
-              icon="government"
+              icon="justice"
             />
             <FeaturedIssue
               title="ICE Detention & Deportation"
-              description="ICE sets 1M deportation target. Detention at 72,000+, arrests exceeding 1,000/day. ICE admits using Graphite spyware to read encrypted messages. Banks to be ordered to collect citizenship data on all customers."
+              description="540K deported in first year. Detention at ~58K (down from 72K peak). Record deaths in custody. DHS shut down oversight office. 25% of arrests are bystanders. $72B reconciliation bill: $38.2B for ICE with zero accountability provisions."
               learnSlug="ice-detention-deportation"
               actSlug="ice-detention-defense"
               badge="Urgent"
@@ -195,23 +195,23 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="DOGE & Government Dismantlement"
-              description="300K+ federal employees fired (9% of workforce). Deferred resignation program cost $4.5B while workers sat idle. Total DOGE costs: $71B. GSA rehiring 400 employees after cuts gutted operations. Set to terminate July 4."
+              description="Musk leaving DOGE end of May — called it 'only somewhat successful.' DOGE cost taxpayers $135B vs. claimed savings. Courts ordered reinstatements at 18 agencies. Trump fired entire National Science Board. Set to terminate July 4."
               learnSlug="doge"
               actSlug="protect-federal-services"
               badge="Urgent"
               icon="government"
             />
             <FeaturedIssue
-              title="Election Security Dismantled"
-              description="With 2026 midterms approaching: EI-ISAC defunded, CISA election workers eliminated, FBI task force disbanded. Mail-in voting EO draws lawsuits from 23 state AGs. FISA Section 702 expires April 20."
-              learnSlug="election-security"
-              actSlug="protect-your-vote"
+              title="Mifepristone Access Crisis"
+              description="5th Circuit blocked telehealth mifepristone access nationwide May 1. SCOTUS issued temporary stay through May 11. Decision on longer-term stay imminent. 13 states with total abortion bans. Republican states adopting new strategies to shield bans from courts."
+              learnSlug="abortion-restrictions"
+              actSlug="abortion-rights"
               badge="Urgent"
-              icon="justice"
+              icon="health"
             />
             <FeaturedIssue
-              title="Medicaid & ACA Safety Net Cuts"
-              description="446 hospitals at high risk of closing. 734 rural hospitals (1/3 of all) at risk — nearly 60% no longer deliver babies. 10.5M projected to lose coverage. Nebraska enforcing work requirements May 1. 100% drug tariffs signed."
+              title="Medicaid & Safety Net Crisis"
+              description="900+ health facilities at risk or closing across 44 states. Nebraska first to implement work requirements (May 1). 4.9-10.1M projected to lose coverage by 2028. CMS rule due June 1. Federal deadline: December 30."
               learnSlug="obbba-medicaid"
               actSlug="medicaid-enrollment"
               badge="Urgent"
