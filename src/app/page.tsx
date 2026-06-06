@@ -171,15 +171,15 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <FeaturedIssue
               title="US-Iran Military Conflict"
-              description="Day 69: Over 3,600 killed in Iran. Ceasefire extended but both sides violating it — May 7 Hormuz naval battle. War Powers votes failed in both chambers. Trump declared hostilities 'terminated' to dodge 60-day deadline."
+              description="Day 98: Iran broke off negotiations June 1, vowing to block Strait of Hormuz. Iranian drones struck Kuwait airport June 3. Talks at 'deadlock.' 3,636+ killed in Iran. Oil at $94-97/barrel. Congress failed all 6 War Powers votes."
               learnSlug="iran-war"
               actSlug="iran-war"
               badge="Urgent"
               icon="government"
             />
             <FeaturedIssue
-              title="Voting Rights Gutted"
-              description="SCOTUS gutted VRA Section 2 in Callais (6-3). Louisiana suspended primary after 100K+ early votes. SAVE Act defeated 48-50. Biggest blow to voting rights since Shelby County. 2026 midterms at stake."
+              title="Voting Rights & Election Security"
+              description="SCOTUS expected to strike down mail-in ballot grace periods in 14 states. VRA Section 2 gutted. FISA Section 702 set to lapse June 12 after Senate failed 47-52. Birthright citizenship ruling pending. CISA election security program slated for elimination."
               learnSlug="voting-rights"
               actSlug="protect-your-vote"
               badge="Urgent"
@@ -187,7 +187,7 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="ICE Detention & Deportation"
-              description="540K deported in first year. Detention at ~58K (down from 72K peak). Record deaths in custody. DHS shut down oversight office. 25% of arrests are bystanders. $72B reconciliation bill: $38.2B for ICE with zero accountability provisions."
+              description="Senate passed $70B ICE/CBP funding (June 5, 52-47) with zero accountability. 605K+ deported, 2.5M total left US. 1,903 287(g) partnerships. Record deaths: 18+ in 2026 (on pace for 60+). People abandoning asylum claims due to prolonged detention."
               learnSlug="ice-detention-deportation"
               actSlug="ice-detention-defense"
               badge="Urgent"
@@ -195,23 +195,23 @@ export default function HomePage() {
             />
             <FeaturedIssue
               title="DOGE & Government Dismantlement"
-              description="Musk leaving DOGE end of May — called it 'only somewhat successful.' DOGE cost taxpayers $135B vs. claimed savings. Courts ordered reinstatements at 18 agencies. Trump fired entire National Science Board. Set to terminate July 4."
+              description="DOGE functionally dead — OPM says it 'doesn't exist.' 386K workers departed in first year. On June 3, Trump reclassified 8,000 more workers as at-will. 10,000+ federal lawyers quit (1 in 5). DOGE terminates July 4."
               learnSlug="doge"
               actSlug="protect-federal-services"
               badge="Urgent"
               icon="government"
             />
             <FeaturedIssue
-              title="Mifepristone Access Crisis"
-              description="5th Circuit blocked telehealth mifepristone access nationwide May 1. SCOTUS issued temporary stay through May 11. Decision on longer-term stay imminent. 13 states with total abortion bans. Republican states adopting new strategies to shield bans from courts."
-              learnSlug="abortion-restrictions"
-              actSlug="abortion-rights"
+              title="Supreme Court's Explosive June"
+              description="23 cases pending: birthright citizenship, mail ballot grace periods (14 states), trans sports bans, FTC independence. Already gutted VRA, enabled oil climate lawsuit dodges. Mifepristone access temporarily restored. Rulings expected any day."
+              learnSlug="supreme-court"
+              actSlug="court-reform"
               badge="Urgent"
-              icon="health"
+              icon="justice"
             />
             <FeaturedIssue
-              title="Medicaid & Safety Net Crisis"
-              description="900+ health facilities at risk or closing across 44 states. Nebraska first to implement work requirements (May 1). 4.9-10.1M projected to lose coverage by 2028. CMS rule due June 1. Federal deadline: December 30."
+              title="OBBBA Deadlines Arriving"
+              description="HHS guidance due June 1. State outreach June 30-Aug 31. Student loan overhaul July 1: SAVE/PAYE eliminated, Grad PLUS gone. Social Security insolvency accelerated to 2032. Medicare to 2040. 900+ health facilities at risk. 10.5M projected to lose coverage."
               learnSlug="obbba-medicaid"
               actSlug="medicaid-enrollment"
               badge="Urgent"
