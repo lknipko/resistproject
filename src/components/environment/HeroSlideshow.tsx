@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// blurDataURL: tiny (16×10) inline WebP LQIP so a preview of each photo shows
+// instantly and sharpens in — no blank/delay before the full image loads.
 const IMAGES = [
-  { src: '/ourhome/hero/canyon.jpg', alt: 'Mesa Arch at sunrise, Canyonlands National Park' },
-  { src: '/ourhome/hero/mountain-lake.jpg', alt: 'Snow-capped mountains reflected in an alpine lake' },
-  { src: '/ourhome/hero/forest.jpg', alt: 'Pacific Northwest forest at sunset' },
-  { src: '/ourhome/hero/meadow.jpg', alt: 'Wildflower meadow at stormy sunset' },
-  { src: '/ourhome/hero/ocean.jpg', alt: 'Ocean sunset with birds in flight' },
+  { src: '/ourhome/hero/canyon.jpg', alt: 'Mesa Arch at sunrise, Canyonlands National Park', blur: 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAQCdASoQAAoAA4BaJZgCdAELRblXMAD9eLHqn5aV8Y/oxIUF6SD8IiWhGf1ExDMt1YxtQ1gvBSYXgaZBsGoH1v4WzY2+muGR6DaO5gIPdPAAAAA=' },
+  { src: '/ourhome/hero/mountain-lake.jpg', alt: 'Snow-capped mountains reflected in an alpine lake', blur: 'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAoAA4BaJQBOgCKeRIIt4AD+8i+EILEA27w3QnzgQRx2Y+GQrizpEg5ZOQ6BADomXQBW0s4AAA==' },
+  { src: '/ourhome/hero/forest.jpg', alt: 'Pacific Northwest forest at sunset', blur: 'data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQAgCdASoQAAoAA4BaJYgCdAEWTsZybNIAAPw8a9JV1fDyrGSTNXuBAyoVEtBN+T4SyLX6TkMTn5AbJP1v6o5qVG5rYyqFgvvPcyixYMDuRyundAA=' },
+  { src: '/ourhome/hero/meadow.jpg', alt: 'Wildflower meadow at stormy sunset', blur: 'data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoQAAoAA4BaJZgCdAEO4/LftYAA+GPp+sN2iOaTodd2FIovOD5CGIrJnxw+NiMYjNGz+2E3xY8GUEoamN71orIAAAA=' },
+  { src: '/ourhome/hero/ocean.jpg', alt: 'Ocean sunset with birds in flight', blur: 'data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAQCdASoQAAoAA4BaJbACdAENavXaQAD+ZN/Z2p5Zk1TVRYV3L+cL63XpSP3EOHUrTvKHsqHL+e99oyBH4eL4+q/SgBfELAAAAA=' },
 ]
 
 const DISPLAY_MS = 15000
@@ -21,7 +23,6 @@ interface HeroSlideshowProps {
 
 export default function HeroSlideshow({ hasActiveIssues }: HeroSlideshowProps) {
   const [current, setCurrent] = useState(0)
-  const [fading, setFading] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
 
   useEffect(() => {
@@ -30,38 +31,36 @@ export default function HeroSlideshow({ hasActiveIssues }: HeroSlideshowProps) {
     if (mq.matches) return
 
     const interval = setInterval(() => {
-      setFading(true)
-      setTimeout(() => {
-        setCurrent((c) => (c + 1) % IMAGES.length)
-        setFading(false)
-      }, FADE_MS)
+      setCurrent((c) => (c + 1) % IMAGES.length)
     }, DISPLAY_MS)
 
     return () => clearInterval(interval)
   }, [])
 
   return (
-    <div className="relative overflow-hidden" style={{ minHeight: '480px' }}>
-      {/* Image stack */}
+    // Dark forest background so there is never a white flash before/between images.
+    <div className="relative overflow-hidden bg-forest-900" style={{ minHeight: '480px' }}>
+      {/* Image stack — every image is stacked and eagerly loaded; opacity drives a true
+          crossfade (incoming fades in over the outgoing, so no blank frame appears). */}
       {IMAGES.map((img, i) => {
         const isActive = i === current
-        const opacity = reducedMotion
-          ? isActive ? 1 : 0
-          : isActive
-            ? fading ? 0 : 1
-            : 0
         return (
           <Image
             key={img.src}
             src={img.src}
             alt={img.alt}
             fill
+            // First image is the LCP (priority); load the rest eagerly so the next
+            // slide is always decoded before its turn — prevents blank crossfades.
             priority={i === 0}
+            loading={i === 0 ? undefined : 'eager'}
+            placeholder="blur"
+            blurDataURL={img.blur}
             sizes="100vw"
             className="object-cover object-center"
             style={{
               transition: reducedMotion ? 'none' : `opacity ${FADE_MS}ms ease-in-out`,
-              opacity,
+              opacity: isActive ? 1 : 0,
               zIndex: isActive ? 1 : 0,
             }}
           />
@@ -84,7 +83,7 @@ export default function HeroSlideshow({ hasActiveIssues }: HeroSlideshowProps) {
             Our Home
           </h1>
           <p className="text-xl text-white/85 leading-relaxed mb-8 max-w-xl">
-            This land is your land. The beauty we could never create is being destroyed. You can stop it.
+            This land is your land. Protect it.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
@@ -118,7 +117,7 @@ export default function HeroSlideshow({ hasActiveIssues }: HeroSlideshowProps) {
             <button
               key={i}
               aria-label={`Show image ${i + 1}`}
-              onClick={() => { setFading(false); setCurrent(i) }}
+              onClick={() => setCurrent(i)}
               className="w-1.5 h-1.5 rounded-full transition-all"
               style={{
                 background: i === current ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)',

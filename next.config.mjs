@@ -3,6 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
 
   images: {
+    // Prefer AVIF (≈25% smaller than WebP) with WebP fallback for hero/content images.
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
