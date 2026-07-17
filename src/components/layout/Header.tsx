@@ -31,7 +31,17 @@ export default function Header({ session, userTier = 1 }: HeaderProps) {
     <header className="sticky top-0 z-50 bg-teal-dark text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Logo variant="wordmark" theme="white" />
+          {/* Primary: Resist Project logo (-> /). Secondary: greyed "Our Home" link (-> /ourhome) */}
+          <div className="flex items-center gap-3">
+            <Logo variant="wordmark" theme="white" />
+            <span className="text-white/25 hidden sm:inline" aria-hidden="true">/</span>
+            <Link
+              href="/ourhome"
+              className="hidden sm:inline text-sm font-bold tracking-tight text-white/50 hover:text-white/80 transition-colors"
+            >
+              Our Home
+            </Link>
+          </div>
 
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/learn" className="hover:text-teal-light transition-colors font-medium">
@@ -89,6 +99,13 @@ export default function Header({ session, userTier = 1 }: HeaderProps) {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
+              </Link>
+              <Link
+                href="/ourhome"
+                className="text-white/60 hover:text-white transition-colors text-lg"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Our Home →
               </Link>
               <div className="pt-2 border-t border-teal-medium">
                 <SearchBar fullWidth />

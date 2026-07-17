@@ -22,33 +22,32 @@ export default function EnvironmentHeader() {
     <header className="sticky top-0 z-50 bg-forest-800 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo: dimmed Resist Project branding + "Our Home" */}
-          <Link href="/ourhome" className="flex items-center gap-3 group">
-            <Image
-              src="/logo-icon-white.svg"
-              alt="Resist Project Logo"
-              width={36}
-              height={36}
-              className="flex-shrink-0 opacity-50 group-hover:opacity-70 transition-opacity"
-              priority
-            />
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold tracking-tight text-white/40 hidden sm:inline">
-                RESIST PROJECT
-              </span>
-              <span className="text-white/25 hidden sm:inline">/</span>
+          {/* Primary: "Our Home" (-> /ourhome). Secondary: greyed Resist Project logo (-> /) */}
+          <div className="flex items-center gap-3">
+            <Link href="/ourhome" className="group">
               <span className="text-xl font-black tracking-tight text-white group-hover:text-forest-200 transition-colors">
                 Our Home
               </span>
-            </div>
-          </Link>
+            </Link>
+            <span className="text-white/25" aria-hidden="true">/</span>
+            <Link href="/" className="flex items-center gap-2 group" aria-label="Resist Project main site">
+              <Image
+                src="/logo-icon-white.svg"
+                alt="Resist Project Logo"
+                width={28}
+                height={28}
+                className="flex-shrink-0 opacity-50 group-hover:opacity-70 transition-opacity"
+                priority
+              />
+              <span className="text-sm font-bold tracking-tight text-white/40 group-hover:text-white/60 transition-colors hidden sm:inline">
+                RESIST PROJECT
+              </span>
+            </Link>
+          </div>
 
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/ourhome/topics" className="hover:text-forest-200 transition-colors font-medium">
               Topics
-            </Link>
-            <Link href="/" className="hover:text-forest-200 transition-colors text-sm text-forest-300">
-              ← Main Site
             </Link>
             <SearchBar />
             <AuthButtonClient session={session} userTier={userTier} />
