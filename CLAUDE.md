@@ -131,6 +131,22 @@ resistproject/                    # ← Working directory (git repo root)
 - Edit proposal, voting, and moderation tables
 - Audit logging system
 
+### 🔐 Auth Architecture Notes & Gotchas (updated 2026-07-18)
+
+Sessions use the **database strategy** (Prisma adapter). Config: `src/lib/auth.ts`.
+
+- **Google account linking is ON and must stay on.** `allowDangerousEmailAccountLinking: true` on the Google provider. The app was **email-first** — a Resend magic-link sign-in creates a `User` row with **no OAuth `Account` row**. Without linking, those users hit `OAuthAccountNotLinked` when they later click "Sign in with Google" and land **logged out after completing the Google flow**. Auto-linking by verified email is safe for Google specifically (Google verifies email ownership). Setting this back to `false` reintroduces the bug.
+
+- **Never set cookies inside Auth.js callbacks/events.** Calling `next/headers` `cookies().set()` inside `signIn`/`createUser` runs during the OAuth callback response and can clobber the session cookie (this made brand-new Google signups land logged out). Instead:
+  - Sign-in server actions (`src/app/auth/signin/actions.ts`) route post-auth through **`/auth/complete?returnTo=...`** via `redirectTo`.
+  - **`src/app/auth/complete/route.ts`** (a normal Route Handler) reads onboarding status and sets the `onboarding-needed` cookie safely, then redirects to `/onboarding` or the original destination.
+
+- **`onboarding-needed` cookie lifecycle:** set in `/auth/complete` → read in `src/middleware.ts` (redirects to `/onboarding`; excludes `/api/*` and `/auth/*` to avoid loops) → deleted in `src/app/onboarding/actions.ts` (dismiss) and `src/app/profile/actions.ts` (complete).
+
+- **Host-mismatch failure mode:** if users reach the site on a different host than `NEXTAUTH_URL`/`AUTH_URL` (e.g. `www` vs apex), OAuth state/session cookies land on the wrong host and sign-in **silently fails** ("went through Google, came back logged out"). Google Console → Authorized redirect URI must be exactly `https://resistproject.com/api/auth/callback/google` and match the `NEXTAUTH_URL` host.
+
+- **Required prod env:** `AUTH_TRUST_HOST=true`, `AUTH_SECRET` (+ `NEXTAUTH_SECRET`), `NEXTAUTH_URL`, `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET`, `RESEND_API_KEY`. Historical fixes: `docs/archive/FIX-UNTRUSTED-HOST.md`, `docs/archive/FIX-CSRF-ERROR.md`.
+
 ---
 
 ## MDX Content Authoring
@@ -737,6 +753,31 @@ npx prisma generate
 npm run dev
 ```
 
+### Running locally without Railway (sandbox / no hosted DB)
+
+If Node and/or a hosted Postgres aren't available (fresh machine or sandbox), this recipe was verified to work end-to-end:
+
+```bash
+# Node 20 via nvm (no sudo needed)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+. "$HOME/.nvm/nvm.sh" && nvm install 20
+
+# Disposable Postgres via rootless podman (fully-qualified image name is required)
+podman run -d --name resist-pg -e POSTGRES_USER=resist -e POSTGRES_PASSWORD=resist \
+  -e POSTGRES_DB=resist -p 5432:5432 docker.io/library/postgres:15-alpine
+
+# .env DATABASE_URL for that container:
+#   DATABASE_URL="postgresql://resist:resist@localhost:5432/resist?schema=public"
+# Generate AUTH_SECRET/NEXTAUTH_SECRET with: openssl rand -base64 32
+
+npm install
+npx prisma migrate deploy   # apply existing migrations (use `migrate dev` only to CREATE new ones)
+npx prisma generate
+npm run dev
+```
+
+Public pages and all MDX content render fine with placeholder external keys. **Google OAuth** needs real `GOOGLE_CLIENT_ID`/`SECRET` (can't be tested locally without them); **email magic links** need a real `RESEND_API_KEY`.
+
 ### Environment Variables (.env)
 
 ```bash
@@ -781,6 +822,39 @@ git add .
 git commit -m "message"
 git push origin main    # Triggers Railway deployment
 ```
+
+---
+
+## Weekly Content Update Workflow
+
+Content lives in `content/{learn,act,environment}/*.mdx`. The loader (`src/lib/content.ts`) reads **`.mdx` only** — any `.md` twins are dead legacy. New pages **auto-appear** in listings (filesystem-based) and self-register metadata lazily (`src/lib/page-registry.ts`); to add one, just create the `.mdx` with correct `type` frontmatter (`learn`/`act`/`environment`).
+
+Every page carries `lastUpdated: "YYYY-MM-DD"` — the staleness signal (pages cluster around shared dates per update). A "weekly update" (see git history for examples) means:
+
+1. **Research the window** since the last update. For events after the model's knowledge cutoff, use **live web research** — a good approach is to fan out topic-cluster research agents (courts, immigration, foreign policy/Iran, economy/tariffs, health, democracy/exec power, civil rights/education, national environment, Western/Utah environment), each returning dated + sourced developments mapped to page slugs, then synthesize a per-page digest.
+2. **Rewrite each affected page's lead** — the `## Quick Summary` paragraph (learn/act) or the `**Key Point:**` paragraph (environment) — to lead with the freshest developments, and **bump `lastUpdated`**.
+3. **Refresh `content/home.mdx`** — the homepage is a curated "Critical Issues" digest of dated headline paragraphs + LEARN/ACT links, with a "Last updated" footer.
+4. **Do NOT falsely bump `lastUpdated`** on pages with no real change — it misrepresents freshness. Leave evergreen tool pages (contact-congress, share, etc.) alone unless their content changed.
+5. Verify pages render (`curl localhost:3000/...`) and commit in logical batches with a detailed digest commit message.
+
+Authoring conventions: simple-syntax headings auto-wrap into components; special links `[→ Take Action: …](/act/…)`, `[← Learn More: …](/learn/…)`, `[source: …](url)`; `### [+]` for collapsibles. Templates in `templates/`.
+
+## Push / Deploy Notes
+
+- Push to `main` → **Railway auto-deploys** (~2-3 min). This is a **solo project; commits go directly to `main`.**
+- This dev environment has **no `gh` CLI** and no stored git credentials. Pushing needs a **fine-grained PAT with `Contents: Read and write`** on `lknipko/resistproject` (a token lacking that scope returns **403**, not 401). Pass it via an ephemeral credential helper and never persist it to git config:
+  ```bash
+  GIT_PAT='<token>' git -c credential.helper='!f() { echo username=lknipko; echo "password=${GIT_PAT}"; }; f' push origin main
+  ```
+- Repo-local git identity used: `lknipko` / `lknipko@gmail.com`.
+
+## Recent Session Log
+
+- **2026-07-18 — Auth fixes** ("went through Google, came back logged out"): enabled Google account linking + moved onboarding cookie into `/auth/complete`. See **Auth Architecture Notes** above.
+- **2026-07-17 — Full content refresh** to the June 6 → July 17 window: ~90 pages updated + 5 new (`temporary-protected-status`, `ice-agent-shootings`, `independent-agencies`, `aca-marketplace`, `pepfar-hiv-funding`).
+- **2026-07-17 — Header cross-branding:** main header shows a greyed "Our Home" link beside the logo; Our Home header (`EnvironmentHeader.tsx`) shows "Our Home" primary + greyed Resist Project logo linking back to `/`.
+- **2026-07-17 — Our Home hero fix** (`HeroSlideshow.tsx`): real crossfade + eager-loaded images + inline blur (LQIP) placeholders + `forest-900` bg; AVIF enabled in `next.config.mjs`.
+- **2026-07-17 — Repo cleanup:** removed duplicate nested app copies (`resist-project/`, `resistproject-upload/`), committed logs, `force.txt`; archived transient fix/handoff docs to `docs/archive/`.
 
 ---
 
