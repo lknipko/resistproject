@@ -2,7 +2,6 @@ import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import Resend from "next-auth/providers/resend"
 import Google from "next-auth/providers/google"
-import { cookies } from "next/headers"
 import { prisma } from "./db"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -96,50 +95,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           })
           console.log(`Created new UserExtended for ${user.email}`)
         }
-
-        // New user always needs onboarding
-        const cookieStore = await cookies()
-        cookieStore.set('onboarding-needed', '1', {
-          httpOnly: false,
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax',
-          path: '/',
-          maxAge: 60 * 60 * 24, // 24 hours
-        })
+        // NOTE: The "onboarding-needed" cookie is intentionally NOT set here.
+        // Setting cookies via next/headers inside an Auth.js event runs during
+        // the OAuth callback response and can interfere with the session cookie.
+        // Onboarding routing is handled by the /auth/complete route handler,
+        // which runs as a normal request right after sign-in.
       } catch (error) {
         console.error('Error in createUser event:', error)
       }
     },
   },
   callbacks: {
-    async signIn({ user }) {
-      // For RETURNING users, check if they still need onboarding and set the cookie.
-      // New users are handled by the createUser event above.
-      if (user.id && user.email) {
-        try {
-          const userExtended = await prisma.userExtended.findUnique({
-            where: { userId: user.id },
-            select: { civicProfileCompleted: true, onboardingDismissed: true },
-          })
-
-          // If no userExtended found, this is likely a new user whose User record
-          // hasn't been created yet (email provider initial phase). Skip silently.
-          if (userExtended && !userExtended.civicProfileCompleted && !userExtended.onboardingDismissed) {
-            const cookieStore = await cookies()
-            cookieStore.set('onboarding-needed', '1', {
-              httpOnly: false,
-              secure: process.env.NODE_ENV === 'production',
-              sameSite: 'lax',
-              path: '/',
-              maxAge: 60 * 60 * 24,
-            })
-          }
-        } catch (error) {
-          console.error('Error in signIn callback:', error)
-        }
-      }
-      return true
-    },
+    // No signIn callback: onboarding routing (and its cookie) is handled by the
+    // /auth/complete route handler after sign-in, not inside the auth callbacks.
     async redirect({ url, baseUrl }) {
       if (url.startsWith("/")) return `${baseUrl}${url}`
       else if (new URL(url).origin === baseUrl) return url
