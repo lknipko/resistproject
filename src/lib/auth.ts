@@ -14,7 +14,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: false,
+      // Link Google sign-in to an existing account with the same email.
+      // This is safe for Google because Google verifies email ownership, so a
+      // user cannot claim an email they don't control. Without this, anyone who
+      // first signed up via the Resend email magic link (which creates a User
+      // with no OAuth Account row) hits `OAuthAccountNotLinked` when they later
+      // click "Sign in with Google" — they complete the Google flow but come
+      // back logged out.
+      allowDangerousEmailAccountLinking: true,
     }),
     Resend({
       apiKey: process.env.RESEND_API_KEY,

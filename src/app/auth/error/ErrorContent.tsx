@@ -7,6 +7,14 @@ const errorMessages = {
   Configuration: 'There is a problem with the server configuration.',
   AccessDenied: 'You do not have permission to sign in.',
   Verification: 'The sign-in link is no longer valid. It may have been used already or expired.',
+  // Auth.js returns this when the OAuth email matches an existing account that
+  // was created with a different sign-in method (e.g. the email magic link).
+  OAuthAccountNotLinked:
+    'An account already exists with this email address. Please sign in using the method you used originally, or use the email magic link below.',
+  OAuthSignin: 'Could not start the Google sign-in. Please try again.',
+  OAuthCallback: 'Google did not complete the sign-in. Please try again.',
+  OAuthCreateAccount: 'We could not create your account. Please try again.',
+  Callback: 'Sign-in could not be completed. Please try again.',
   Default: 'An error occurred during sign-in.',
 }
 
