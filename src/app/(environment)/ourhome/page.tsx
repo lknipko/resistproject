@@ -135,15 +135,20 @@ function StatusBadge({ tags }: { tags: string[] }) {
 export default async function EnvironmentPage() {
   const allPages = getAllPages('environment')
 
-  // Active issues: Urgent or Comment Period Open, max 4
+  // Active issues: Urgent or Comment Period Open, max 4.
+  // Rank Urgent above Comment-Period-Open, then surface the most recently
+  // updated first so the freshest stories win the limited slots and stale
+  // pages fall off automatically (lastUpdated is a "YYYY-MM-DD" string).
+  const statusRank = (p: (typeof allPages)[number]) =>
+    p.tags?.includes('Urgent') ? 2 : 1
   const activePages = allPages
     .filter((p) =>
       p.tags?.includes('Urgent') || p.tags?.includes('Comment Period Open')
     )
     .sort((a, b) => {
-      const aUrgent = a.tags?.includes('Urgent') ? 2 : 1
-      const bUrgent = b.tags?.includes('Urgent') ? 2 : 1
-      return bUrgent - aUrgent
+      const diff = statusRank(b) - statusRank(a)
+      if (diff !== 0) return diff
+      return (b.lastUpdated ?? '').localeCompare(a.lastUpdated ?? '')
     })
     .slice(0, 4)
 
