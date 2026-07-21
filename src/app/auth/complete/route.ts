@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/db'
+import { publicBaseUrl } from '@/lib/request-url'
 
 /**
  * Post-sign-in landing route.
@@ -21,10 +22,15 @@ export async function GET(request: NextRequest) {
   // Only honor relative, same-site destinations.
   const returnTo = returnToParam.startsWith('/') ? returnToParam : '/'
 
+  // Build redirects against the public origin (via X-Forwarded-* headers), NOT
+  // request.url — behind Railway's proxy request.url resolves to the internal
+  // host (localhost:3000) and would redirect users off the real domain.
+  const base = publicBaseUrl(request)
+
   const session = await auth()
   if (!session?.user?.id) {
     // No session — sign-in didn't take. Send them back to sign in.
-    return NextResponse.redirect(new URL('/auth/signin', request.url))
+    return NextResponse.redirect(new URL('/auth/signin', base))
   }
 
   let onboardingNeeded = false
@@ -42,8 +48,8 @@ export async function GET(request: NextRequest) {
   }
 
   const destination = onboardingNeeded
-    ? new URL(`/onboarding?returnTo=${encodeURIComponent(returnTo)}`, request.url)
-    : new URL(returnTo, request.url)
+    ? new URL(`/onboarding?returnTo=${encodeURIComponent(returnTo)}`, base)
+    : new URL(returnTo, base)
 
   const response = NextResponse.redirect(destination)
 

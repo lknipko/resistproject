@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { publicBaseUrl } from '@/lib/request-url'
 
 // ---------------------------------------------------------------------------
 // In-memory sliding-window rate limiter
@@ -99,8 +100,10 @@ export function middleware(request: NextRequest) {
     // Skip redirect for API routes and auth routes so they still function
     if (!path.startsWith('/api/') && !path.startsWith('/auth/')) {
       const returnTo = encodeURIComponent(path + request.nextUrl.search)
+      // Use the public origin (X-Forwarded-* aware), not request.url, so the
+      // redirect stays on the real domain behind Railway's proxy.
       return NextResponse.redirect(
-        new URL(`/onboarding?returnTo=${returnTo}`, request.url),
+        new URL(`/onboarding?returnTo=${returnTo}`, publicBaseUrl(request)),
       )
     }
   }
